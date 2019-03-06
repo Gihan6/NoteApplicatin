@@ -1,0 +1,43 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/color_blue_primary</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="itemTextAppearance">@style/Style_TextView</item>
+    </style>
+
+    <style name="EditTextStyle" parent="Widget.Design.TextInputLayout">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@drawable/back_white_edit_text</item>
+        <item name="android:paddingStart">@dimen/edit_text_padding_start</item>
+        <item name="android:paddingEnd">@dimen/edit_text_padding_start</item>
+        <item name="android:paddingTop">@dimen/edit_text_padding_top</item>
+        <item name="android:paddingBottom">@dimen/edit_text_padding_top</item>
+        <item name="android:textColorHint">@color/edit_text_colors</item>
+        <item name="android:layout_margin">@dimen/edit_text_padding_top</item>
+        <item name="fontFamily">@font/tajawal</item>
+
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/tajawal</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/tajawal</item>
+    </style>
+    <style name="Style_TextView">
+        <item name="fontFamily">@font/tajawal</item>
+    </style>
+    <style name="TextAppearance.TabsFont" parent="android:TextAppearance">
+        <item name="android:fontFamily">@font/tajawal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>

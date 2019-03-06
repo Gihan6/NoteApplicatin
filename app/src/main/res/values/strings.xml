@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">Note App</string>
+    <string name="login">Login</string>
+    <string name="login_text"><u>Already have Account</u></string>
+    <string name="signup_text"><u>Don\'t have Account ? SignUp</u></string>
+    <string name="signup"><u>SignUp</u></string>
+    <string name="txt_add_new_person"><u>Add New Member</u></string>
+    <string name="save">Save</string>
+    <string name="exit">Are you sure you want to exit?</string>
+    <string name="dialog_action_yes">yes</string>
+    <string name="dialog_action_no">No</string>
+    <string name="company_name_empty_msg">Please,Fill Company Name</string>
+    <string name="company_email_empty_msg">Please,Fill Company Email</string>
+    <string name="company_password_empty_msg">Please,Fill Company Password</string>
+    <string name="company_password_confirmation_empty_msg">Please,Fill Company Password Confirmation</string>
+    <string name="company_password_not_identical">Password does not match</string>
+    <string name="verify">Verify</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="resend_sms_code">Resend SMS Code</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="mobile_field_msg">Please, Fill Phone Number</string>
+    <string name="verification_code">Verification code</string>
+    <string name="verification_code_empty_msg">Please ,Fill Verification Code</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="code_does_not_match">Code does not match</string>
+    <string name="title_activity_note_home">NoteHomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="projects">Projects</string>
+
+    <string name="groups">Groups</string>
+    <string name="members">Members</string>
+    <string name="empty_project_msg">There is no project.Please, click plus button to add new project</string>
+    <string name="project_name">Project Name</string>
+    <string name="project_description">Project Description</string>
+    <string name="project_cost">Project Cost</string>
+    <string name="task_cost">Task Cost</string>
+
+    <string name="project_owner">Project Owner</string>
+    <string name="task_owner">Responsible People</string>
+    <string name="tasks">Tasks</string>
+    <string name="pick_a_end_date">Pick a End Date</string>
+    <string name="pick_a_end_time">Pick a End Time</string>
+    <string name="project_name_empty">Project Name Can not Be Empty</string>
+    <string name="task_name_empty">Task Name Can not Be Empty</string>
+
+    <string name="pick_a_start_time">Pick a Start Time</string>
+    <string name="pick_a_start_date">Pick a Start Date</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="company_name">Company Name</string>
+    <string name="company_email">Company Email</string>
+    <string name="Password">Password</string>
+    <string name="Confirm_Password">Confirm Password</string>
+    <string name="register_as_company">Register As Company:</string>
+    <string name="Upload_Picture">Upload Picture</string>
+    <string name="pic_about">Picture Of Your Company</string>
+    <string name="SignUp">Sign UP</string>
+    <string name="signup_text_person"><u>Sign As Person</u></string>
+    <string name="Pictur_Added_Successfully">Picture Added Sccessfully</string>
+    <string name="loading">Loading</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="group_name_empty">Group Name Can not Be Empty</string>
+    <string name="task_description">Task Description</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_add_new_group">Add New Group</string>
+    <string name="txt_add_new_project">Add New Project</string>
+
+    <string name="add_pic">Add Picture</string>
+    <string name="group_name">Group Name</string>
+    <string name="group_desc">Group Description</string>
+    <string name="group_added_successfully">Group Added Successfully</string>
+    <string name="login_as_company">Login As Company :</string>
+    <string name="register_as_user">Register As User</string>
+    <string name="user_email_empty_msg">Please,Fill User Email</string>
+    <string name="user_password_empty_msg">Please,Fill User Password</string>
+    <string name="coin">Coin</string>
+    <string name="project_director">Project Director</string>
+    <string name="duration">Duration</string>
+    <string name="txt_add_new_task">Add New Task</string>
+    <string name="task_name">Task Name</string>
+    <string name="task_status">Task status</string>
+    <string name="project_status">Project status</string>
+    <string name="txt_upload_file">Upload File</string>
+
+</resources>

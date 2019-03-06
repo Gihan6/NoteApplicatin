@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="company_name">اسم الشركة</string>
+    <string name="company_email">الايميل</string>
+    <string name="Password">كلمة المرور</string>
+    <string name="Confirm_Password">اعادة كلمة المرور</string>
+    <string name="register_as_company">التسجيل مؤسسة</string>
+    <string name="Upload_Picture">ارفاق صورة</string>
+    <string name="pic_about">صورة معبرة عن المؤسسة</string>
+    <string name="SignUp"> تسجيل </string>
+    <string name="login_text"><u>لديك حساب بالفعل</u></string>
+    <string name="signup_text_person">التسجيل كأفراد</string>
+    <string name="Pictur_Added_Successfully"><u>تم اختيار الصورة بنجاح</u></string>
+    <string name="loading">جاري التحميل</string>
+    <string name="please_wait">برجاء الانتظار</string>
+    <string name="exit">هل تود أغلاق التطبيق؟</string>
+    <string name="dialog_action_yes">نعم</string>
+    <string name="dialog_action_no">لأ</string>
+    <string name="txt_add_new_group">اضافة مجموعة جديدة</string>
+    <string name="save">حفظ</string>
+    <string name="add_pic">اضافة صورة</string>
+    <string name="group_name">اسم المجموعة</string>
+    <string name="group_desc">وصف المجموعة</string>
+    <string name="group_name_empty">لا بد من ادخال اسم المجموعة</string>
+    <string name="group_added_successfully">تمت اضافة المجموعة بنجاح</string>
+    <string name="login">دخول</string>
+    <string name="login_as_company"> تسجيل الدخول كمؤسسة:</string>
+    <string name="signup_text"><u>ليس لديك حساب</u></string>
+    <string name="register_as_user">التسجيل كأفراد</string>
+    <string name="user_email_empty_msg">برجاء ادخل اسم المستخدم</string>
+    <string name="user_password_empty_msg">برجاء ادخل  كلمة المرور</string>
+    <string name="txt_add_new_project">اضافة مشروع جديد</string>
+    <string name="project_name">اسم المشروع</string>
+    <string name="project_description">وصف المشروع</string>
+    <string name="project_cost">تكلفة المشروع</string>
+    <string name="project_owner">مالك المشروع</string>
+    <string name="pick_a_end_date">تاريخ الانتهاء</string>
+    <string name="pick_a_end_time">وقت الانتهاء</string>
+    <string name="project_name_empty">عليك ادخال اسم المشروع</string>
+    <string name="task_name_empty">عليك ادخال اسم المهمة</string>
+
+    <string name="pick_a_start_time">وقت البدء</string>
+    <string name="pick_a_start_date">تاريخ البدء</string>
+    <string name="coin">العملة</string>
+    <string name="project_director">مدير المشروع</string>
+    <string name="duration">مدة التنفيذ</string>
+    <string name="txt_add_new_person"><u>اضافة عضو جديد</u></string>
+    <string name="txt_add_new_task">اضافة مهمة جديدة</string>
+    <string name="task_name">اسم المهمة</string>
+    <string name="task_description">وصف المهمة</string>
+    <string name="task_cost">تكلفة المهمة</string>
+    <string name="task_owner">المسؤولون</string>
+    <string name="groups">المجموعات</string>
+    <string name="tasks">المهام</string>
+
+    <string name="task_status">حالة المهمة</string>
+    <string name="project_status">حالة المشروع</string>
+    <string name="txt_upload_file">ارفاق ملف</string>
+
+</resources>

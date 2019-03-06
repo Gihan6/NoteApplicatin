@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.creativematrix.noteapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.BeforeLoginActivity">
+
+        </activity>
+        <activity android:name=".activities.UserLoginRegisterActivity">
+        </activity>
+        <service android:name=".services.FloatingService" />
+
+        <activity android:name=".activities.CompanyLoginRegisterActivity">
+        </activity>
+        <activity android:name=".activities.SplachScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.VerificationActivity" />
+        <activity android:name=".activities.AddTaskActivity" />
+        <activity
+            android:name=".activities.NoteHomeActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme" />
+    </application>
+
+</manifest>

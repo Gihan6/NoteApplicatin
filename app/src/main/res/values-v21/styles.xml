@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="edit_text_padding_start">10dp</dimen>
+    <dimen name="edit_text_padding_top">5dp</dimen>
+</resources>
