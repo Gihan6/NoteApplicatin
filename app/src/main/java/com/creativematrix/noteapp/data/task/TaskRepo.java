@@ -48,13 +48,15 @@ public class TaskRepo {
     }
 
 
-    public void addTask(Task task) {
-        Call<Task> taskCall = mTaskApiInterface.postAddTask(task);
+    public LiveData<Task> addTask(Task task) {
+        final MutableLiveData<Task> mutableLiveData = new MutableLiveData<>();
         showDialog();
-        taskCall.enqueue(new Callback<Task>() {
+        Call<Task> tasksResponseCall = mTaskApiInterface.postAddTask(task);
+        tasksResponseCall.enqueue(new Callback<Task>() {
             @Override
             public void onResponse(Call<Task> call, Response<Task> response) {
                 Log.d(TAG, "onResponse: " + response.message());
+                mutableLiveData.postValue(response.body());
                 hideDialog();
             }
 
@@ -63,7 +65,9 @@ public class TaskRepo {
                 hideDialog();
             }
         });
+        return mutableLiveData;
     }
+
 
     public LiveData<DisplayTasksResponse> displayTasks(DisplayTaskRequest displayTaskRequest) {
         final MutableLiveData<DisplayTasksResponse> mutableLiveData = new MutableLiveData<>();
@@ -79,6 +83,26 @@ public class TaskRepo {
 
             @Override
             public void onFailure(Call<DisplayTasksResponse> call, Throwable t) {
+                hideDialog();
+            }
+        });
+        return mutableLiveData;
+    }
+
+    public LiveData<GetUsersInCompanyResponse> getUsersInCompanyResponseLiveData(DisplayTaskRequest displayTaskRequest) {
+        final MutableLiveData<GetUsersInCompanyResponse> mutableLiveData = new MutableLiveData<>();
+        showDialog();
+        Call<GetUsersInCompanyResponse> tasksResponseCall = mTaskApiInterface.postGetUsersInCompany(displayTaskRequest);
+        tasksResponseCall.enqueue(new Callback<GetUsersInCompanyResponse>() {
+            @Override
+            public void onResponse(Call<GetUsersInCompanyResponse> call, Response<GetUsersInCompanyResponse> response) {
+                Log.d(TAG, "onResponse: " + response.body());
+                mutableLiveData.postValue(response.body());
+                hideDialog();
+            }
+
+            @Override
+            public void onFailure(Call<GetUsersInCompanyResponse> call, Throwable t) {
                 hideDialog();
             }
         });

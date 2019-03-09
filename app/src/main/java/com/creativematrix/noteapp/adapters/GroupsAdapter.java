@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<LstGroup> cityArrayList=new ArrayList<>();
+    private ArrayList<LstGroup> cityArrayList;
     private GroupsAdapter.OnItemClickListener clickListener;
     private static int sSelected = -1;
 
@@ -85,7 +85,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
 
         LstGroup lstGroup=cityArrayList.get(position);
 
-        holder.group_name.setText(lstGroup.getGroupName());
+        holder.group_name.setText(lstGroup.getMGroupName());
 
 
     }

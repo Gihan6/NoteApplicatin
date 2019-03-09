@@ -22,12 +22,25 @@ import android.widget.TextView;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
+import com.creativematrix.noteapp.activities.SelectProjectActivity;
+import com.creativematrix.noteapp.activities.SelectTaskOwnersActivity;
 import com.creativematrix.noteapp.callback.ProjectCallbacks;
+import com.creativematrix.noteapp.callback.TaskCallbacks;
+import com.creativematrix.noteapp.data.project.DisplayProjectRequest;
 import com.creativematrix.noteapp.data.project.Project;
 import com.creativematrix.noteapp.data.project.ProjectRepo;
+import com.creativematrix.noteapp.data.task.LstUsersnCompnay;
+import com.creativematrix.noteapp.data.task.Task;
+import com.creativematrix.noteapp.data.task.TaskRepo;
+import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.internal.Util;
 
 public class AddNewTaskFragment extends Fragment {
     private ProjectCallbacks mCallbacks;
@@ -42,11 +55,16 @@ public class AddNewTaskFragment extends Fragment {
     private TextInputEditText editTextTaskEndDate;
     private TextInputEditText editTextTaskStatus;
     private TextInputEditText editTextTaskCoin;
-
+    private TextInputEditText editTextProjectName;
+    private static final int GET_USERS_INCOMPANY = 20;
+    private static final int GET_PROJECTS_INCOMPANY = 21;
     private TextView textViewAddMember;
     private Button buttonSaveProject;
     private Context mContext;
+    private List<LstUsersnCompnay> lstUsersnCompnays=new ArrayList<>();
+    private List<Project> projects=new ArrayList<>();
 
+    String taskOwnerIDS ,taskOwnerNames,selectedProjectName,selectedProjectID;
     private String startDate;
     private String startTime;
     private String endDate;
@@ -114,6 +132,11 @@ public class AddNewTaskFragment extends Fragment {
             showDateFragment();
             mCallbacks.onStartDateClicked(Constant.START_DATE);
         });
+        editTextTaskOwner.setOnClickListener(v -> {
+            //should open date picker and return the date value
+            startActivityForResult(new Intent(getActivity(), SelectTaskOwnersActivity.class), GET_USERS_INCOMPANY);
+
+        });
 
         editTextTaskStartTime.setOnClickListener(v -> {
             showTimeFragment();
@@ -124,7 +147,10 @@ public class AddNewTaskFragment extends Fragment {
             showDateFragment();
             mCallbacks.onEndDateClicked(Constant.END_DATE);
         });
+        editTextProjectName.setOnClickListener(v -> {
+            startActivityForResult(new Intent(getActivity(), SelectProjectActivity.class), GET_PROJECTS_INCOMPANY);
 
+        });
         editTextTaskEndTime.setOnClickListener(v -> {
             showTimeFragment();
             mCallbacks.onEndTimeClicked(Constant.END_TIME);
@@ -142,13 +168,14 @@ public class AddNewTaskFragment extends Fragment {
         editTextTaskName = view.findViewById(R.id.input_task_name);
         editTextTaskDescription = view.findViewById(R.id.input_task_description);
         editTextTaskCost = view.findViewById(R.id.input_task_cost);
-        editTextTaskCoin= view.findViewById(R.id.input_task_coin);
+        editTextTaskCoin = view.findViewById(R.id.input_task_coin);
         editTextTaskOwner = view.findViewById(R.id.input_task_owner);
         editTextTaskStartTime = view.findViewById(R.id.input_task_start_time);
         editTextTaskStartDate = view.findViewById(R.id.input_task_start_date);
         editTextTaskEndTime = view.findViewById(R.id.input_task_end_time);
         editTextTaskEndDate = view.findViewById(R.id.input_task_end_date);
-        editTextTaskStatus= view.findViewById(R.id.input_task_status);
+        editTextTaskStatus = view.findViewById(R.id.input_task_status);
+        editTextProjectName= view.findViewById(R.id.input_project_name);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -167,6 +194,7 @@ public class AddNewTaskFragment extends Fragment {
 
     private void collectData() {
         String taskName = editTextTaskName.getText().toString();
+        String ProjectID=selectedProjectID;
         String taskDesc = editTextTaskDescription.getText().toString();
         String taskCost = editTextTaskCost.getText().toString();
         String taskCoin = editTextTaskCoin.getText().toString();
@@ -175,28 +203,29 @@ public class AddNewTaskFragment extends Fragment {
         String taskStartDate = editTextTaskStartDate.getText().toString();
         String taskEndTime = editTextTaskEndTime.getText().toString();
         String taskEndDate = editTextTaskEndDate.getText().toString();
-        String taskStatus= editTextTaskStatus.getText().toString();
+        String taskStatus = editTextTaskStatus.getText().toString();
         if (Utils.isFieldEmpty(taskName)) {
-            Utils.showResToast(mContext, R.string.project_name_empty);
+            Utils.showResToast(mContext, R.string.task_name_empty);
             return;
         }
-                Project project =
-                new Project(projectName, projectStartDate + " " + projectStartTime
-                , projectEndDate + " " + projectEndTime, projectOwner, projectDesc, projectCost
-                , 13, ""
-                , Utils.getLang(), 0, projectDirector);
+        Task task=new Task();
+        task.setTaskName(taskName);
+        task.setTaskDescripation(taskDesc);
+        task.setProjectID(Long.valueOf(ProjectID));
+        task.setUsersIDs(taskOwnerIDS);
+        task.setCompanyID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
 
-        Log.d(TAG, "collectData: " + projectStartDate + " " + projectStartTime);
-        Log.d(TAG, "collectData: " + projectEndDate + " " + projectEndTime);
-        new ProjectRepo().addProject(project)
-                .observe(this, projectRes -> {
+        new TaskRepo(getActivity()).addTask(task)
+                .observe(this, GroupRes -> {
                     try {
-                        Log.d(TAG, "collectData: " + projectRes.toString());
+                        if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)){
+                            Utils.showStringToast(getActivity(),getString(R.string.task_added_success));
+                            getActivity().onBackPressed();
+                        }
                     } catch (Exception ex) {
-                        Log.d(TAG, "collectData: " + ex.getMessage());
+
                     }
                 });
-
 
     }
 
@@ -222,24 +251,41 @@ public class AddNewTaskFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent resultData) {
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if (requestCode == GET_USERS_INCOMPANY && resultCode == Activity.RESULT_OK) {
+            //Intent i = getActivity().getIntent();
+            lstUsersnCompnays = (List<LstUsersnCompnay>) resultData.getSerializableExtra(Constant.USERS_LIST);
+            if(lstUsersnCompnays.size()>0){
+                Utils.showStringToast(getActivity(),getString(R.string.users_selected));
+                setIdsAndNamesOfUsers();
+                editTextTaskOwner.setText(taskOwnerNames);
+            }
+        }
 
-        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
-        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
-        // response to some other intent, and the code below shouldn't run at all.
-
-        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // The document selected by the user won't be returned in the intent.
-            // Instead, a URI to that document will be contained in the return intent
-            // provided to this method as a parameter.
-            // Pull that URI using resultData.getData().
-            Uri uri = null;
-            if (resultData != null) {
-                uri = resultData.getData();
-                Log.i(TAG, "Uri: " + uri.toString());
-//                showImage(uri);
+        if (requestCode == GET_PROJECTS_INCOMPANY && resultCode == Activity.RESULT_OK) {
+            //Intent i = getActivity().getIntent();
+            projects = (List<Project>) resultData.getSerializableExtra(Constant.PROJECTS_LIST);
+            if(projects.size()>0){
+                Utils.showStringToast(getActivity(),getString(R.string.Project_selected));
+                setIdsAndNamesOProject();
+                editTextProjectName.setText(selectedProjectName);
             }
         }
     }
+
+    private void setIdsAndNamesOfUsers() {
+        taskOwnerIDS="";
+        taskOwnerNames="";
+        for (int i=0;i<lstUsersnCompnays.size();i++){
+            taskOwnerNames+=lstUsersnCompnays.get(i).getUsername()+"-";
+            taskOwnerIDS+=lstUsersnCompnays.get(i).getUserID()+"-";
+        }
+    }
+
+
+    private void setIdsAndNamesOProject() {
+        selectedProjectID=String.valueOf(projects.get(0).getId());
+        selectedProjectName=String.valueOf(projects.get(0).getProjectName());
+    }
+
 }

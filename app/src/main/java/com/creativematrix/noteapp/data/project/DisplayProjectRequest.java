@@ -1,11 +1,11 @@
 
-package com.creativematrix.noteapp.data.task;
+package com.creativematrix.noteapp.data.project;
 
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
-public class DisplayTaskRequest {
-    public DisplayTaskRequest(Long companyID,String Lang) {
+public class DisplayProjectRequest {
+    public DisplayProjectRequest(Long companyID, String Lang) {
         this.companyID = companyID;
         this.lang=Lang;
     }

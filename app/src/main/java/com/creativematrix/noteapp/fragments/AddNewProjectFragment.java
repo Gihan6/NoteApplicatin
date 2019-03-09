@@ -168,7 +168,7 @@ public class AddNewProjectFragment extends Fragment {
 
         Log.d(TAG, "collectData: " + projectStartDate + " " + projectStartTime);
         Log.d(TAG, "collectData: " + projectEndDate + " " + projectEndTime);
-        new ProjectRepo().addProject(project)
+        new ProjectRepo(getActivity()).addProject(project)
                 .observe(this, projectRes -> {
                     try {
                         Log.d(TAG, "collectData: " + projectRes.toString());

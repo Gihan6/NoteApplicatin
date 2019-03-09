@@ -98,7 +98,7 @@ public class LstGroup {
         this.groupImage = groupImage;
     }
 
-    public String getGroupName() {
+    public String getMGroupName() {
         return groupName;
     }
 

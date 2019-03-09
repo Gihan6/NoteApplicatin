@@ -14,4 +14,7 @@ public interface TaskApiInterface {
 
     @POST("DisplayTasks/")
     Call<DisplayTasksResponse> postDisplayTasks(@Body DisplayTaskRequest displayTaskRequest);
+
+    @POST("GetUsersInCompany/")
+    Call<GetUsersInCompanyResponse> postGetUsersInCompany(@Body DisplayTaskRequest displayTaskRequest);
 }

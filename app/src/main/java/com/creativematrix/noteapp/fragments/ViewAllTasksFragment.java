@@ -145,7 +145,7 @@ public class ViewAllTasksFragment extends Fragment {
         });
 
 
-        new TaskRepo(getActivity()).displayTasks(new DisplayTaskRequest(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity()))))
+        new TaskRepo(getActivity()).displayTasks(new DisplayTaskRequest(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())),Utils.getLang()))
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)){

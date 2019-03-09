@@ -1,17 +1,48 @@
+
 package com.creativematrix.noteapp.data.project;
 
-public class Project {
-    public String ProjectName;
-    public String StartTime;
-    public String EndTime;
-    public String ProjectOwner;
-    public String ProjectDescripation;
-    public String ProjectCost;
-    public long AddedID;
-    public String Msg;
-    public String lang;
-    public int ProjectStatus;
-    public String DirectorIDs;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+@SuppressWarnings("unused")
+public class Project implements Serializable {
+
+    @Expose
+    private String $id;
+    @SerializedName("AddedID")
+    private Long addedID;
+    @SerializedName("CompanyID")
+    private Long companyID;
+    @SerializedName("DirctoresIDS")
+    private Object dirctoresIDS;
+    @SerializedName("DirectorIDs")
+    private Object directorIDs;
+    @SerializedName("EndTime")
+    private String endTime;
+    @Expose
+    private Object flag;
+    @Expose
+    private Long id;
+    @Expose
+    private Object lang;
+    @SerializedName("Msg")
+    private Object msg;
+    @SerializedName("ProJects")
+    private Boolean proJects;
+    @SerializedName("ProjectCost")
+    private Long projectCost;
+    @SerializedName("ProjectDescripation")
+    private String projectDescripation;
+    @SerializedName("ProjectName")
+    private String projectName;
+    @SerializedName("ProjectOwner")
+    private String projectOwner;
+    @SerializedName("ProjectStatus")
+    private Long projectStatus;
+    @SerializedName("StartTime")
+    private String startTime;
 
     public Project(String projectName,
                    String startTime,
@@ -24,33 +55,156 @@ public class Project {
                    String lang,
                    int projectStatus,
                    String directorIDs) {
-        ProjectName = projectName;
-        StartTime = startTime;
-        EndTime = endTime;
-        ProjectOwner = projectOwner;
-        ProjectDescripation = projectDescripation;
-        ProjectCost = projectCost;
-        AddedID = addedID;
-        Msg = msg;
+        this.projectName = projectName;
+        this.  startTime = startTime;
+        this. endTime = endTime;
+        this.  projectOwner = projectOwner;
+        this. projectDescripation = projectDescripation;
+        this. projectCost = Long.valueOf(projectCost);
+        this. addedID = addedID;
+        this. msg = msg;
         this.lang = lang;
-        ProjectStatus = projectStatus;
-        DirectorIDs = directorIDs;
+        this. projectStatus = Long.valueOf(projectStatus);
+        this. directorIDs = directorIDs;
+
+
     }
 
-    @Override
-    public String toString() {
-        return "Project{" +
-                "ProjectName='" + ProjectName + '\'' +
-                ", StartTime='" + StartTime + '\'' +
-                ", EndTime='" + EndTime + '\'' +
-                ", ProjectOwner='" + ProjectOwner + '\'' +
-                ", ProjectDescripation='" + ProjectDescripation + '\'' +
-                ", ProjectCost='" + ProjectCost + '\'' +
-                ", AddedID=" + AddedID +
-                ", Msg='" + Msg + '\'' +
-                ", lang='" + lang + '\'' +
-                ", ProjectStatus=" + ProjectStatus +
-                ", DirectorIDs='" + DirectorIDs + '\'' +
-                '}';
+    public String get$id() {
+        return $id;
     }
+
+    public void set$id(String $id) {
+        this.$id = $id;
+    }
+
+    public Long getAddedID() {
+        return addedID;
+    }
+
+    public void setAddedID(Long addedID) {
+        this.addedID = addedID;
+    }
+
+    public Long getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(Long companyID) {
+        this.companyID = companyID;
+    }
+
+    public Object getDirctoresIDS() {
+        return dirctoresIDS;
+    }
+
+    public void setDirctoresIDS(Object dirctoresIDS) {
+        this.dirctoresIDS = dirctoresIDS;
+    }
+
+    public Object getDirectorIDs() {
+        return directorIDs;
+    }
+
+    public void setDirectorIDs(Object directorIDs) {
+        this.directorIDs = directorIDs;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public Object getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Object flag) {
+        this.flag = flag;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Object getLang() {
+        return lang;
+    }
+
+    public void setLang(Object lang) {
+        this.lang = lang;
+    }
+
+    public Object getMsg() {
+        return msg;
+    }
+
+    public void setMsg(Object msg) {
+        this.msg = msg;
+    }
+
+    public Boolean getProJects() {
+        return proJects;
+    }
+
+    public void setProJects(Boolean proJects) {
+        this.proJects = proJects;
+    }
+
+    public Long getProjectCost() {
+        return projectCost;
+    }
+
+    public void setProjectCost(Long projectCost) {
+        this.projectCost = projectCost;
+    }
+
+    public String getProjectDescripation() {
+        return projectDescripation;
+    }
+
+    public void setProjectDescripation(String projectDescripation) {
+        this.projectDescripation = projectDescripation;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getProjectOwner() {
+        return projectOwner;
+    }
+
+    public void setProjectOwner(String projectOwner) {
+        this.projectOwner = projectOwner;
+    }
+
+    public Long getProjectStatus() {
+        return projectStatus;
+    }
+
+    public void setProjectStatus(Long projectStatus) {
+        this.projectStatus = projectStatus;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+
 }

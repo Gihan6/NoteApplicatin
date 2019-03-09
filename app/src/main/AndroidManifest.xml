@@ -31,6 +31,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.VerificationActivity" />
+        <activity android:name=".activities.SelectTaskOwnersActivity" />
+        <activity android:name=".activities.SelectProjectActivity" />
         <activity android:name=".activities.AddTaskActivity" />
         <activity
             android:name=".activities.NoteHomeActivity"

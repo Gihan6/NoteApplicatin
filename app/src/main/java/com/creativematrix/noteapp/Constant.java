@@ -14,4 +14,7 @@ public class Constant {
     public static final int START_TIME = 2;
     public static final int END_DATE = 3;
     public static final int END_TIME = 4;
+    public static final String USERS_LIST = "USERS_LIST";
+    public static final String PROJECTS_LIST = "PROJECTS_LIST";
+
 }

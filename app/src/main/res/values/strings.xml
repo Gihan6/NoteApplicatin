@@ -88,5 +88,9 @@
     <string name="task_status">Task status</string>
     <string name="project_status">Project status</string>
     <string name="txt_upload_file">Upload File</string>
+    <string name="Select">Select</string>
+    <string name="users_selected">Responsible people selected</string>
+    <string name="Project_selected">Project selected</string>
+    <string name="task_added_success">Task Added Successfully</string>
 
 </resources>

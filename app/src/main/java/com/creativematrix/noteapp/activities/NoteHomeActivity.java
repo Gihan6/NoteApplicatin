@@ -11,33 +11,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.support.v4.app.Fragment;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.callback.DateTimeCallbacks;
 import com.creativematrix.noteapp.callback.ProjectCallbacks;
+import com.creativematrix.noteapp.callback.TaskCallbacks;
 import com.creativematrix.noteapp.data.project.Project;
 import com.creativematrix.noteapp.fragments.AddNewGroupFragment;
 import com.creativematrix.noteapp.fragments.AddNewProjectFragment;
+import com.creativematrix.noteapp.fragments.AddNewTaskFragment;
 import com.creativematrix.noteapp.fragments.ViewAllGroupsFragment;
 import com.creativematrix.noteapp.fragments.ViewAllProjectsFragment;
 import com.creativematrix.noteapp.fragments.ViewAllTasksFragment;
 import com.creativematrix.noteapp.util.Utils;
 
 public class NoteHomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ProjectCallbacks, DateTimeCallbacks{
+        implements NavigationView.OnNavigationItemSelectedListener, ProjectCallbacks, DateTimeCallbacks {
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     private Toolbar toolbar;
     private FragmentManager mFragmentManager;
-   // private ViewAllProjectsFragment viewAllProjectsFragment;
+    // private ViewAllProjectsFragment viewAllProjectsFragment;
     private AddNewProjectFragment addNewProjectFragment;
+    private AddNewTaskFragment addNewTaskFragment;
+
     private int timeDateFlag;
 
     public DrawerLayout getmDrawerLayout() {
         return drawer;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +52,8 @@ public class NoteHomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mFragmentManager = getSupportFragmentManager();
-     //   viewAllProjectsFragment = new ViewAllProjectsFragment();
-        addNewProjectFragment = new AddNewProjectFragment();
+
+        //   viewAllProjectsFragment = new ViewAllProjectsFragment();
         Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new ViewAllTasksFragment(), NoteHomeActivity.this, Utils.VIEWAllTASKSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
 
 
@@ -151,24 +157,52 @@ public class NoteHomeActivity extends AppCompatActivity
 
     @Override
     public void onDateSelected(int year, int month, int day) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_holder_home);
         String date = String.format("%4d-%02d-%02d", year, month, day);
-        if (timeDateFlag == Constant.START_DATE) {
-            addNewProjectFragment.setStartDate(date);
-            Log.d(TAG, "onDateSelected: " + year);
-        } else if (timeDateFlag == Constant.END_DATE) {
-            addNewProjectFragment.setEndDate(date);
-            Log.d(TAG, "onDateSelected: " + year);
+        if (currentFragment instanceof AddNewProjectFragment) {
+            addNewProjectFragment  = (AddNewProjectFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_holder_home);
+            if (timeDateFlag == Constant.START_DATE) {
+                addNewProjectFragment.setStartDate(date);
+                Log.d(TAG, "onDateSelected: " + year);
+            } else if (timeDateFlag == Constant.END_DATE) {
+                addNewProjectFragment.setEndDate(date);
+                Log.d(TAG, "onDateSelected: " + year);
+            }
+        } else if (currentFragment instanceof AddNewTaskFragment) {
+            addNewTaskFragment  = (AddNewTaskFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_holder_home);
+
+            if (timeDateFlag == Constant.START_DATE) {
+                addNewTaskFragment.setStartDate(date);
+                Log.d(TAG, "onDateSelected: " + year);
+            } else if (timeDateFlag == Constant.END_DATE) {
+                addNewTaskFragment.setEndDate(date);
+                Log.d(TAG, "onDateSelected: " + year);
+            }
         }
+
     }
 
     @Override
     public void onTimeSelected(int hour, int minute) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_holder_home);
         String time = String.format("%02d:%02d", hour, minute);
-        if (timeDateFlag == Constant.START_TIME) {
-            addNewProjectFragment.setStartTime(time);
-        } else if (timeDateFlag == Constant.END_TIME) {
-            addNewProjectFragment.setEndTime(time);
+        if (currentFragment instanceof AddNewProjectFragment) {
+            addNewProjectFragment  = (AddNewProjectFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_holder_home);
+
+            if (timeDateFlag == Constant.START_TIME) {
+                addNewProjectFragment.setStartTime(time);
+            } else if (timeDateFlag == Constant.END_TIME) {
+                addNewProjectFragment.setEndTime(time);
+            }
+        } else if (currentFragment instanceof AddNewTaskFragment) {
+            addNewTaskFragment  = (AddNewTaskFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_holder_home);
+            if (timeDateFlag == Constant.START_TIME) {
+                addNewTaskFragment.setStartTime(time);
+            } else if (timeDateFlag == Constant.END_TIME) {
+                addNewTaskFragment.setEndTime(time);
+            }
         }
+
     }
 
 

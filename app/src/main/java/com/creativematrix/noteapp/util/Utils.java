@@ -395,11 +395,13 @@ public class Utils {
 
     public static String getLang() {
         String companyLang;
-        if (isLangArabic()) {
+        companyLang = Constant.EN_LANG;
+
+        /*if (isLangArabic()) {
             companyLang = Constant.AR_LANG;
         } else {
             companyLang = Constant.EN_LANG;
-        }
+        }*/
         return companyLang;
     }
 

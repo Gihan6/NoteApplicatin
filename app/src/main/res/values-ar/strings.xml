@@ -38,6 +38,8 @@
     <string name="pick_a_end_time">وقت الانتهاء</string>
     <string name="project_name_empty">عليك ادخال اسم المشروع</string>
     <string name="task_name_empty">عليك ادخال اسم المهمة</string>
+    <string name="projects">المشروعات</string>
+    <string name="members">الأعضاء</string>
 
     <string name="pick_a_start_time">وقت البدء</string>
     <string name="pick_a_start_date">تاريخ البدء</string>
@@ -56,5 +58,9 @@
     <string name="task_status">حالة المهمة</string>
     <string name="project_status">حالة المشروع</string>
     <string name="txt_upload_file">ارفاق ملف</string>
+    <string name="Select">اختر</string>
+    <string name="users_selected">تم اختيار المسؤلين</string>
+    <string name="Project_selected">تم اختيار المشروع</string>
+    <string name="task_added_success">Task Added Successfully</string>
 
 </resources>
