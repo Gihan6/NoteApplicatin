@@ -105,10 +105,10 @@ public class NoteHomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_projects) {
-            /*mFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_holder_home, viewAllProjectsFragment)
-                    .commit();*/
+            Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new ViewAllProjectsFragment(), NoteHomeActivity.this, Utils.VIEWAllPROJECTSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
+
         } else if (id == R.id.nav_tasks) {
+            Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new ViewAllTasksFragment(), NoteHomeActivity.this, Utils.VIEWAllTASKSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
 
         } else if (id == R.id.nav_groups) {
             Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new ViewAllGroupsFragment(), NoteHomeActivity.this, Utils.VIEWAllGROUPSFRAGGMENT, Utils.AnimationType.SLIDE_UP);

@@ -18,12 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/toolbar_color"
+            android:gravity="center"
             android:minHeight="?attr/actionBarSize"
             app:layout_behavior="com.godevx.dawadoz.main.view.customview.FixAppBarLayoutBehavior"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:title="@string/groups"
-            android:gravity="center"
-            app:titleTextColor="@color/color_blue_primary"/>
+            app:navigationIcon="@drawable/ic_back"
+            app:titleTextColor="@color/color_blue_primary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="@string/groups"
+                android:textColor="@color/color_blue_primary"
+                android:textSize="@dimen/title_list"
+                android:textStyle="bold" />
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

@@ -85,6 +85,8 @@ public class ViewAllGroupsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_all_groups, container, false);
         configureViews(view);
+        floating_button_add_group.setOnClickListener(view1 -> Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new AddNewGroupFragment(), getActivity(), Utils.ADDNEWGROUPFRAGMENT, Utils.AnimationType.SLIDE_UP));
+
         view.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                 getActivity().onBackPressed();

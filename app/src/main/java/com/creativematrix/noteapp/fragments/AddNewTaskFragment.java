@@ -24,6 +24,7 @@ import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.activities.SelectProjectActivity;
 import com.creativematrix.noteapp.activities.SelectTaskOwnersActivity;
+import com.creativematrix.noteapp.activities.SelectTaskStatusActivity;
 import com.creativematrix.noteapp.callback.ProjectCallbacks;
 import com.creativematrix.noteapp.callback.TaskCallbacks;
 import com.creativematrix.noteapp.data.project.DisplayProjectRequest;
@@ -32,6 +33,7 @@ import com.creativematrix.noteapp.data.project.ProjectRepo;
 import com.creativematrix.noteapp.data.task.LstUsersnCompnay;
 import com.creativematrix.noteapp.data.task.Task;
 import com.creativematrix.noteapp.data.task.TaskRepo;
+import com.creativematrix.noteapp.data.task.TaskStatus;
 import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -58,18 +60,19 @@ public class AddNewTaskFragment extends Fragment {
     private TextInputEditText editTextProjectName;
     private static final int GET_USERS_INCOMPANY = 20;
     private static final int GET_PROJECTS_INCOMPANY = 21;
+    private static final int GET_TASK_STATUS = 22;
     private TextView textViewAddMember;
     private Button buttonSaveProject;
     private Context mContext;
     private List<LstUsersnCompnay> lstUsersnCompnays=new ArrayList<>();
     private List<Project> projects=new ArrayList<>();
-
-    String taskOwnerIDS ,taskOwnerNames,selectedProjectName,selectedProjectID;
+    private List<TaskStatus> taskStatuses=new ArrayList<>();
+    String taskOwnerIDS ,taskOwnerNames,selectedProjectName,selectedProjectID,selectedTaskStatusName,selectedTaskStatusID;
     private String startDate;
     private String startTime;
     private String endDate;
     private String endTime;
-
+    String taskStatus;
     public void setStartDate(String startDate) {
         this.startDate = startDate;
         if (startDate != null && !startDate.equals("")) {
@@ -151,6 +154,11 @@ public class AddNewTaskFragment extends Fragment {
             startActivityForResult(new Intent(getActivity(), SelectProjectActivity.class), GET_PROJECTS_INCOMPANY);
 
         });
+        editTextTaskStatus.setOnClickListener(v -> {
+            startActivityForResult(new Intent(getActivity(), SelectTaskStatusActivity.class), GET_TASK_STATUS);
+
+        });
+
         editTextTaskEndTime.setOnClickListener(v -> {
             showTimeFragment();
             mCallbacks.onEndTimeClicked(Constant.END_TIME);
@@ -198,12 +206,12 @@ public class AddNewTaskFragment extends Fragment {
         String taskDesc = editTextTaskDescription.getText().toString();
         String taskCost = editTextTaskCost.getText().toString();
         String taskCoin = editTextTaskCoin.getText().toString();
-        String taskOwner = editTextTaskOwner.getText().toString();
+        //String taskOwner = editTextTaskOwner.getText().toString();
         String taskStartTime = editTextTaskStartTime.getText().toString();
         String taskStartDate = editTextTaskStartDate.getText().toString();
         String taskEndTime = editTextTaskEndTime.getText().toString();
         String taskEndDate = editTextTaskEndDate.getText().toString();
-        String taskStatus = editTextTaskStatus.getText().toString();
+       // String taskStatus = editTextTaskStatus.getText().toString();
         if (Utils.isFieldEmpty(taskName)) {
             Utils.showResToast(mContext, R.string.task_name_empty);
             return;
@@ -213,8 +221,11 @@ public class AddNewTaskFragment extends Fragment {
         task.setTaskDescripation(taskDesc);
         task.setProjectID(Long.valueOf(ProjectID));
         task.setUsersIDs(taskOwnerIDS);
+        task.setTaskCost(Long.valueOf(taskCost));
+        task.setTaskStatus(Long.valueOf(selectedTaskStatusID));
         task.setCompanyID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
-
+        task.setStartTime(taskStartTime);
+        task.setEndTime(taskEndTime);
         new TaskRepo(getActivity()).addTask(task)
                 .observe(this, GroupRes -> {
                     try {
@@ -271,6 +282,20 @@ public class AddNewTaskFragment extends Fragment {
                 editTextProjectName.setText(selectedProjectName);
             }
         }
+
+        if (requestCode == GET_TASK_STATUS && resultCode == Activity.RESULT_OK) {
+            //Intent i = getActivity().getIntent();
+            taskStatuses = (List<TaskStatus>) resultData.getSerializableExtra(Constant.TASK_STATUS_LIST);
+            if(projects.size()>0){
+                setTaskStatus();
+                editTextTaskStatus.setText(selectedTaskStatusName);
+            }
+        }
+    }
+
+    private void setTaskStatus() {
+        selectedTaskStatusName=String.valueOf(taskStatuses.get(0).getTaskStatusName());
+        selectedTaskStatusID=String.valueOf(taskStatuses.get(0).getTaskStatusName());
     }
 
     private void setIdsAndNamesOfUsers() {
@@ -287,5 +312,6 @@ public class AddNewTaskFragment extends Fragment {
         selectedProjectID=String.valueOf(projects.get(0).getId());
         selectedProjectName=String.valueOf(projects.get(0).getProjectName());
     }
+
 
 }

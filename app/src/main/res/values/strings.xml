@@ -92,5 +92,9 @@
     <string name="users_selected">Responsible people selected</string>
     <string name="Project_selected">Project selected</string>
     <string name="task_added_success">Task Added Successfully</string>
+    <string name="Critical">Critical</string>
+    <string name="Usual">Usual</string>
+    <string name="Urgent">Urgent</string>
+    <string name="Welcome">Welcome</string>
 
 </resources>

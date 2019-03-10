@@ -62,5 +62,9 @@
     <string name="users_selected">تم اختيار المسؤلين</string>
     <string name="Project_selected">تم اختيار المشروع</string>
     <string name="task_added_success">Task Added Successfully</string>
+    <string name="Critical">طارئة</string>
+    <string name="Usual">عادية</string>
+    <string name="Urgent">مستعجله</string>
+    <string name="Welcome">Welcome</string>
 
 </resources>
