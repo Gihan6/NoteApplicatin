@@ -1,8 +1,11 @@
 
 package com.creativematrix.noteapp.data.task;
 
+import com.creativematrix.noteapp.data.project.Dirctote;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class Task {
@@ -15,8 +18,25 @@ public class Task {
     private Long companyID;
     @SerializedName("EndTime")
     private Object endTime;
+
+    public List<FilesBinary> getFilesBinaryList() {
+        return FilesBinary;
+    }
+
+    public void setFilesBinaryList(List<FilesBinary> filesBinaryList) {
+        this.FilesBinary = filesBinaryList;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
     @SerializedName("FilesBinary")
-    private Object filesBinary;
+    private List<FilesBinary> FilesBinary;
     @Expose
     private Object flag;
     @SerializedName("IsAdmin")
@@ -78,13 +98,7 @@ public class Task {
         this.endTime = endTime;
     }
 
-    public Object getFilesBinary() {
-        return filesBinary;
-    }
 
-    public void setFilesBinary(Object filesBinary) {
-        this.filesBinary = filesBinary;
-    }
 
     public Object getFlag() {
         return flag;

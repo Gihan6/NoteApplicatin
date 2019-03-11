@@ -1,15 +1,21 @@
 package com.creativematrix.noteapp.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,17 +25,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
+import com.creativematrix.noteapp.activities.NoteHomeActivity;
 import com.creativematrix.noteapp.activities.SelectProjectActivity;
 import com.creativematrix.noteapp.activities.SelectTaskOwnersActivity;
 import com.creativematrix.noteapp.activities.SelectTaskStatusActivity;
+import com.creativematrix.noteapp.adapters.CustomFilesAdapter;
+import com.creativematrix.noteapp.adapters.GroupsAdapter;
 import com.creativematrix.noteapp.callback.ProjectCallbacks;
 import com.creativematrix.noteapp.callback.TaskCallbacks;
 import com.creativematrix.noteapp.data.project.DisplayProjectRequest;
 import com.creativematrix.noteapp.data.project.Project;
 import com.creativematrix.noteapp.data.project.ProjectRepo;
+import com.creativematrix.noteapp.data.task.FilesBinary;
 import com.creativematrix.noteapp.data.task.LstUsersnCompnay;
 import com.creativematrix.noteapp.data.task.Task;
 import com.creativematrix.noteapp.data.task.TaskRepo;
@@ -42,9 +53,12 @@ import com.orhanobut.dialogplus.ViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+import ir.sohreco.androidfilechooser.ExternalStorageNotAvailableException;
+import ir.sohreco.androidfilechooser.FileChooser;
 import okhttp3.internal.Util;
 
-public class AddNewTaskFragment extends Fragment {
+public class AddNewTaskFragment extends Fragment  {
+    private final static int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 13;
     private ProjectCallbacks mCallbacks;
     public static final String TAG = AddNewTaskFragment.class.getSimpleName();
     private TextInputEditText editTextTaskName;
@@ -52,6 +66,7 @@ public class AddNewTaskFragment extends Fragment {
     private TextInputEditText editTextTaskCost;
     private TextInputEditText editTextTaskOwner;
     private TextInputEditText editTextTaskStartTime;
+    private TextView txtAttachFile;
     private TextInputEditText editTextTaskStartDate;
     private TextInputEditText editTextTaskEndTime;
     private TextInputEditText editTextTaskEndDate;
@@ -61,17 +76,19 @@ public class AddNewTaskFragment extends Fragment {
     private static final int GET_USERS_INCOMPANY = 20;
     private static final int GET_PROJECTS_INCOMPANY = 21;
     private static final int GET_TASK_STATUS = 22;
-    private TextView textViewAddMember;
+    private List<FilesBinary> filesBinaryList=new ArrayList<>();
     private Button buttonSaveProject;
     private Context mContext;
     private List<LstUsersnCompnay> lstUsersnCompnays=new ArrayList<>();
     private List<Project> projects=new ArrayList<>();
     private List<TaskStatus> taskStatuses=new ArrayList<>();
+    CustomFilesAdapter customFilesAdapter;
     String taskOwnerIDS ,taskOwnerNames,selectedProjectName,selectedProjectID,selectedTaskStatusName,selectedTaskStatusID;
     private String startDate;
     private String startTime;
     private String endDate;
     private String endTime;
+    RecyclerView recycler_view_files;
     String taskStatus;
     public void setStartDate(String startDate) {
         this.startDate = startDate;
@@ -140,7 +157,17 @@ public class AddNewTaskFragment extends Fragment {
             startActivityForResult(new Intent(getActivity(), SelectTaskOwnersActivity.class), GET_USERS_INCOMPANY);
 
         });
-
+        txtAttachFile.setOnClickListener(view1 -> {
+            int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+            } else {
+                addFileChooserFragment();
+            }
+        });
         editTextTaskStartTime.setOnClickListener(v -> {
             showTimeFragment();
             mCallbacks.onStartTimeClicked(Constant.START_TIME);
@@ -171,7 +198,41 @@ public class AddNewTaskFragment extends Fragment {
 
         return view;
     }
+    private void addFileChooserFragment() {
+        FileChooser.Builder builder = new FileChooser.Builder(FileChooser.ChooserType.FILE_CHOOSER,
+                (FileChooser.ChooserListener) path ->
+                {
+                    getActivity().onBackPressed();
+                    Toast.makeText(getActivity(), path, Toast.LENGTH_SHORT).show();
+                    String filename=path.substring(path.lastIndexOf("/")+1);
+                    String fileExtension=path.substring(path.lastIndexOf(".") + 1);
+                    String fileContent= Utils.encodeImage(path);
+                    filesBinaryList.add(new FilesBinary(filename,fileExtension,fileContent));
+                    customFilesAdapter.notifyDataSetChanged();
 
+                }
+
+        );
+        try {
+            Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, builder.build(), getActivity(), Utils.VIEWAllTASKSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
+
+        } catch (ExternalStorageNotAvailableException e) {
+            Toast.makeText(getActivity(), "There is no external storage available on this device.",
+                    Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                addFileChooserFragment();
+            }
+        }
+    }
     private void configureViews(View view) {
         editTextTaskName = view.findViewById(R.id.input_task_name);
         editTextTaskDescription = view.findViewById(R.id.input_task_description);
@@ -183,7 +244,21 @@ public class AddNewTaskFragment extends Fragment {
         editTextTaskEndTime = view.findViewById(R.id.input_task_end_time);
         editTextTaskEndDate = view.findViewById(R.id.input_task_end_date);
         editTextTaskStatus = view.findViewById(R.id.input_task_status);
+        txtAttachFile= view.findViewById(R.id.txtAttachFile);
         editTextProjectName= view.findViewById(R.id.input_project_name);
+        recycler_view_files=view.findViewById(R.id.recycler_view_files);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recycler_view_files.setLayoutManager(linearLayoutManager);
+        recycler_view_files.setHasFixedSize(true);
+        customFilesAdapter=new CustomFilesAdapter(getActivity(), filesBinaryList, new CustomFilesAdapter.MyAdapterListener() {
+            @Override
+            public void deleteFile(View v, int position) {
+                filesBinaryList.remove(position);
+                customFilesAdapter.notifyDataSetChanged();
+            }
+        });
+
+        recycler_view_files.setAdapter(customFilesAdapter);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -212,20 +287,41 @@ public class AddNewTaskFragment extends Fragment {
         String taskEndTime = editTextTaskEndTime.getText().toString();
         String taskEndDate = editTextTaskEndDate.getText().toString();
        // String taskStatus = editTextTaskStatus.getText().toString();
-        if (Utils.isFieldEmpty(taskName)) {
+        /*if (Utils.isFieldEmpty(taskName)) {
             Utils.showResToast(mContext, R.string.task_name_empty);
             return;
         }
+        if (Utils.isFieldEmpty(ProjectID)) {
+            Utils.showResToast(mContext, R.string.task_name_empty);
+            return;
+        }
+        if (Utils.isFieldEmpty(taskCost)) {
+            Utils.showResToast(mContext, R.string.task_name_empty);
+            return;
+        }
+        if (Utils.isFieldEmpty(taskStartTime)) {
+            Utils.showResToast(mContext, R.string.task_name_empty);
+            return;
+        }
+        if (Utils.isFieldEmpty(taskEndTime)) {
+            Utils.showResToast(mContext, R.string.task_name_empty);
+            return;
+        }
+       if (Utils.isFieldEmpty(selectedTaskStatusID)) {
+            Utils.showResToast(mContext, R.string.task_name_empty);
+            return;
+        }*/
         Task task=new Task();
         task.setTaskName(taskName);
         task.setTaskDescripation(taskDesc);
         task.setProjectID(Long.valueOf(ProjectID));
-        task.setUsersIDs(taskOwnerIDS);
+        //task.setUsersIDs(taskOwnerIDS);
         task.setTaskCost(Long.valueOf(taskCost));
-        task.setTaskStatus(Long.valueOf(selectedTaskStatusID));
+        //task.setTaskStatus(Long.valueOf(selectedTaskStatusID));
         task.setCompanyID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
         task.setStartTime(taskStartTime);
         task.setEndTime(taskEndTime);
+        task.setFilesBinaryList(filesBinaryList);
         new TaskRepo(getActivity()).addTask(task)
                 .observe(this, GroupRes -> {
                     try {

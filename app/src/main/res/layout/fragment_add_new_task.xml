@@ -274,10 +274,12 @@
 
 
             <TextView
+                android:id="@+id/txtAttachFile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
                 android:paddingTop="4dp"
+                android:clickable="true"
                 android:drawablePadding="10dp"
                 android:drawableStart="@drawable/drawables"
                 android:textStyle="bold"
@@ -285,6 +287,10 @@
                 android:gravity="center|start"
                 android:text="@string/txt_upload_file"
                 android:textColor="@color/link" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_files"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/btn_save_project"
                 android:layout_width="match_parent"
