@@ -17,10 +17,11 @@ public class Constant {
     public static final String USERS_LIST = "USERS_LIST";
     public static final String PROJECTS_LIST = "PROJECTS_LIST";
     public static final String TASK_STATUS_LIST = "TASK_STATUS_LIST";
+    public static final String TASK_CURRNECY_LIST = "TASK_CURRNECY_LIST";
     public static final String TAST_URGENT = "2";
     public static final String TASK_USUAL = "0";
     public static final String TASK_CRITCAL = "1";
 
 
-
+    public static final String ALL_CURRENCY = "0";
 }

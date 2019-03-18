@@ -5,20 +5,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.textfield.TextInputEditText;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,17 +26,14 @@ import android.widget.Toast;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
-import com.creativematrix.noteapp.activities.NoteHomeActivity;
 import com.creativematrix.noteapp.activities.SelectProjectActivity;
+import com.creativematrix.noteapp.activities.SelectTaskCoinActivity;
 import com.creativematrix.noteapp.activities.SelectTaskOwnersActivity;
 import com.creativematrix.noteapp.activities.SelectTaskStatusActivity;
 import com.creativematrix.noteapp.adapters.CustomFilesAdapter;
-import com.creativematrix.noteapp.adapters.GroupsAdapter;
 import com.creativematrix.noteapp.callback.ProjectCallbacks;
-import com.creativematrix.noteapp.callback.TaskCallbacks;
-import com.creativematrix.noteapp.data.project.DisplayProjectRequest;
+import com.creativematrix.noteapp.data.coins.CurrencyList;
 import com.creativematrix.noteapp.data.project.Project;
-import com.creativematrix.noteapp.data.project.ProjectRepo;
 import com.creativematrix.noteapp.data.task.FilesBinary;
 import com.creativematrix.noteapp.data.task.LstUsersnCompnay;
 import com.creativematrix.noteapp.data.task.Task;
@@ -47,17 +41,15 @@ import com.creativematrix.noteapp.data.task.TaskRepo;
 import com.creativematrix.noteapp.data.task.TaskStatus;
 import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import ir.sohreco.androidfilechooser.ExternalStorageNotAvailableException;
 import ir.sohreco.androidfilechooser.FileChooser;
-import okhttp3.internal.Util;
 
-public class AddNewTaskFragment extends Fragment  {
+public class AddNewTaskFragment extends Fragment {
     private final static int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 13;
     private ProjectCallbacks mCallbacks;
     public static final String TAG = AddNewTaskFragment.class.getSimpleName();
@@ -76,20 +68,23 @@ public class AddNewTaskFragment extends Fragment  {
     private static final int GET_USERS_INCOMPANY = 20;
     private static final int GET_PROJECTS_INCOMPANY = 21;
     private static final int GET_TASK_STATUS = 22;
-    private List<FilesBinary> filesBinaryList=new ArrayList<>();
+    private static final int GET_CURRNECY = 23;
+    private List<FilesBinary> filesBinaryList = new ArrayList<>();
     private Button buttonSaveProject;
     private Context mContext;
-    private List<LstUsersnCompnay> lstUsersnCompnays=new ArrayList<>();
-    private List<Project> projects=new ArrayList<>();
-    private List<TaskStatus> taskStatuses=new ArrayList<>();
+    private List<LstUsersnCompnay> lstUsersnCompnays = new ArrayList<>();
+    private List<Project> projects = new ArrayList<>();
+    private List<TaskStatus> taskStatuses = new ArrayList<>();
+    private List<CurrencyList> currencyLists = new ArrayList<>();
     CustomFilesAdapter customFilesAdapter;
-    String taskOwnerIDS ,taskOwnerNames,selectedProjectName,selectedProjectID,selectedTaskStatusName,selectedTaskStatusID;
+    String taskOwnerIDS = "", taskOwnerNames = "", selectedProjectName = "", selectedProjectID = "", selectedTaskStatusName = "", selectedTaskStatusID = "", selectedCurrnecyID = "", selectedCurrencyName = "";
     private String startDate;
     private String startTime;
     private String endDate;
     private String endTime;
     RecyclerView recycler_view_files;
     String taskStatus;
+
     public void setStartDate(String startDate) {
         this.startDate = startDate;
         if (startDate != null && !startDate.equals("")) {
@@ -185,6 +180,11 @@ public class AddNewTaskFragment extends Fragment  {
             startActivityForResult(new Intent(getActivity(), SelectTaskStatusActivity.class), GET_TASK_STATUS);
 
         });
+        editTextTaskCoin.setOnClickListener(v -> {
+            startActivityForResult(new Intent(getActivity(), SelectTaskCoinActivity.class), GET_CURRNECY);
+
+        });
+
 
         editTextTaskEndTime.setOnClickListener(v -> {
             showTimeFragment();
@@ -198,16 +198,17 @@ public class AddNewTaskFragment extends Fragment  {
 
         return view;
     }
+
     private void addFileChooserFragment() {
         FileChooser.Builder builder = new FileChooser.Builder(FileChooser.ChooserType.FILE_CHOOSER,
                 (FileChooser.ChooserListener) path ->
                 {
                     getActivity().onBackPressed();
                     Toast.makeText(getActivity(), path, Toast.LENGTH_SHORT).show();
-                    String filename=path.substring(path.lastIndexOf("/")+1);
-                    String fileExtension=path.substring(path.lastIndexOf(".") + 1);
-                    String fileContent= Utils.encodeImage(path);
-                    filesBinaryList.add(new FilesBinary(filename,fileExtension,fileContent));
+                    String filename = path.substring(path.lastIndexOf("/") + 1);
+                    String fileExtension = path.substring(path.lastIndexOf(".") + 1);
+                    String fileContent = Utils.encodeImage(path);
+                    filesBinaryList.add(new FilesBinary(filename, fileExtension, fileContent));
                     customFilesAdapter.notifyDataSetChanged();
 
                 }
@@ -222,6 +223,7 @@ public class AddNewTaskFragment extends Fragment  {
             e.printStackTrace();
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
@@ -233,6 +235,7 @@ public class AddNewTaskFragment extends Fragment  {
             }
         }
     }
+
     private void configureViews(View view) {
         editTextTaskName = view.findViewById(R.id.input_task_name);
         editTextTaskDescription = view.findViewById(R.id.input_task_description);
@@ -244,13 +247,13 @@ public class AddNewTaskFragment extends Fragment  {
         editTextTaskEndTime = view.findViewById(R.id.input_task_end_time);
         editTextTaskEndDate = view.findViewById(R.id.input_task_end_date);
         editTextTaskStatus = view.findViewById(R.id.input_task_status);
-        txtAttachFile= view.findViewById(R.id.txtAttachFile);
-        editTextProjectName= view.findViewById(R.id.input_project_name);
-        recycler_view_files=view.findViewById(R.id.recycler_view_files);
+        txtAttachFile = view.findViewById(R.id.txtAttachFile);
+        editTextProjectName = view.findViewById(R.id.input_project_name);
+        recycler_view_files = view.findViewById(R.id.recycler_view_files);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_files.setLayoutManager(linearLayoutManager);
         recycler_view_files.setHasFixedSize(true);
-        customFilesAdapter=new CustomFilesAdapter(getActivity(), filesBinaryList, new CustomFilesAdapter.MyAdapterListener() {
+        customFilesAdapter = new CustomFilesAdapter(getActivity(), filesBinaryList, new CustomFilesAdapter.MyAdapterListener() {
             @Override
             public void deleteFile(View v, int position) {
                 filesBinaryList.remove(position);
@@ -277,56 +280,76 @@ public class AddNewTaskFragment extends Fragment  {
 
     private void collectData() {
         String taskName = editTextTaskName.getText().toString();
-        String ProjectID=selectedProjectID;
+        String ProjectID = selectedProjectID;
         String taskDesc = editTextTaskDescription.getText().toString();
         String taskCost = editTextTaskCost.getText().toString();
-        String taskCoin = editTextTaskCoin.getText().toString();
-        //String taskOwner = editTextTaskOwner.getText().toString();
+        String CurrencyID = selectedCurrnecyID;
+        String taskOwner = editTextTaskOwner.getText().toString();
         String taskStartTime = editTextTaskStartTime.getText().toString();
         String taskStartDate = editTextTaskStartDate.getText().toString();
         String taskEndTime = editTextTaskEndTime.getText().toString();
         String taskEndDate = editTextTaskEndDate.getText().toString();
-       // String taskStatus = editTextTaskStatus.getText().toString();
-        /*if (Utils.isFieldEmpty(taskName)) {
+        String taskStatus = editTextTaskStatus.getText().toString();
+
+
+        if (Utils.isFieldEmpty(taskName)) {
             Utils.showResToast(mContext, R.string.task_name_empty);
             return;
         }
         if (Utils.isFieldEmpty(ProjectID)) {
-            Utils.showResToast(mContext, R.string.task_name_empty);
+            Utils.showResToast(mContext, R.string.project_name_empty);
             return;
         }
-        if (Utils.isFieldEmpty(taskCost)) {
-            Utils.showResToast(mContext, R.string.task_name_empty);
-            return;
-        }
+
         if (Utils.isFieldEmpty(taskStartTime)) {
-            Utils.showResToast(mContext, R.string.task_name_empty);
+            Utils.showResToast(mContext, R.string.task_start_time_empty);
             return;
         }
         if (Utils.isFieldEmpty(taskEndTime)) {
+            Utils.showResToast(mContext, R.string.task_end_time_empty);
+            return;
+        }
+        if (Utils.isFieldEmpty(taskStartDate)) {
+            Utils.showResToast(mContext, R.string.task_start_date_empty);
+            return;
+        }
+        if (Utils.isFieldEmpty(taskEndDate)) {
+            Utils.showResToast(mContext, R.string.task_end_date_empty);
+            return;
+        }
+
+        if (Utils.isFieldEmpty(selectedTaskStatusID)) {
             Utils.showResToast(mContext, R.string.task_name_empty);
             return;
         }
-       if (Utils.isFieldEmpty(selectedTaskStatusID)) {
-            Utils.showResToast(mContext, R.string.task_name_empty);
-            return;
-        }*/
-        Task task=new Task();
+        Task task = new Task();
         task.setTaskName(taskName);
         task.setTaskDescripation(taskDesc);
         task.setProjectID(Long.valueOf(ProjectID));
-        //task.setUsersIDs(taskOwnerIDS);
+        task.setUsersIDs(taskOwnerIDS);
         task.setTaskCost(Long.valueOf(taskCost));
-        //task.setTaskStatus(Long.valueOf(selectedTaskStatusID));
+        task.setTaskStatus(Long.valueOf(selectedTaskStatusID));
+        task.setCurrencyID(CurrencyID);
         task.setCompanyID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
-        task.setStartTime(taskStartTime);
-        task.setEndTime(taskEndTime);
+        task.setAddedID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
+        try {
+            task.setStartTime(Utils.formatDate(taskStartDate + " " + taskStartTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            task.setEndTime(Utils.formatDate(taskEndDate + " " + taskEndTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         task.setFilesBinaryList(filesBinaryList);
         new TaskRepo(getActivity()).addTask(task)
                 .observe(this, GroupRes -> {
                     try {
-                        if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)){
-                            Utils.showStringToast(getActivity(),getString(R.string.task_added_success));
+                        if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            Utils.showStringToast(getActivity(), getString(R.string.task_added_success));
                             getActivity().onBackPressed();
                         }
                     } catch (Exception ex) {
@@ -362,8 +385,8 @@ public class AddNewTaskFragment extends Fragment  {
         if (requestCode == GET_USERS_INCOMPANY && resultCode == Activity.RESULT_OK) {
             //Intent i = getActivity().getIntent();
             lstUsersnCompnays = (List<LstUsersnCompnay>) resultData.getSerializableExtra(Constant.USERS_LIST);
-            if(lstUsersnCompnays.size()>0){
-                Utils.showStringToast(getActivity(),getString(R.string.users_selected));
+            if (lstUsersnCompnays.size() > 0) {
+                Utils.showStringToast(getActivity(), getString(R.string.users_selected));
                 setIdsAndNamesOfUsers();
                 editTextTaskOwner.setText(taskOwnerNames);
             }
@@ -372,8 +395,8 @@ public class AddNewTaskFragment extends Fragment  {
         if (requestCode == GET_PROJECTS_INCOMPANY && resultCode == Activity.RESULT_OK) {
             //Intent i = getActivity().getIntent();
             projects = (List<Project>) resultData.getSerializableExtra(Constant.PROJECTS_LIST);
-            if(projects.size()>0){
-                Utils.showStringToast(getActivity(),getString(R.string.Project_selected));
+            if (projects.size() > 0) {
+                Utils.showStringToast(getActivity(), getString(R.string.Project_selected));
                 setIdsAndNamesOProject();
                 editTextProjectName.setText(selectedProjectName);
             }
@@ -382,32 +405,45 @@ public class AddNewTaskFragment extends Fragment  {
         if (requestCode == GET_TASK_STATUS && resultCode == Activity.RESULT_OK) {
             //Intent i = getActivity().getIntent();
             taskStatuses = (List<TaskStatus>) resultData.getSerializableExtra(Constant.TASK_STATUS_LIST);
-            if(projects.size()>0){
+            if (taskStatuses.size() > 0) {
                 setTaskStatus();
                 editTextTaskStatus.setText(selectedTaskStatusName);
+            }
+        }
+
+        if (requestCode == GET_CURRNECY && resultCode == Activity.RESULT_OK) {
+            //Intent i = getActivity().getIntent();
+            currencyLists = (List<CurrencyList>) resultData.getSerializableExtra(Constant.TASK_CURRNECY_LIST);
+            if (currencyLists.size() > 0) {
+                setTaskCurrency();
+                editTextTaskCoin.setText(selectedCurrencyName);
             }
         }
     }
 
     private void setTaskStatus() {
-        selectedTaskStatusName=String.valueOf(taskStatuses.get(0).getTaskStatusName());
-        selectedTaskStatusID=String.valueOf(taskStatuses.get(0).getTaskStatusName());
+        selectedTaskStatusName = String.valueOf(taskStatuses.get(0).getTaskStatusName());
+        selectedTaskStatusID = String.valueOf(taskStatuses.get(0).getID());
     }
 
     private void setIdsAndNamesOfUsers() {
-        taskOwnerIDS="";
-        taskOwnerNames="";
-        for (int i=0;i<lstUsersnCompnays.size();i++){
-            taskOwnerNames+=lstUsersnCompnays.get(i).getUsername()+"-";
-            taskOwnerIDS+=lstUsersnCompnays.get(i).getUserID()+"-";
+        taskOwnerIDS = "";
+        taskOwnerNames = "";
+        for (int i = 0; i < lstUsersnCompnays.size(); i++) {
+            taskOwnerNames += lstUsersnCompnays.get(i).getUsername() + "-";
+            taskOwnerIDS += lstUsersnCompnays.get(i).getUserID() + "-";
         }
     }
 
 
     private void setIdsAndNamesOProject() {
-        selectedProjectID=String.valueOf(projects.get(0).getId());
-        selectedProjectName=String.valueOf(projects.get(0).getProjectName());
+        selectedProjectID = String.valueOf(projects.get(0).getId());
+        selectedProjectName = String.valueOf(projects.get(0).getProjectName());
     }
 
+    private void setTaskCurrency() {
+        selectedCurrnecyID = String.valueOf(currencyLists.get(0).getCurrencyID());
+        selectedCurrencyName = String.valueOf(currencyLists.get(0).getCurrencyName());
+    }
 
 }

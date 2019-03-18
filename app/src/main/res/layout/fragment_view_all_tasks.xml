@@ -7,13 +7,13 @@
     android:fitsSystemWindows="true"
 
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/anim_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,9 +34,9 @@
                 android:textColor="@color/color_blue_primary"
                 android:textSize="@dimen/title_list"
                 android:textStyle="bold" />
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <FrameLayout
@@ -46,12 +46,12 @@
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_tasks"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button_add_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

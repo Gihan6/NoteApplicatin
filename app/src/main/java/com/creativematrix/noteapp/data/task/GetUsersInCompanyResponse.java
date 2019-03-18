@@ -19,6 +19,8 @@ public class GetUsersInCompanyResponse {
     @Expose
     private String lang;
     @Expose
+
+    @SerializedName("lstUsersnCompany")
     private List<LstUsersnCompnay> lstUsersnCompnay;
 
     public String get$id() {

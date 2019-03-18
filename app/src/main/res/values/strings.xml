@@ -96,5 +96,14 @@
     <string name="Usual">Usual</string>
     <string name="Urgent">Urgent</string>
     <string name="Welcome">Welcome</string>
+    <string name="task_start_time_empty">Task start time can not be empty</string>
+    <string name="task_end_time_empty">Task end time not Be Empty</string>
+    <string name="task_start_date_empty">Task start date Can not Be Empty</string>
+    <string name="task_end_date_empty">Task end date Can not Be Empty</string>
+    <string name="task_under_processing">المهم تحت التنفيذ</string>
+    <string name="task_completed">مكتملة</string>
+    <string name="project_add_successfully">Project Added Successfully</string>
+    <string name="start_record">Start Recording Calls</string>
+    <string name="stop_record">Stop Recording Calls</string>
 
 </resources>

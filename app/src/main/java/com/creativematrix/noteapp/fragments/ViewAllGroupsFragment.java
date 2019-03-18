@@ -3,11 +3,12 @@ package com.creativematrix.noteapp.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +17,9 @@ import android.view.ViewGroup;
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.adapters.GroupsAdapter;
-import com.creativematrix.noteapp.callback.ProjectCallbacks;
 import com.creativematrix.noteapp.data.groups.DisplayGroupRequest;
 import com.creativematrix.noteapp.data.groups.GroupRepo;
 import com.creativematrix.noteapp.data.groups.LstGroup;
-import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
 
 import java.util.ArrayList;
@@ -47,7 +46,8 @@ public class ViewAllGroupsFragment extends Fragment {
     RecyclerView recycler_view_groups;
     FloatingActionButton floating_button_add_group;
     GroupsAdapter groupsAdapter;
-    private ArrayList<LstGroup> lstGroups=new ArrayList<>();
+    private ArrayList<LstGroup> lstGroups = new ArrayList<>();
+    Toolbar toolbar;
 
     public ViewAllGroupsFragment() {
         // Required empty public constructor
@@ -93,11 +93,12 @@ public class ViewAllGroupsFragment extends Fragment {
             }
             return true;
         });
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         new GroupRepo(getActivity()).displayGroups(new DisplayGroupRequest("39", "39", "0"))
                 .observe(this, GroupRes -> {
                     try {
-                        if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)){
+                        if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
                             lstGroups.clear();
                             lstGroups.addAll(GroupRes.getLstGroup());
                             groupsAdapter.notifyDataSetChanged();
@@ -145,13 +146,14 @@ public class ViewAllGroupsFragment extends Fragment {
     }
 
     private void configureViews(View view) {
-        recycler_view_groups=view.findViewById(R.id.recycler_view_groups);
-        floating_button_add_group=view.findViewById(R.id.floating_button_add_group);
+        recycler_view_groups = view.findViewById(R.id.recycler_view_groups);
+        floating_button_add_group = view.findViewById(R.id.floating_button_add_group);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_groups.setLayoutManager(linearLayoutManager);
         recycler_view_groups.setHasFixedSize(true);
-        groupsAdapter=new GroupsAdapter(getActivity(), lstGroups, (v, position) -> Utils.showStringToast(getActivity(),String.valueOf(lstGroups.get(position).getCompanyid())));
+        groupsAdapter = new GroupsAdapter(getActivity(), lstGroups, (v, position) -> Utils.showStringToast(getActivity(), String.valueOf(lstGroups.get(position).getCompanyid())));
         // Set adapter in recyclerView
+        toolbar = view.findViewById(R.id.anim_toolbar);
 
         recycler_view_groups.setAdapter(groupsAdapter);
     }

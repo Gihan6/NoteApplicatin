@@ -7,13 +7,13 @@
     android:background="@color/color_background"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -32,8 +32,8 @@
                 android:textColor="@color/color_blue_primary"
                 android:textSize="@dimen/toolbar_text_size"
                 android:textStyle="bold" />
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -50,11 +50,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_task_name"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
@@ -63,12 +63,12 @@
                     android:inputType="textMultiLine"
                     android:padding="10dp"
                     android:textColorHint="@android:color/background_dark" />
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_project_name"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
@@ -76,17 +76,16 @@
                     android:focusableInTouchMode="false"
                     android:hint="@string/project_name"
                     android:inputType="text"
-
                     android:drawableEnd="@drawable/ic_action_name"
                     android:padding="10dp"
                     android:textColorHint="@android:color/background_dark" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_task_description"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
@@ -96,19 +95,19 @@
 
                     android:padding="10dp"
                     android:textColorHint="@android:color/background_dark" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_task_cost"
                         style="@style/EditTextStyle"
                         android:layout_width="match_parent"
@@ -118,26 +117,27 @@
                         android:padding="10dp"
                         android:textColorHint="@android:color/background_dark" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
                     android:layout_weight="1">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         style="@style/EditTextStyle"
                         android:id="@+id/input_task_coin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/coin"
+                        android:focusableInTouchMode="false"
                         android:inputType="textMultiLine"
                         android:padding="10dp"
                         android:drawableEnd="@drawable/ic_action_name"
                         android:textColorHint="@android:color/background_dark" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
@@ -155,12 +155,12 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_task_start_time"
                         style="@style/EditTextStyle"
                         android:layout_width="match_parent"
@@ -170,14 +170,14 @@
                         android:inputType="time"
                         android:padding="10dp"
                         android:textColorHint="@android:color/background_dark" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_task_start_date"
                         style="@style/EditTextStyle"
                         android:layout_width="match_parent"
@@ -187,7 +187,7 @@
                         android:inputType="date"
                         android:padding="10dp"
                         android:textColorHint="@android:color/background_dark" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -195,12 +195,12 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_task_end_time"
                         style="@style/EditTextStyle"
                         android:layout_width="match_parent"
@@ -210,14 +210,14 @@
                         android:inputType="time"
                         android:padding="10dp"
                         android:textColorHint="@android:color/background_dark" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <android.support.design.widget.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_task_end_date"
                         style="@style/EditTextStyle"
                         android:layout_width="match_parent"
@@ -227,15 +227,15 @@
                         android:inputType="date"
                         android:padding="10dp"
                         android:textColorHint="@android:color/background_dark" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <!-- for selecting project director -->
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_task_owner"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
@@ -246,7 +246,7 @@
                     android:padding="10dp"
                     android:drawableEnd="@drawable/ic_action_name"
                     android:textColorHint="@android:color/background_dark" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -255,11 +255,11 @@
                 android:textStyle="bold"
                 android:text="@string/txt_add_new_person"
                 android:textColor="@color/link" />
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_task_status"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
@@ -270,7 +270,7 @@
                     android:focusableInTouchMode="false"
                     android:drawableEnd="@drawable/ic_action_name"
                     android:textColorHint="@android:color/background_dark" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <TextView
@@ -287,7 +287,7 @@
                 android:gravity="center|start"
                 android:text="@string/txt_upload_file"
                 android:textColor="@color/link" />
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_files"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

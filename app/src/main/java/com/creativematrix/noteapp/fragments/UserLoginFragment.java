@@ -1,10 +1,10 @@
 package com.creativematrix.noteapp.fragments;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
+import androidx.annotation.Nullable;
+import com.google.android.material.textfield.TextInputEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.callback.RegisterCallbacks;
-import com.creativematrix.noteapp.data.company.CompanyRepo;
 import com.creativematrix.noteapp.data.company.Login;
 import com.creativematrix.noteapp.data.user.UserRepo;
 import com.creativematrix.noteapp.util.Utils;

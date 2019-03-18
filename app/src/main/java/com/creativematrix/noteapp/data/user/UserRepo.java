@@ -1,12 +1,11 @@
 package com.creativematrix.noteapp.data.user;
 
 import android.app.ProgressDialog;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.util.Log;
 
-import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.data.ApiClient;
 import com.creativematrix.noteapp.data.company.Login;

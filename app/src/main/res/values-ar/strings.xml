@@ -66,5 +66,13 @@
     <string name="Usual">عادية</string>
     <string name="Urgent">مستعجله</string>
     <string name="Welcome">Welcome</string>
-
+    <string name="task_start_time_empty">عليك ادخال وقت البدء</string>
+    <string name="task_end_time_empty">عليك ادخال وقت الانتهاء</string>
+    <string name="task_start_date_empty">عليك ادخال تاريخ البدء</string>
+    <string name="task_end_date_empty">عليك ادخال تاريخ الانتهاء</string>
+    <string name="task_under_processing">قيد التنفيذ</string>
+    <string name="task_completed">مكتملة</string>
+    <string name="project_add_successfully">تمت اضافة المشروع بنجاح</string>
+    <string name="start_record">تم تشغيل تسجيل المكالمات</string>
+    <string name="stop_record">تم ايقاف تسجيل المكالمات</string>
 </resources>

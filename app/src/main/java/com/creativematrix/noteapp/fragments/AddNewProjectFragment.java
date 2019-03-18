@@ -1,15 +1,14 @@
 package com.creativematrix.noteapp.fragments;
 
 import android.app.Activity;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.textfield.TextInputEditText;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +18,16 @@ import android.widget.TextView;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
-import com.creativematrix.noteapp.callback.DateTimeCallbacks;
+import com.creativematrix.noteapp.activities.SelectTaskOwnersActivity;
 import com.creativematrix.noteapp.callback.ProjectCallbacks;
 import com.creativematrix.noteapp.data.project.Project;
 import com.creativematrix.noteapp.data.project.ProjectRepo;
+import com.creativematrix.noteapp.data.task.LstUsersnCompnay;
+import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddNewProjectFragment extends Fragment {
     private ProjectCallbacks mCallbacks;
@@ -40,11 +44,15 @@ public class AddNewProjectFragment extends Fragment {
     private TextView textViewAddMember;
     private Button buttonSaveProject;
     private Context mContext;
-
+    Toolbar toolbar;
+    String taskOwnerIDS = "", taskOwnerNames = "", selectedProjectName = "", selectedProjectID = "", selectedTaskStatusName = "", selectedTaskStatusID = "", selectedCurrnecyID = "", selectedCurrencyName = "";
     private String startDate;
     private String startTime;
     private String endDate;
     private String endTime;
+    private List<LstUsersnCompnay> lstUsersnCompnays = new ArrayList<>();
+
+    private static final int GET_USERS_INCOMPANY = 20;
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
@@ -119,6 +127,13 @@ public class AddNewProjectFragment extends Fragment {
             collectData();
         });
 
+        editTextProjectDirector.setOnClickListener(v -> {
+            //should open date picker and return the date value
+            startActivityForResult(new Intent(getActivity(), SelectTaskOwnersActivity.class), GET_USERS_INCOMPANY);
+
+        });
+
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         return view;
     }
@@ -133,6 +148,7 @@ public class AddNewProjectFragment extends Fragment {
         editTextProjectEndTime = view.findViewById(R.id.input_project_end_time);
         editTextProjectEndDate = view.findViewById(R.id.input_project_end_date);
         editTextProjectDirector= view.findViewById(R.id.input_project_director);
+        toolbar = view.findViewById(R.id.anim_toolbar);
         buttonSaveProject = view.findViewById(R.id.btn_save_project);
     }
 
@@ -155,7 +171,7 @@ public class AddNewProjectFragment extends Fragment {
         String projectStartDate = editTextProjectStartDate.getText().toString();
         String projectEndTime = editTextProjectEndTime.getText().toString();
         String projectEndDate = editTextProjectEndDate.getText().toString();
-        String projectDirector= editTextProjectDirector.getText().toString();
+        String projectDirector= taskOwnerIDS;
         if (Utils.isFieldEmpty(projectName)) {
             Utils.showResToast(mContext, R.string.project_name_empty);
             return;
@@ -163,14 +179,18 @@ public class AddNewProjectFragment extends Fragment {
                 Project project =
                 new Project(projectName, projectStartDate + " " + projectStartTime
                 , projectEndDate + " " + projectEndTime, projectOwner, projectDesc, projectCost
-                , 13, ""
-                , Utils.getLang(), 0, projectDirector);
+                , Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())), ""
+                , Utils.getLang(), 0, projectDirector,Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
 
         Log.d(TAG, "collectData: " + projectStartDate + " " + projectStartTime);
         Log.d(TAG, "collectData: " + projectEndDate + " " + projectEndTime);
         new ProjectRepo(getActivity()).addProject(project)
                 .observe(this, projectRes -> {
                     try {
+                        if (projectRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            Utils.showStringToast(getActivity(), getString(R.string.project_add_successfully));
+                            getActivity().onBackPressed();
+                        }
                         Log.d(TAG, "collectData: " + projectRes.toString());
                     } catch (Exception ex) {
                         Log.d(TAG, "collectData: " + ex.getMessage());
@@ -205,21 +225,24 @@ public class AddNewProjectFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
 
-        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
-        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
-        // response to some other intent, and the code below shouldn't run at all.
-
-        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // The document selected by the user won't be returned in the intent.
-            // Instead, a URI to that document will be contained in the return intent
-            // provided to this method as a parameter.
-            // Pull that URI using resultData.getData().
-            Uri uri = null;
-            if (resultData != null) {
-                uri = resultData.getData();
-                Log.i(TAG, "Uri: " + uri.toString());
-//                showImage(uri);
+        if (requestCode == GET_USERS_INCOMPANY && resultCode == Activity.RESULT_OK) {
+            //Intent i = getActivity().getIntent();
+            lstUsersnCompnays = (List<LstUsersnCompnay>) resultData.getSerializableExtra(Constant.USERS_LIST);
+            if (lstUsersnCompnays.size() > 0) {
+                Utils.showStringToast(getActivity(), getString(R.string.users_selected));
+                setIdsAndNamesOfUsers();
+                editTextProjectDirector.setText(taskOwnerNames);
             }
+        }
+
+    }
+
+    private void setIdsAndNamesOfUsers() {
+        taskOwnerIDS = "";
+        taskOwnerNames = "";
+        for (int i = 0; i < lstUsersnCompnays.size(); i++) {
+            taskOwnerNames += lstUsersnCompnays.get(i).getUsername() + "-";
+            taskOwnerIDS += lstUsersnCompnays.get(i).getUserID() + "-";
         }
     }
 }

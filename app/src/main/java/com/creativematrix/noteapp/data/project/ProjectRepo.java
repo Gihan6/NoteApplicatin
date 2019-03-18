@@ -1,13 +1,11 @@
 package com.creativematrix.noteapp.data.project;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.util.Log;
 
 import com.creativematrix.noteapp.data.ApiClient;
-import com.creativematrix.noteapp.data.task.DisplayTaskRequest;
-import com.creativematrix.noteapp.data.task.GetUsersInCompanyResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

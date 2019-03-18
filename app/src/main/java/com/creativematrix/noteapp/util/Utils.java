@@ -3,7 +3,6 @@ package com.creativematrix.noteapp.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -13,11 +12,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
@@ -30,7 +29,11 @@ import com.creativematrix.noteapp.R;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -103,6 +106,13 @@ public class Utils {
             return null;
         }
 
+    }
+
+    public static String formatDate(String dateTime) throws ParseException {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.ENGLISH);
+        Date date = (Date)formatter.parse(dateTime);
+        String finalString = formatter.format(date);
+        return  finalString;
     }
 
     public interface DelayCallback{

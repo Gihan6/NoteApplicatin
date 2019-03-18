@@ -1,30 +1,33 @@
 package com.creativematrix.noteapp.activities;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.provider.Settings;
+import androidx.annotation.RequiresApi;
+import com.google.android.material.navigation.NavigationView;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.callback.DateTimeCallbacks;
 import com.creativematrix.noteapp.callback.ProjectCallbacks;
-import com.creativematrix.noteapp.callback.TaskCallbacks;
 import com.creativematrix.noteapp.data.project.Project;
-import com.creativematrix.noteapp.fragments.AddNewGroupFragment;
 import com.creativematrix.noteapp.fragments.AddNewProjectFragment;
 import com.creativematrix.noteapp.fragments.AddNewTaskFragment;
 import com.creativematrix.noteapp.fragments.ViewAllGroupsFragment;
 import com.creativematrix.noteapp.fragments.ViewAllProjectsFragment;
 import com.creativematrix.noteapp.fragments.ViewAllTasksFragment;
+import com.creativematrix.noteapp.services.FloatingViewService;
 import com.creativematrix.noteapp.util.Utils;
 
 public class NoteHomeActivity extends AppCompatActivity
@@ -37,12 +40,14 @@ public class NoteHomeActivity extends AppCompatActivity
     // private ViewAllProjectsFragment viewAllProjectsFragment;
     private AddNewProjectFragment addNewProjectFragment;
     private AddNewTaskFragment addNewTaskFragment;
+    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
 
     private int timeDateFlag;
 
     public DrawerLayout getmDrawerLayout() {
         return drawer;
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +70,50 @@ public class NoteHomeActivity extends AppCompatActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+      /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+        } else {
+            initializeView();
+        }*/
+        createFloatView();
     }
 
+    private void initializeView() {
+        startService(new Intent(NoteHomeActivity.this, FloatingViewService.class));
+       //  finish();
+    }
+    private void createFloatView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkDrawOverlayPermission();
+        } else {
+            initializeView();
+        }
+    }
+
+    public void checkDrawOverlayPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + this.getPackageName()));
+                startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+            } else {
+                initializeView();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(this)) {
+                    initializeView();
+                }
+
+            }
+        }
+    }
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -185,6 +232,7 @@ public class NoteHomeActivity extends AppCompatActivity
     @Override
     public void onTimeSelected(int hour, int minute) {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_holder_home);
+
         String time = String.format("%02d:%02d", hour, minute);
         if (currentFragment instanceof AddNewProjectFragment) {
             addNewProjectFragment  = (AddNewProjectFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_holder_home);

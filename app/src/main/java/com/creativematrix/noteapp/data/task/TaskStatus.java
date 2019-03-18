@@ -1,6 +1,8 @@
 package com.creativematrix.noteapp.data.task;
 
-public class TaskStatus {
+import java.io.Serializable;
+
+public class TaskStatus implements Serializable {
     String taskStatusName;
     String ID;
 

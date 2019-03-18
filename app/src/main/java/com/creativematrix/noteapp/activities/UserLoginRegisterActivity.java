@@ -1,10 +1,9 @@
 package com.creativematrix.noteapp.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.creativematrix.noteapp.Constant;
@@ -13,7 +12,6 @@ import com.creativematrix.noteapp.callback.RegisterCallbacks;
 import com.creativematrix.noteapp.data.company.Company;
 import com.creativematrix.noteapp.data.company.LoginResponse;
 import com.creativematrix.noteapp.fragments.CompanyLoginFragment;
-import com.creativematrix.noteapp.fragments.CompanyRegisterFragment;
 import com.creativematrix.noteapp.fragments.UserLoginFragment;
 import com.creativematrix.noteapp.util.PreferenceHelper;
 

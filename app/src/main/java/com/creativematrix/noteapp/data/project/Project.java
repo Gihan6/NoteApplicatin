@@ -13,7 +13,7 @@ public class Project implements Serializable {
     private String $id;
     @SerializedName("AddedID")
     private Long addedID;
-    @SerializedName("CompanyID")
+     @SerializedName("CompanyID")
     private Long companyID;
     @SerializedName("DirctoresIDS")
     private Object dirctoresIDS;
@@ -54,7 +54,9 @@ public class Project implements Serializable {
                    String msg,
                    String lang,
                    int projectStatus,
-                   String directorIDs) {
+                   String directorIDs,
+                   long companyID
+                   ) {
         this.projectName = projectName;
         this.  startTime = startTime;
         this. endTime = endTime;
@@ -66,7 +68,7 @@ public class Project implements Serializable {
         this.lang = lang;
         this. projectStatus = Long.valueOf(projectStatus);
         this. directorIDs = directorIDs;
-
+this.companyID=companyID;
 
     }
 

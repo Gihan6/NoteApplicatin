@@ -2,6 +2,7 @@
 package com.creativematrix.noteapp.data.task;
 
 import com.creativematrix.noteapp.data.project.Dirctote;
+import com.creativematrix.noteapp.util.Utils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -53,6 +54,18 @@ public class Task {
     private Long taskCost;
     @SerializedName("TaskDescripation")
     private String taskDescripation;
+
+    public String getCurrencyID() {
+        return CurrencyID;
+    }
+
+    public void setCurrencyID(String currencyID) {
+        CurrencyID = currencyID;
+    }
+
+    @SerializedName("CurrencyID")
+    private String CurrencyID;
+
     @SerializedName("TaskDescripationEn")
     private String taskDescripationEn;
     @SerializedName("TaskID")
@@ -145,6 +158,7 @@ public class Task {
     }
 
     public void setStartTime(Object startTime) {
+
         this.startTime = startTime;
     }
 

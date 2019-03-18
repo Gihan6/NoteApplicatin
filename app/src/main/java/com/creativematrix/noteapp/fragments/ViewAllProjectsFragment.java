@@ -3,38 +3,26 @@ package com.creativematrix.noteapp.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
-import com.creativematrix.noteapp.activities.NoteHomeActivity;
 import com.creativematrix.noteapp.adapters.ProjectAdapter;
-import com.creativematrix.noteapp.adapters.TasksAdapter;
-import com.creativematrix.noteapp.callback.ProjectCallbacks;
 import com.creativematrix.noteapp.data.project.DisplayProjectRequest;
 import com.creativematrix.noteapp.data.project.Project;
 import com.creativematrix.noteapp.data.project.ProjectRepo;
-import com.creativematrix.noteapp.data.task.DisplayTaskRequest;
-import com.creativematrix.noteapp.data.task.Task;
-import com.creativematrix.noteapp.data.task.TaskRepo;
 import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.ArrayList;
 
@@ -96,14 +84,12 @@ public class ViewAllProjectsFragment extends Fragment {
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
-
             if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                 getActivity().onBackPressed();
             }
-
             return true;
-
         });
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
 
         new ProjectRepo(getActivity()).displayProjectsResponseLiveData(new DisplayProjectRequest(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())), Utils.getLang()))
@@ -118,6 +104,8 @@ public class ViewAllProjectsFragment extends Fragment {
 
                     }
                 });
+
+
         return view;
     }
 
@@ -165,11 +153,12 @@ public class ViewAllProjectsFragment extends Fragment {
         projectAdapter = new ProjectAdapter(getActivity(), projects, (v, position) -> Utils.showStringToast(getActivity(), String.valueOf("")));
         // Set adapter in recyclerView
         toolbar = view.findViewById(R.id.anim_toolbar);
+        /*
         ((NoteHomeActivity) getActivity()).setSupportActionBar(toolbar);
         ((NoteHomeActivity) getActivity()).getSupportActionBar()
                 .setDisplayShowTitleEnabled(false);
         toolbar.setNavigationOnClickListener(v -> ((NoteHomeActivity) getActivity()).getmDrawerLayout()
-                .openDrawer(GravityCompat.START));
+                .openDrawer(GravityCompat.START));*/
 
         recycler_view_projects.setAdapter(projectAdapter);
     }

@@ -3,7 +3,7 @@ package com.creativematrix.noteapp.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
@@ -11,15 +11,8 @@ import android.widget.ListView;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
-import com.creativematrix.noteapp.adapters.CustomProjectsInCompanyAdapter;
-import com.creativematrix.noteapp.adapters.CustomSelectUserInCompanyAdapter;
 import com.creativematrix.noteapp.adapters.CustomTaskStatusAdapter;
-import com.creativematrix.noteapp.data.project.DisplayProjectRequest;
-import com.creativematrix.noteapp.data.project.Project;
-import com.creativematrix.noteapp.data.project.ProjectRepo;
 import com.creativematrix.noteapp.data.task.TaskStatus;
-import com.creativematrix.noteapp.util.PreferenceHelper;
-import com.creativematrix.noteapp.util.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,15 +1,14 @@
 package com.creativematrix.noteapp.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.creativematrix.noteapp.R;
-import com.creativematrix.noteapp.data.groups.LstGroup;
 import com.creativematrix.noteapp.data.task.Task;
 
 import java.util.ArrayList;
@@ -85,7 +84,15 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
         Task task=tasks.get(position);
         holder.task_name.setText(task.getTaskName());
-        holder.task_status.setText(String.valueOf(task.getTaskStatus()));
+        if(String.valueOf(task.getTaskStatus()).equals("0")){
+            holder.task_status.setText(context.getResources().getString(R.string.task_under_processing));
+        }
+        else {
+            holder.task_status.setText(context.getResources().getString(R.string.task_completed));
+
+        }
+
+   //     holder.task_status.setText(String.valueOf(task.getTaskStatus()));
     }
 
     @Override
