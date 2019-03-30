@@ -1,6 +1,7 @@
 package com.creativematrix.noteapp.data.groups;
 
 import com.creativematrix.noteapp.data.project.Project;
+import com.creativematrix.noteapp.data.user.DisplayUserDetailsRequest;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -13,4 +14,6 @@ public interface GroupsApiInterface {
 
     @POST("DisplayGroup/")
     Call<DisplayGroupResponse> postDisplayGroups(@Body DisplayGroupRequest displayGroupRequest);
+    @POST("DisplayGroupAllData/")
+    Call<DisplayGroupDetailsResponse> DISPLAY_GROUP_DETAILS_RESPONSE_CALL(@Body DisplayGroupDetailsRequest displayUserDetailsRequest);
 }

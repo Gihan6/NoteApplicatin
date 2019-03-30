@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 @SuppressWarnings("unused")
 public class DisplayTaskRequest {
     public DisplayTaskRequest(Long companyID,String Lang) {
-        this.companyID = companyID;
+        this.CompanyID = companyID;
         this.lang=Lang;
     }
 
@@ -19,14 +19,14 @@ public class DisplayTaskRequest {
     }
 
     @SerializedName("CompanyID")
-    private Long companyID;
+    private Long CompanyID;
     String lang;
     public Long getCompanyID() {
-        return companyID;
+        return CompanyID;
     }
 
     public void setCompanyID(Long companyID) {
-        this.companyID = companyID;
+        this.CompanyID = companyID;
     }
 
 }

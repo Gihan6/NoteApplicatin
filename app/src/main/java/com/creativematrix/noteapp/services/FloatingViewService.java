@@ -38,7 +38,16 @@ public class FloatingViewService extends Service {
         super.onCreate();
         //Inflate the floating view layout we created
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
-
+        callRecord = new CallRecord.Builder(this)
+                .setLogEnable(true)
+                .setRecordFileName("RecordFileName")
+                .setRecordDirName("RecordDirName")
+                .setRecordDirPath(Environment.getExternalStorageDirectory().getPath()) // optional & default value
+                .setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB) // optional & default value
+                .setOutputFormat(MediaRecorder.OutputFormat.AMR_NB) // optional & default value
+                .setAudioSource(MediaRecorder.AudioSource.MIC) // optional & default value
+                .setShowSeed(true) // optional & default value ->Ex: RecordFileName_incoming.amr || RecordFileName_outgoing.amr
+                .build();
         int LAYOUT_FLAG;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
@@ -80,20 +89,11 @@ public class FloatingViewService extends Service {
         //Set the play button.
         ImageView start_record_btn =  mFloatingView.findViewById(R.id.start_record_btn);
         start_record_btn.setOnClickListener(v ->
-
-                callRecord = new CallRecord.Builder(this)
-                        .setLogEnable(true)
-                        .setRecordFileName("RecordFileName")
-                        .setRecordDirName("RecordDirName")
-                        .setRecordDirPath(Environment.getExternalStorageDirectory().getPath()) // optional & default value
-                        .setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB) // optional & default value
-                        .setOutputFormat(MediaRecorder.OutputFormat.AMR_NB) // optional & default value
-                        .setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION) // optional & default value
-                        .setShowSeed(true) // optional & default value ->Ex: RecordFileName_incoming.amr || RecordFileName_outgoing.amr
-                        .build());
+                callRecord.startCallReceiver()
+          );
 
 
-        callRecord.startCallReceiver();
+
 
 
         //Set the next button.

@@ -10,8 +10,11 @@ import retrofit2.http.POST;
 public interface UserApiInterface {
 
     @POST("AddUser/")
-    Call<User> postAddUser(@Body User user);
+    Call<AddUserResponse> postAddUser(@Body User user);
     @POST("Login/")
     Call<LoginResponse> login(@Body Login login);
-
+    @POST("DisplayCompanyUSers/")
+    Call<AllUserInCompanyResponse> login(@Body DisplayAllUsersRequest displayAllUsersRequest);
+    @POST("DisplayUserDetails/")
+    Call<DisplayUserDetailsResponse> DISPLAY_USER_DETAILS_RESPONSE_CALL(@Body DisplayUserDetailsRequest displayUserDetailsRequest);
 }

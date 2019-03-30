@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import androidx.annotation.RequiresApi;
+
+import com.creativematrix.noteapp.fragments.ViewAllUsersFragment;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.FragmentManager;
 import androidx.core.view.GravityCompat;
@@ -77,7 +79,7 @@ public class NoteHomeActivity extends AppCompatActivity
         } else {
             initializeView();
         }*/
-        createFloatView();
+      // createFloatView();
     }
 
     private void initializeView() {
@@ -105,6 +107,7 @@ public class NoteHomeActivity extends AppCompatActivity
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Settings.canDrawOverlays(this)) {
@@ -161,6 +164,7 @@ public class NoteHomeActivity extends AppCompatActivity
             Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new ViewAllGroupsFragment(), NoteHomeActivity.this, Utils.VIEWAllGROUPSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
 
         } else if (id == R.id.nav_members) {
+            Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new ViewAllUsersFragment(), NoteHomeActivity.this, Utils.VIEWAllUSERSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
 
         }
 

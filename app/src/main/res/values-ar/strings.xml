@@ -18,6 +18,8 @@
     <string name="dialog_action_no">لأ</string>
     <string name="txt_add_new_group">اضافة مجموعة جديدة</string>
     <string name="save">حفظ</string>
+    <string name="txt_add_new_user">اضافة عضو جديد</string>
+
     <string name="add_pic">اضافة صورة</string>
     <string name="group_name">اسم المجموعة</string>
     <string name="group_desc">وصف المجموعة</string>
@@ -27,7 +29,7 @@
     <string name="login_as_company"> تسجيل الدخول كمؤسسة:</string>
     <string name="signup_text"><u>ليس لديك حساب</u></string>
     <string name="register_as_user">التسجيل كأفراد</string>
-    <string name="user_email_empty_msg">برجاء ادخل اسم المستخدم</string>
+    <string name="user_email_empty_msg">برجاء ادخل الايميل</string>
     <string name="user_password_empty_msg">برجاء ادخل  كلمة المرور</string>
     <string name="txt_add_new_project">اضافة مشروع جديد</string>
     <string name="project_name">اسم المشروع</string>
@@ -40,6 +42,7 @@
     <string name="task_name_empty">عليك ادخال اسم المهمة</string>
     <string name="projects">المشروعات</string>
     <string name="members">الأعضاء</string>
+    <string name="delete_sure">هل أنت متأكد أنك تريد المسح؟ </string>
 
     <string name="pick_a_start_time">وقت البدء</string>
     <string name="pick_a_start_date">تاريخ البدء</string>
@@ -61,6 +64,7 @@
     <string name="Select">اختر</string>
     <string name="users_selected">تم اختيار المسؤلين</string>
     <string name="Project_selected">تم اختيار المشروع</string>
+    <string name="group_selected">تم اختيار المجموعة</string>
     <string name="task_added_success">Task Added Successfully</string>
     <string name="Critical">طارئة</string>
     <string name="Usual">عادية</string>
@@ -75,4 +79,18 @@
     <string name="project_add_successfully">تمت اضافة المشروع بنجاح</string>
     <string name="start_record">تم تشغيل تسجيل المكالمات</string>
     <string name="stop_record">تم ايقاف تسجيل المكالمات</string>
+    <string name="update">تعديل</string>
+    <string name="delete">مسح</string>
+    <string name="deleted_succees">تم المسح</string>
+    <string name="users">الأعضاء</string>
+    <string name="phone">الجوال</string>
+    <string name="group">المجموعة</string>
+    <string name="user_added_successfully">تمت اضافة العضو بنجاح</string>
+    <string name="Group_selected">تم اختيار المجموعة</string>
+    <string name="user_group_empty_msg">قم باختيار المجموعة</string>
+    <string name="user_phone_empty_msg">قم بادخال رقم الجوال</string>
+    <string name="no_tasks_found">لا يوجد مهام انقر لاضافة مهمة جديده</string>
+    <string name="start_time">بدأ:</string>
+    <string name="end_time">انتهاء:</string>
+    <string name="tasks_count">عدد المهام</string>
 </resources>

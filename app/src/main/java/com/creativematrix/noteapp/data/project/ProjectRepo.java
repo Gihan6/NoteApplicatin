@@ -36,7 +36,40 @@ public class ProjectRepo {
         });
         return mutableLiveData;
     }
+    public LiveData<Project> deleteProject(Project project) {
+        final MutableLiveData<Project> mutableLiveData = new MutableLiveData<>();
+        Call<Project> projectCall = mProjectApiInterface.postAddProject(project);
+        projectCall.enqueue(new Callback<Project>() {
+            @Override
+            public void onResponse(Call<Project> call, Response<Project> response) {
+                Log.d(TAG, "onResponse: " + response.message());
+                mutableLiveData.postValue(response.body());
+            }
 
+            @Override
+            public void onFailure(Call<Project> call, Throwable t) {
+
+            }
+        });
+        return mutableLiveData;
+    }
+    public LiveData<ProjectDetailsResponse> displayProjectDeitals(Project project) {
+        final MutableLiveData<ProjectDetailsResponse> mutableLiveData = new MutableLiveData<>();
+        Call<ProjectDetailsResponse> projectCall = mProjectApiInterface.postDisplayProjectDetails(project);
+        projectCall.enqueue(new Callback<ProjectDetailsResponse>() {
+            @Override
+            public void onResponse(Call<ProjectDetailsResponse> call, Response<ProjectDetailsResponse> response) {
+                Log.d(TAG, "onResponse: " + response.message());
+                mutableLiveData.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ProjectDetailsResponse> call, Throwable t) {
+
+            }
+        });
+        return mutableLiveData;
+    }
     public LiveData<DisplayProjectsResponse> displayProjectsResponseLiveData(DisplayProjectRequest displayProjectRequest) {
         final MutableLiveData<DisplayProjectsResponse> mutableLiveData = new MutableLiveData<>();
         //showDialog();

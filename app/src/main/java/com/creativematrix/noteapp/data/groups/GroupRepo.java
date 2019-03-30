@@ -73,4 +73,21 @@ public class GroupRepo {
         });
         return mutableLiveData;
     }
+    public LiveData<DisplayGroupDetailsResponse> displayGroupDetailsResponseLiveData(DisplayGroupDetailsRequest displayGroupRequest) {
+        final MutableLiveData<DisplayGroupDetailsResponse> mutableLiveData = new MutableLiveData<>();
+        Call<DisplayGroupDetailsResponse> groupCall = mGroupsApiInterface.DISPLAY_GROUP_DETAILS_RESPONSE_CALL(displayGroupRequest);
+        groupCall.enqueue(new Callback<DisplayGroupDetailsResponse>() {
+            @Override
+            public void onResponse(Call<DisplayGroupDetailsResponse> call, Response<DisplayGroupDetailsResponse> response) {
+                Log.d(TAG, "onResponse: " + response.message());
+                mutableLiveData.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DisplayGroupDetailsResponse> call, Throwable t) {
+
+            }
+        });
+        return mutableLiveData;
+    }
 }

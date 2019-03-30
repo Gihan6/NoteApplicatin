@@ -21,7 +21,7 @@ public class Constant {
     public static final String TAST_URGENT = "2";
     public static final String TASK_USUAL = "0";
     public static final String TASK_CRITCAL = "1";
-
+    public static final String GROUPS_LIST = "GROUPS_LIST";
 
     public static final String ALL_CURRENCY = "0";
 }

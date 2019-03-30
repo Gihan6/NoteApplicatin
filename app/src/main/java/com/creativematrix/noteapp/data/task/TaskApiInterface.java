@@ -11,10 +11,14 @@ public interface TaskApiInterface {
 
     @POST("AddTask/")
     Call<Task> postAddTask(@Body Task task);
-
+    @POST("DeleteTask/")
+    Call<Task> postDeleteTask(@Body Task task);
     @POST("DisplayTasks/")
     Call<DisplayTasksResponse> postDisplayTasks(@Body DisplayTaskRequest displayTaskRequest);
 
     @POST("GetUsersInCompany/")
     Call<GetUsersInCompanyResponse> postGetUsersInCompany(@Body DisplayTaskRequest displayTaskRequest);
+
+    @POST("GetTaskDetails/")
+    Call<TaskDetailsResponse> postGetTaskDetails(@Body Task task);
 }

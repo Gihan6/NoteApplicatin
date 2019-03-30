@@ -3,6 +3,8 @@ package com.creativematrix.noteapp.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+
+import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -95,7 +97,7 @@ public class ViewAllGroupsFragment extends Fragment {
         });
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
-        new GroupRepo(getActivity()).displayGroups(new DisplayGroupRequest("39", "39", "0"))
+        new GroupRepo(getActivity()).displayGroups(new DisplayGroupRequest(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())), Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())), Long.valueOf(0)))
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
@@ -151,7 +153,10 @@ public class ViewAllGroupsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_groups.setLayoutManager(linearLayoutManager);
         recycler_view_groups.setHasFixedSize(true);
-        groupsAdapter = new GroupsAdapter(getActivity(), lstGroups, (v, position) -> Utils.showStringToast(getActivity(), String.valueOf(lstGroups.get(position).getCompanyid())));
+        groupsAdapter = new GroupsAdapter(getActivity(), lstGroups, (v, position) ->
+                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
+                        new GroupDetailFragment(lstGroups.get(position)),
+                        getActivity(), Utils.USERDETAILFRAGMENT, Utils.AnimationType.SLIDE_UP));
         // Set adapter in recyclerView
         toolbar = view.findViewById(R.id.anim_toolbar);
 

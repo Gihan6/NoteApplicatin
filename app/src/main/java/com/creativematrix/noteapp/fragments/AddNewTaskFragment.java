@@ -328,7 +328,7 @@ public class AddNewTaskFragment extends Fragment {
         task.setProjectID(Long.valueOf(ProjectID));
         task.setUsersIDs(taskOwnerIDS);
         task.setTaskCost(Long.valueOf(taskCost));
-        task.setTaskStatus(Long.valueOf(selectedTaskStatusID));
+        task.setTaskState(Long.valueOf(selectedTaskStatusID));
         task.setCurrencyID(CurrencyID);
         task.setCompanyID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
         task.setAddedID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));

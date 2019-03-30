@@ -32,6 +32,26 @@ public class UserRepo {
             // progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         }
     }
+    public LiveData<AllUserInCompanyResponse> DisplayAllUsers(DisplayAllUsersRequest displayAllUsersRequest) {
+        final MutableLiveData<AllUserInCompanyResponse> liveData = new MutableLiveData<>();
+        showDialog();
+        mUserApiInterface.login(displayAllUsersRequest).enqueue(new Callback<AllUserInCompanyResponse>() {
+            @Override
+            public void onResponse(Call<AllUserInCompanyResponse> call, Response<AllUserInCompanyResponse> response) {
+                Log.d(TAG, "onResponse: " + response.message());
+                Log.d(TAG, "onResponse: " + response.body().toString());
+                hideDialog();
+                liveData.postValue(response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<AllUserInCompanyResponse> call, Throwable t) {
+                hideDialog();
+            }
+        });
+        return liveData;
+    }
     public LiveData<LoginResponse> login(Login login) {
         final MutableLiveData<LoginResponse> liveData = new MutableLiveData<>();
         showDialog();
@@ -64,18 +84,45 @@ public class UserRepo {
             progressDoalog.dismiss();
     }
 
-    public void addUser(User user) {
-        Call<User> userCall = mUserApiInterface.postAddUser(user);
-        userCall.enqueue(new Callback<User>() {
+
+    public LiveData<AddUserResponse> addUser(User user) {
+        final MutableLiveData<AddUserResponse> liveData = new MutableLiveData<>();
+        showDialog();
+        mUserApiInterface.postAddUser(user).enqueue(new Callback<AddUserResponse>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<AddUserResponse> call, Response<AddUserResponse> response) {
                 Log.d(TAG, "onResponse: " + response.message());
+                Log.d(TAG, "onResponse: " + response.body().toString());
+                hideDialog();
+                liveData.postValue(response.body());
+
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-
+            public void onFailure(Call<AddUserResponse> call, Throwable t) {
+                hideDialog();
             }
         });
+        return liveData;
+    }
+    public LiveData<DisplayUserDetailsResponse> displayUserDetailsResponseLiveData(DisplayUserDetailsRequest displayUserDetailsRequest) {
+        final MutableLiveData<DisplayUserDetailsResponse> liveData = new MutableLiveData<>();
+        showDialog();
+        mUserApiInterface.DISPLAY_USER_DETAILS_RESPONSE_CALL(displayUserDetailsRequest).enqueue(new Callback<DisplayUserDetailsResponse>() {
+            @Override
+            public void onResponse(Call<DisplayUserDetailsResponse> call, Response<DisplayUserDetailsResponse> response) {
+                Log.d(TAG, "onResponse: " + response.message());
+                Log.d(TAG, "onResponse: " + response.body().toString());
+                hideDialog();
+                liveData.postValue(response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<DisplayUserDetailsResponse> call, Throwable t) {
+                hideDialog();
+            }
+        });
+        return liveData;
     }
 }

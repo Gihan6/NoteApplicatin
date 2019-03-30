@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
@@ -50,7 +51,7 @@ public class ViewAllTasksFragment extends Fragment {
     private Context mContext;
     private OnFragmentInteractionListener mListener;
     DialogPlus dialog;
-
+    FrameLayout empty_frame_layout;
     RecyclerView recycler_view_tasks;
     FloatingActionButton floating_button_add_task;
     TasksAdapter tasksAdapter;
@@ -145,6 +146,9 @@ public class ViewAllTasksFragment extends Fragment {
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)){
+                            if(GroupRes.getTasks().size()==0){
+                                empty_frame_layout.setVisibility(View.VISIBLE);
+                            }
                             tasks.clear();
                             tasks.addAll(GroupRes.getTasks());
                             tasksAdapter.notifyDataSetChanged();
@@ -193,11 +197,17 @@ public class ViewAllTasksFragment extends Fragment {
 
     private void configureViews(View view) {
         recycler_view_tasks=view.findViewById(R.id.recycler_view_tasks);
+        empty_frame_layout=view.findViewById(R.id.empty_frame_layout);
         floating_button_add_task=view.findViewById(R.id.floating_button_add_task);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_tasks.setLayoutManager(linearLayoutManager);
         recycler_view_tasks.setHasFixedSize(true);
-        tasksAdapter=new TasksAdapter(getActivity(), tasks, (v, position) -> Utils.showStringToast(getActivity(),String.valueOf("")));
+        tasksAdapter=new TasksAdapter(getActivity(), tasks, (v, position) ->
+                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new TaskDetailFragment(tasks.get(position)), getActivity(), Utils.VIEWAllTASKSFRAGGMENT, Utils.AnimationType.SLIDE_UP)
+
+
+
+        );
         // Set adapter in recyclerView
          toolbar = view.findViewById(R.id.anim_toolbar);
         ((NoteHomeActivity) getActivity()).setSupportActionBar(toolbar);

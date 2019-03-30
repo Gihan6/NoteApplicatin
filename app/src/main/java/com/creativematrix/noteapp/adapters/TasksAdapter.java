@@ -84,11 +84,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
         Task task=tasks.get(position);
         holder.task_name.setText(task.getTaskName());
-        if(String.valueOf(task.getTaskStatus()).equals("0")){
-            holder.task_status.setText(context.getResources().getString(R.string.task_under_processing));
+        if((task.getTaskStatus())){
+            holder.task_status.setText(context.getResources().getString(R.string.task_completed));
         }
         else {
-            holder.task_status.setText(context.getResources().getString(R.string.task_completed));
+            holder.task_status.setText(context.getResources().getString(R.string.task_under_processing));
 
         }
 

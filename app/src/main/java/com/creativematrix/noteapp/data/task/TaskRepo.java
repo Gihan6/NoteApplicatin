@@ -64,7 +64,44 @@ public class TaskRepo {
         });
         return mutableLiveData;
     }
+    public LiveData<Task> deleteTask(Task task) {
+        final MutableLiveData<Task> mutableLiveData = new MutableLiveData<>();
+        showDialog();
+        Call<Task> tasksResponseCall = mTaskApiInterface.postDeleteTask(task);
+        tasksResponseCall.enqueue(new Callback<Task>() {
+            @Override
+            public void onResponse(Call<Task> call, Response<Task> response) {
+                Log.d(TAG, "onResponse: " + response.message());
+                mutableLiveData.postValue(response.body());
+                hideDialog();
+            }
 
+            @Override
+            public void onFailure(Call<Task> call, Throwable t) {
+                hideDialog();
+            }
+        });
+        return mutableLiveData;
+    }
+    public LiveData<TaskDetailsResponse> displayTaskDetails(Task task) {
+        final MutableLiveData<TaskDetailsResponse> mutableLiveData = new MutableLiveData<>();
+        showDialog();
+        Call<TaskDetailsResponse> tasksResponseCall = mTaskApiInterface.postGetTaskDetails(task);
+        tasksResponseCall.enqueue(new Callback<TaskDetailsResponse>() {
+            @Override
+            public void onResponse(Call<TaskDetailsResponse> call, Response<TaskDetailsResponse> response) {
+                Log.d(TAG, "onResponse: " + response.message());
+                mutableLiveData.postValue(response.body());
+                hideDialog();
+            }
+
+            @Override
+            public void onFailure(Call<TaskDetailsResponse> call, Throwable t) {
+                hideDialog();
+            }
+        });
+        return mutableLiveData;
+    }
 
     public LiveData<DisplayTasksResponse> displayTasks(DisplayTaskRequest displayTaskRequest) {
         final MutableLiveData<DisplayTasksResponse> mutableLiveData = new MutableLiveData<>();
@@ -105,4 +142,5 @@ public class TaskRepo {
         });
         return mutableLiveData;
     }
+
 }

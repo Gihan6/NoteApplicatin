@@ -1,11 +1,13 @@
 
 package com.creativematrix.noteapp.data.groups;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
-public class LstGroup {
+public class LstGroup implements Serializable {
 
     @Expose
     private String $id;
@@ -20,6 +22,7 @@ public class LstGroup {
     @Expose
     private Object groupDescripationInEnglish;
     @Expose
+    @SerializedName("GroupId")
     private Long groupId;
     @Expose
     private Object groupImage;

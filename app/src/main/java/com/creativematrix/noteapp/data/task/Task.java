@@ -69,11 +69,22 @@ public class Task {
     @SerializedName("TaskDescripationEn")
     private String taskDescripationEn;
     @SerializedName("TaskID")
-    private Long taskID;
+    private Long TaskID;
     @SerializedName("TaskName")
     private String taskName;
     @SerializedName("TaskStatus")
-    private Long taskStatus;
+    private boolean taskStatus;
+
+    public Long getTaskState() {
+        return TaskState;
+    }
+
+    public void setTaskState(Long taskState) {
+        TaskState = taskState;
+    }
+
+    @SerializedName("TaskState")
+    private Long TaskState;
     @SerializedName("UserID")
     private Long userID;
     @SerializedName("UsersIDs")
@@ -187,11 +198,11 @@ public class Task {
     }
 
     public Long getTaskID() {
-        return taskID;
+        return TaskID;
     }
 
     public void setTaskID(Long taskID) {
-        this.taskID = taskID;
+        this.TaskID = taskID;
     }
 
     public String getTaskName() {
@@ -202,11 +213,11 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public Long getTaskStatus() {
+    public boolean getTaskStatus() {
         return taskStatus;
     }
 
-    public void setTaskStatus(Long taskStatus) {
+    public void setTaskStatus(boolean taskStatus) {
         this.taskStatus = taskStatus;
     }
 

@@ -76,7 +76,6 @@ public class CompanyRepo {
                 Log.d(TAG, "onResponse: " + response.body().toString());
                 hideDialog();
                 liveData.postValue(response.body());
-
             }
 
             @Override

@@ -35,6 +35,7 @@
         <activity android:name=".activities.VerificationActivity" />
         <activity android:name=".activities.SelectTaskStatusActivity" />
         <activity android:name=".activities.SelectTaskOwnersActivity" />
+        <activity android:name=".activities.SelectGroupActivity" />
         <activity android:name=".activities.SelectProjectActivity" />
         <activity android:name=".activities.AddTaskActivity" />
         <activity

@@ -69,8 +69,13 @@ public class Utils {
     public static final String VIEWAllGROUPSFRAGGMENT = "ViewAllGroupsFragment";
     public static final String VIEWAllTASKSFRAGGMENT = "ViewAllTasksFragment";
     public static final String ADDNEWGROUPFRAGMENT = "AddNewGroupFragment";
+    public static final String ADDNEWUSERFRAGMENT = "AddNewUserFragment";
+    public static final String VIEWAllUSERSFRAGGMENT = "ViewAllUsersFragment";
+
     public static final String ADDNEWTASKFRAGMENT = "AddNewTaskFragment";
     public static final String ADDNEWPROJECTFRAGMENT = "AddNewProjectFragment";
+    public static final String USERDETAILFRAGMENT = "UserDetailFragment";
+
     private static String CURRENT_TAG = null;
     private static Map<String, Typeface> TYPEFACE = new HashMap<String, Typeface>();
 
