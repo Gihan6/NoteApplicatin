@@ -17,7 +17,7 @@
         android:layout_gravity="center"
         android:background="@color/toolbar_color"
         android:gravity="center"
-        app:navigationIcon="@drawable/ic_back"
+        app:navigationIcon="@drawable/ic_back_icon"
         app:titleTextColor="@color/color_blue_primary">
 
         <TextView

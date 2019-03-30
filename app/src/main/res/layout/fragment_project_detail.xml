@@ -21,7 +21,7 @@
             android:minHeight="?attr/actionBarSize"
             app:layout_behavior="com.godevx.dawadoz.main.view.customview.FixAppBarLayoutBehavior"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:navigationIcon="@drawable/ic_back"
+            app:navigationIcon="@drawable/ic_back_icon"
             app:titleTextColor="@color/color_blue_primary">
 
             <TextView
