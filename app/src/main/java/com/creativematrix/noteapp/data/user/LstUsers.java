@@ -5,7 +5,21 @@ import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class LstUsers {
+    public LstUsers(Long mUserId) {
+        this.mUserId = mUserId;
+    }
 
+
+    public Long getGroupID() {
+        return GroupID;
+    }
+
+    public void setGroupID(Long groupID) {
+        GroupID = groupID;
+    }
+
+    @SerializedName("GroupID")
+    private Long GroupID;
     @SerializedName("$id")
     private String m$id;
     @SerializedName("CompanyID")

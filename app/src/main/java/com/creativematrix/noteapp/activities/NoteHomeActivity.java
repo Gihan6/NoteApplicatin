@@ -79,7 +79,7 @@ public class NoteHomeActivity extends AppCompatActivity
         } else {
             initializeView();
         }*/
-      // createFloatView();
+       createFloatView();
     }
 
     private void initializeView() {

@@ -71,6 +71,7 @@ public class Utils {
     public static final String ADDNEWGROUPFRAGMENT = "AddNewGroupFragment";
     public static final String ADDNEWUSERFRAGMENT = "AddNewUserFragment";
     public static final String VIEWAllUSERSFRAGGMENT = "ViewAllUsersFragment";
+    public static final String PROJECT_DETAIL_FRAGMENT = "ProjectDetailFragment";
 
     public static final String ADDNEWTASKFRAGMENT = "AddNewTaskFragment";
     public static final String ADDNEWPROJECTFRAGMENT = "AddNewProjectFragment";
@@ -186,7 +187,11 @@ public class Utils {
         return Math.round((float) dp * density);
     }
 
-    public static void switchFragmentWithAnimation(int id, Fragment fragment, FragmentActivity activity, String TAG, AnimationType transitionStyle) {
+    public static void switchFragmentWithAnimation(int id,
+                                                   Fragment fragment,
+                                                   FragmentActivity activity,
+                                                   String TAG,
+                                                   AnimationType transitionStyle) {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (transitionStyle != null) {

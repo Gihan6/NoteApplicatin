@@ -55,7 +55,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-        private TextView group_name;
+        private TextView group_name,group_desc;
         //RadioButton checker;
         CardView cardlist_item;
 
@@ -64,6 +64,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
             super(itemView);
             cardlist_item = itemView.findViewById(R.id.cardlist_item);
             group_name = itemView.findViewById(R.id.group_name);
+            group_desc= itemView.findViewById(R.id.group_desc);
            // checker=itemView.findViewById(R.id.checker);
             cardlist_item.setOnClickListener(this);
 
@@ -85,6 +86,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
         LstGroup lstGroup=cityArrayList.get(position);
 
         holder.group_name.setText(lstGroup.getMGroupName());
+        holder.group_desc.setText(lstGroup.getGroupDescripation());
 
 
     }

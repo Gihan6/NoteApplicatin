@@ -1,5 +1,6 @@
 package com.creativematrix.noteapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,12 +10,17 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.textfield.TextInputEditText;
+
 import androidx.fragment.app.Fragment;
 import androidx.cardview.widget.CardView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +49,17 @@ public class AddNewGroupFragment extends Fragment {
     private Context mContext;
     Toolbar toolbar;
     String logoPath;
+    Group mGroup = null;
+
+    @SuppressLint("ValidFragment")
+    public AddNewGroupFragment(Group group) {
+        this.mGroup = group;
+    }
+
+    public AddNewGroupFragment() {
+    }
+
+
     CardView upload_photo;
 
 
@@ -88,6 +105,11 @@ public class AddNewGroupFragment extends Fragment {
         ((NoteHomeActivity) getActivity()).getSupportActionBar()
                 .setDisplayShowTitleEnabled(false);
 
+        if (mGroup != null) {
+            et_group_name.setText(mGroup.getGroupName());
+            if(mGroup.getGroupDescreption()!=null)
+            et_group_desc.setText((String.valueOf(mGroup.getGroupDescreption())));
+        }
     }
 
 
@@ -106,17 +128,57 @@ public class AddNewGroupFragment extends Fragment {
         group.setGroupDescreption(groupDesc);
         group.setAddBy(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity()));
         group.setImagebinary(Utils.encodeImage(logoPath));
-        new GroupRepo(getActivity()).addGroup(group).observe(this, GroupRes -> {
-                    try {
-                        if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
-                            Utils.showResToast(mContext, R.string.group_added_successfully);
-                        }
-                        Log.d(TAG, "collectData: " + GroupRes.toString());
-                    } catch (Exception ex) {
-                        Log.d(TAG, "collectData: " + ex.getMessage());
-                    }
-                });
+        group.setLang(Utils.getLang());
+        if(mGroup!=null){
+            group.setGroupId(mGroup.getGroupId());
+            updateGroup(group);
+        }
+        else{
+            AddGroup(group);
+        }
+      
 
+    }
+
+    private void updateGroup(Group group) {
+        new GroupRepo(getActivity()).updateGroup(group).observe(this, GroupRes -> {
+            try {
+                if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                    //Utils.showResToast(mContext, R.string.group_added_successfully);
+                    Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.popBackStack(
+                            fragmentManager.getBackStackEntryAt(
+                                    fragmentManager.getBackStackEntryCount() - 2).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    //getActivity().onBackPressed();
+
+                }
+                else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
+                    Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
+                }
+                Log.d(TAG, "collectData: " + GroupRes.toString());
+            } catch (Exception ex) {
+                Log.d(TAG, "collectData: " + ex.getMessage());
+            }
+        });
+    }
+
+    private void AddGroup(Group group) {
+        new GroupRepo(getActivity()).addGroup(group).observe(this, GroupRes -> {
+            try {
+                if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                   // Utils.showResToast(mContext, R.string.group_added_successfully);
+                    Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
+                    getActivity().onBackPressed();
+                }
+                else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
+                     Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
+                }
+                Log.d(TAG, "collectData: " + GroupRes.toString());
+            } catch (Exception ex) {
+                Log.d(TAG, "collectData: " + ex.getMessage());
+            }
+        });
 
     }
 

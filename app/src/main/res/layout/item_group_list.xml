@@ -34,6 +34,13 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/list" />
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:orientation="vertical"
+                >
             <TextView
                 android:id="@+id/group_name"
                 android:layout_width="wrap_content"
@@ -48,7 +55,20 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:text="order_no" />
-
+                <TextView
+                    android:id="@+id/group_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:focusable="false"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:freezesText="true"
+                    android:textColor="@color/black"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text="order_no" />
+            </LinearLayout>
 
         </LinearLayout>
 

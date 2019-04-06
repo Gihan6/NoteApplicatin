@@ -17,4 +17,6 @@ public interface ProjectApiInterface {
     Call<DisplayProjectsResponse> postDisplayProjects(@Body DisplayProjectRequest displayTaskRequest);
     @POST("DisplayProjectDetials/")
     Call<ProjectDetailsResponse> postDisplayProjectDetails(@Body Project project);
+    @POST("EditProject/")
+    Call<Project> postUpdateProject(@Body Project project);
 }

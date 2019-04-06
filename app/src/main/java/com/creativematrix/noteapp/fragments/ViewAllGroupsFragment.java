@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -87,7 +88,11 @@ public class ViewAllGroupsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_all_groups, container, false);
         configureViews(view);
-        floating_button_add_group.setOnClickListener(view1 -> Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new AddNewGroupFragment(), getActivity(), Utils.ADDNEWGROUPFRAGMENT, Utils.AnimationType.SLIDE_UP));
+        floating_button_add_group.setOnClickListener(
+                view1 -> Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
+                        new AddNewGroupFragment(), getActivity(),
+                        Utils.ADDNEWGROUPFRAGMENT, Utils.AnimationType.SLIDE_UP
+                ));
 
         view.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
@@ -104,7 +109,10 @@ public class ViewAllGroupsFragment extends Fragment {
                             lstGroups.clear();
                             lstGroups.addAll(GroupRes.getLstGroup());
                             groupsAdapter.notifyDataSetChanged();
+                        } else {
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMessage()));
                         }
+
                     } catch (Exception ex) {
 
                     }

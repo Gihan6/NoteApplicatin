@@ -17,6 +17,8 @@ import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.adapters.GroupsAdapter;
 import com.creativematrix.noteapp.adapters.TasksInUsersAdapter;
+import com.creativematrix.noteapp.data.groups.Group;
+import com.creativematrix.noteapp.data.groups.GroupRepo;
 import com.creativematrix.noteapp.data.groups.LstGroup;
 import com.creativematrix.noteapp.data.project.Project;
 import com.creativematrix.noteapp.data.project.ProjectDetailsResponse;
@@ -26,6 +28,7 @@ import com.creativematrix.noteapp.data.user.DisplayUserDetailsRequest;
 import com.creativematrix.noteapp.data.user.LstUsers;
 import com.creativematrix.noteapp.data.user.User;
 import com.creativematrix.noteapp.data.user.UserRepo;
+import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -57,6 +60,7 @@ public class UserDetailFragment extends Fragment {
     Toolbar toolbar;
     LstUsers mUser;
     DialogPlus dialog;
+    Button btnUpdate,btnDelete;
     TextView user_name,user_email,user_name_title;
     public UserDetailFragment(LstUsers user) {
         this.mUser = user;
@@ -84,21 +88,48 @@ public class UserDetailFragment extends Fragment {
             }
             return true;
         });
+        btnDelete.setOnClickListener(v ->
+                deleteUser(mUser));
 
+        btnUpdate.setOnClickListener(v -> {
+           /* Group group = new Group();
+            group.setLang(Utils.getLang());
+            if (mGroup.getGroupId() != null)
+                group.setGroupId(mGroup.getGroupId());
+
+            if (mGroup.getGroupImage() != null)
+                group.setImagebinary(mGroup.getGroupImage());
+
+            if (mGroup.getGroupDescripation() != null)
+                group.setGroupDescreption(mGroup.getGroupDescripation());
+
+            if (mGroup.getMGroupName() != null)
+                group.setGroupName(
+                        mGroup.getMGroupName());
+            if (mGroup.getGroupDescripation() != null)
+                group.setGroupDescreption(mGroup.getGroupDescripation());*/
+
+            Utils.switchFragmentWithAnimation
+                    (R.id.fragment_holder_home,
+                            new AddNewUserFragment(mUser),
+                            getActivity(),
+                            Utils.ADDNEWGROUPFRAGMENT,
+                            Utils.AnimationType.SLIDE_UP);
+
+
+        });
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         new UserRepo(getActivity()).displayUserDetailsResponseLiveData(new DisplayUserDetailsRequest(mUser.getUserId()))
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
-
                             tasks.clear();
                             tasks.addAll(GroupRes.getTasks());
                             tasksInUsersAdapter.notifyDataSetChanged();
                             user_name_title.setText(GroupRes.getName());
                             user_email.setText(GroupRes.getEmail());
                             user_name.setText(GroupRes.getName());
-
                             //Utils.showStringToast(getActivity(),getResources().getString(R.string.deleted_succees));
                         }
                         else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
@@ -116,6 +147,45 @@ public class UserDetailFragment extends Fragment {
 
 
 
+
+    private void deleteUser(LstUsers mUser) {
+        mUser.setLang(Utils.getLang());
+        dialog = DialogPlus.newDialog(getActivity())
+                .setContentHolder(new ViewHolder(R.layout.custom_dialog_confrim_delete))
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setGravity(Gravity.CENTER)
+                .create();
+        dialog.show();
+
+        LinearLayout btnYes = (LinearLayout) dialog.findViewById(R.id.btnYes);
+        LinearLayout btnNo = (LinearLayout) dialog.findViewById(R.id.btnNo);
+        btnYes.setOnClickListener(v ->
+                confirm_delete_group(mUser)
+
+        );
+        btnNo.setOnClickListener(v -> dialog.dismiss());
+    }
+
+    private void confirm_delete_group(LstUsers mUser) {
+        dialog.dismiss();
+        new UserRepo(getActivity()).deleteUser(mUser)
+                .observe(this, GroupRes -> {
+                    try {
+                        if (GroupRes.getFlag().equals(String.valueOf(Constant.RESPONSE_SUCCESS))) {
+
+                            Utils.showStringToast(getActivity(), getResources().getString(R.string.deleted_succees));
+                            getActivity().onBackPressed();
+                        } else if (GroupRes.getFlag().equals(String.valueOf(Constant.RESPONSE_FAILURE))) {
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMessage()));
+
+
+                        }
+                    } catch (Exception ex) {
+
+
+                    }
+                });
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -155,6 +225,8 @@ public class UserDetailFragment extends Fragment {
     private void configureViews(View view) {
         user_name= view.findViewById(R.id.user_name);
         user_email= view.findViewById(R.id.user_email);
+        btnUpdate= view.findViewById(R.id.btnUpdate);
+        btnDelete= view.findViewById(R.id.btnDelete);
         user_name_title= view.findViewById(R.id.user_name_title);
         recycler_view_users = view.findViewById(R.id.recycler_view_tasks);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

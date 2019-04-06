@@ -35,8 +35,6 @@ public class AllUsersAdapter extends RecyclerView.Adapter<AllUsersAdapter.ViewHo
 
         void addCity(View v, int position);
 
-
-
     }
     public void setOnItemClickListener(final AllUsersAdapter.OnItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
@@ -68,24 +66,18 @@ public class AllUsersAdapter extends RecyclerView.Adapter<AllUsersAdapter.ViewHo
             user_group= itemView.findViewById(R.id.user_group);
            // checker=itemView.findViewById(R.id.checker);
             cardlist_item.setOnClickListener(this);
-
         }
-
 
         @Override
         public void onClick(View v) {
-
             sSelected = getAdapterPosition();
             clickListener.onItemClick(v, getPosition());
-
         }
     }
 
     @Override
     public void onBindViewHolder(final AllUsersAdapter.ViewHolder holder, int position) {
-
         LstUsers lstUser=lstUsers.get(position);
-
         holder.user_name.setText(lstUser.getUserName());
         holder.user_group.setText(lstUser.getGroupName());
 

@@ -107,7 +107,7 @@
     <string name="task_end_date_empty">Task end date Can not Be Empty</string>
     <string name="task_under_processing">Under Processing</string>
     <string name="task_completed">Completed</string>
-    <string name="project_add_successfully">Project Added Successfully</string>
+    <string name="project_add_successfully">Saved Successfully</string>
     <string name="start_record">Start Recording Calls</string>
     <string name="stop_record">Stop Recording Calls</string>
     <string name="update">Update</string>
@@ -124,5 +124,12 @@
     <string name="start_time">Start :</string>
     <string name="end_time">End :</string>
     <string name="tasks_count">Tasks Count</string>
+    <string name="what_do_you_want_to_do">What Do You Want To Do ?</string>
+    <string name="project_updated_successfully">Project Updated Successfully</string>
+    <string name="no_member_yet">No Members Yet</string>
+    <string name="default_file_name" translatable="false">TaskNote</string>
+    <string name="toast_recording_start">Recording Voice Note Started</string>
+    <string name="record_in_progress">Recording</string>
+    <string name="record_prompt">Tap to start record</string>
 
 </resources>

@@ -17,4 +17,9 @@ public interface UserApiInterface {
     Call<AllUserInCompanyResponse> login(@Body DisplayAllUsersRequest displayAllUsersRequest);
     @POST("DisplayUserDetails/")
     Call<DisplayUserDetailsResponse> DISPLAY_USER_DETAILS_RESPONSE_CALL(@Body DisplayUserDetailsRequest displayUserDetailsRequest);
+    @POST("DeleteUser/")
+    Call<DeleteUserResponse> postDeleteUser(@Body LstUsers lstUsers);
+
+    @POST("EditUser/")
+    Call<UpdateUserResponse> postEditUser(@Body User user);
 }

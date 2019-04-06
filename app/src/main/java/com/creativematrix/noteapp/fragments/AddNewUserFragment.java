@@ -1,5 +1,6 @@
 package com.creativematrix.noteapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -58,7 +59,19 @@ public class AddNewUserFragment extends Fragment {
     Toolbar toolbar;
     String logoPath;
     CardView upload_photo;
+    Long GroupID;
+    LstUsers mUser;
+   Long UserId;
+    @SuppressLint("ValidFragment")
+    public AddNewUserFragment(LstUsers user) {
+        this.mUser = user;
+        GroupID = mUser.getGroupID();
+        UserId=mUser.getUserId();
+    }
 
+    public AddNewUserFragment() {
+
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -96,7 +109,16 @@ public class AddNewUserFragment extends Fragment {
         input_user_group = view.findViewById(R.id.input_user_group);
         btn_save_user = view.findViewById(R.id.btn_save_user);
         toolbar = view.findViewById(R.id.toolbar);
+        if (mUser != null) {
+            if (mUser.getUserPhone() != null)
+                input_register_user_phone.setText(String.valueOf(mUser.getUserPhone()));
 
+            if (mUser.getUserEmail() != null)
+                input_register_user_email.setText((String.valueOf(mUser.getUserEmail())));
+
+            if (mUser.getGroupName() != null)
+                input_user_group.setText((String.valueOf(mUser.getGroupName())));
+        }
     }
 
 
@@ -124,9 +146,40 @@ public class AddNewUserFragment extends Fragment {
             Utils.showResToast(mContext, R.string.user_group_empty_msg);
             return;
         }
+        User user;
+        user = new User(userEmail, userPhone, userPassword, Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())), GroupID, Utils.getLang(), "");
 
-        User user = new User(userEmail, userPhone, userPassword, Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())), "", "");
+        if (mUser != null) {
+            user.setmUserId(UserId);
+            updateUser(user);
+        } else {
+            AddUser(user);
+        }
 
+
+
+    }
+
+    private void updateUser(User user) {
+        new UserRepo(getActivity()).updateUser(user).observe(this, GroupRes -> {
+            try {
+                if (GroupRes.getFlag().equals(String.valueOf(Constant.RESPONSE_SUCCESS))) {
+                    Utils.showResToast(mContext, R.string.user_added_successfully);
+                    getActivity().onBackPressed();
+                } else {
+                    Utils.showStringToast(mContext, GroupRes.getMessage());
+                }
+                Log.d(TAG, "collectData: " + GroupRes.toString());
+            } catch (Exception ex) {
+                Log.d(TAG, "collectData: " + ex.getMessage());
+            }
+        });
+    }
+
+    private static final int READ_REQUEST_CODE = 42;
+
+
+    private void AddUser(User user) {
         new UserRepo(getActivity()).addUser(user).observe(this, GroupRes -> {
             try {
                 if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
@@ -140,17 +193,6 @@ public class AddNewUserFragment extends Fragment {
                 Log.d(TAG, "collectData: " + ex.getMessage());
             }
         });
-
-
-    }
-
-    private static final int READ_REQUEST_CODE = 42;
-
-
-
-    private void uploadPhoto() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, RESULT_LOAD_IMAGE);
     }
 
     @Override
@@ -169,5 +211,6 @@ public class AddNewUserFragment extends Fragment {
 
     private void setGroupName() {
         SelectedGroupName = String.valueOf(lstGroups.get(0).getMGroupName());
+        GroupID = lstGroups.get(0).getGroupId();
     }
 }

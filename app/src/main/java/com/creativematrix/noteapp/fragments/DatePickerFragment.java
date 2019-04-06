@@ -1,8 +1,10 @@
 package com.creativematrix.noteapp.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -43,7 +45,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+        dialog = new DatePickerDialog(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,this, year, month, day);
+
+
         return dialog;
     }
 }

@@ -23,6 +23,8 @@
         <activity android:name=".activities.UserLoginRegisterActivity"></activity>
 
         <service android:name=".services.FloatingService" />
+        <service android:name=".services.RecordingService" />
+
         <service android:name=".services.FloatingViewService" />
         <activity android:name=".activities.CompanyLoginRegisterActivity"></activity>
         <activity android:name=".activities.SplachScreen">

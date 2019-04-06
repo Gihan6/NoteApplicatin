@@ -1,11 +1,15 @@
 package com.creativematrix.noteapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.creativematrix.noteapp.activities.SelectTaskCoinActivity;
+import com.creativematrix.noteapp.data.coins.CurrencyList;
 import com.google.android.material.textfield.TextInputEditText;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
@@ -41,6 +45,7 @@ public class AddNewProjectFragment extends Fragment {
     private TextInputEditText editTextProjectEndTime;
     private TextInputEditText editTextProjectEndDate;
     private TextInputEditText editTextProjectDirector ;
+    private TextInputEditText  editTextProjectCoin;
     private TextView textViewAddMember;
     private Button buttonSaveProject;
     private Context mContext;
@@ -50,7 +55,17 @@ public class AddNewProjectFragment extends Fragment {
     private String startTime;
     private String endDate;
     private String endTime;
+    private List<CurrencyList> currencyLists = new ArrayList<>();
+    Project mProject;
     private List<LstUsersnCompnay> lstUsersnCompnays = new ArrayList<>();
+    private static final int GET_CURRNECY = 23;
+
+    @SuppressLint("ValidFragment")
+    public AddNewProjectFragment(Project project) {
+        this.mProject=project;
+    }
+    public AddNewProjectFragment() {
+    }
 
     private static final int GET_USERS_INCOMPANY = 20;
 
@@ -98,7 +113,10 @@ public class AddNewProjectFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView
+            (@NonNull LayoutInflater inflater,
+             @Nullable ViewGroup container,
+             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_new_project, container, false);
         configureViews(view);
 
@@ -122,7 +140,9 @@ public class AddNewProjectFragment extends Fragment {
             showTimeFragment();
             mCallbacks.onEndTimeClicked(Constant.END_TIME);
         });
-
+        editTextProjectCoin.setOnClickListener(v -> {
+            startActivityForResult(new Intent(getActivity(), SelectTaskCoinActivity.class), GET_CURRNECY);
+        });
         buttonSaveProject.setOnClickListener(v -> {
             collectData();
         });
@@ -147,9 +167,18 @@ public class AddNewProjectFragment extends Fragment {
         editTextProjectStartDate = view.findViewById(R.id.input_project_start_date);
         editTextProjectEndTime = view.findViewById(R.id.input_project_end_time);
         editTextProjectEndDate = view.findViewById(R.id.input_project_end_date);
+        editTextProjectCoin= view.findViewById(R.id.editTextProjectCoin);
         editTextProjectDirector= view.findViewById(R.id.input_project_director);
         toolbar = view.findViewById(R.id.anim_toolbar);
         buttonSaveProject = view.findViewById(R.id.btn_save_project);
+        if (mProject != null) {
+            editTextProjectName.setText(mProject.getProjectName());
+            if(mProject.getProjectDescripation()!=null)
+                editTextProjectDescription .setText((String.valueOf(mProject.getProjectDescripation())));
+            if(mProject.getProjectCost()!=null)
+                editTextProjectCost.setText((String.valueOf(mProject.getProjectDescripation())));
+
+        }
     }
 
     public void showDateFragment() {
@@ -171,6 +200,7 @@ public class AddNewProjectFragment extends Fragment {
         String projectStartDate = editTextProjectStartDate.getText().toString();
         String projectEndTime = editTextProjectEndTime.getText().toString();
         String projectEndDate = editTextProjectEndDate.getText().toString();
+
         String projectDirector= taskOwnerIDS;
         if (Utils.isFieldEmpty(projectName)) {
             Utils.showResToast(mContext, R.string.project_name_empty);
@@ -184,6 +214,20 @@ public class AddNewProjectFragment extends Fragment {
 
         Log.d(TAG, "collectData: " + projectStartDate + " " + projectStartTime);
         Log.d(TAG, "collectData: " + projectEndDate + " " + projectEndTime);
+        if(mProject!=null){
+            project.setId(mProject.getId());
+            updateProject(project);
+        }
+        else{
+            AddProject(project);
+        }
+
+
+
+
+    }
+
+    private void AddProject(Project project) {
         new ProjectRepo(getActivity()).addProject(project)
                 .observe(this, projectRes -> {
                     try {
@@ -191,13 +235,32 @@ public class AddNewProjectFragment extends Fragment {
                             Utils.showStringToast(getActivity(), getString(R.string.project_add_successfully));
                             getActivity().onBackPressed();
                         }
+                        else if (projectRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
+                            Utils.showStringToast(getActivity(),String.valueOf(projectRes.getMsg()));
+                        }
                         Log.d(TAG, "collectData: " + projectRes.toString());
                     } catch (Exception ex) {
                         Log.d(TAG, "collectData: " + ex.getMessage());
                     }
                 });
+    }
 
-
+    private void updateProject(Project project) {
+        new ProjectRepo(getActivity()).updateProject(project)
+                .observe(this, projectRes -> {
+                    try {
+                        if (projectRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            Utils.showStringToast(getActivity(), getString(R.string.project_updated_successfully));
+                            getActivity().onBackPressed();
+                        }
+                        else if (projectRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
+                            Utils.showStringToast(getActivity(),String.valueOf(projectRes.getMsg()));
+                        }
+                        Log.d(TAG, "collectData: " + projectRes.toString());
+                    } catch (Exception ex) {
+                        Log.d(TAG, "collectData: " + ex.getMessage());
+                    }
+                });
     }
 
     private static final int READ_REQUEST_CODE = 42;
@@ -234,9 +297,19 @@ public class AddNewProjectFragment extends Fragment {
                 editTextProjectDirector.setText(taskOwnerNames);
             }
         }
-
+        if (requestCode == GET_CURRNECY && resultCode == Activity.RESULT_OK) {
+            //Intent i = getActivity().getIntent();
+            currencyLists = (List<CurrencyList>) resultData.getSerializableExtra(Constant.TASK_CURRNECY_LIST);
+            if (currencyLists.size() > 0) {
+                setTaskCurrency();
+                editTextProjectCoin.setText(selectedCurrencyName);
+            }
+        }
     }
-
+    private void setTaskCurrency() {
+        selectedCurrnecyID = String.valueOf(currencyLists.get(0).getCurrencyID());
+        selectedCurrencyName = String.valueOf(currencyLists.get(0).getCurrencyName());
+    }
     private void setIdsAndNamesOfUsers() {
         taskOwnerIDS = "";
         taskOwnerNames = "";

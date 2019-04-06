@@ -4,14 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
+import com.creativematrix.noteapp.activities.NoteHomeActivity;
 import com.creativematrix.noteapp.adapters.TasksInGroupAdapter;
 import com.creativematrix.noteapp.adapters.TasksInUsersAdapter;
 import com.creativematrix.noteapp.data.groups.DisplayGroupDetailsRequest;
@@ -21,13 +25,17 @@ import com.creativematrix.noteapp.data.groups.GroupRepo;
 import com.creativematrix.noteapp.data.groups.LstGroup;
 import com.creativematrix.noteapp.data.groups.Userslst;
 import com.creativematrix.noteapp.data.task.Task;
+import com.creativematrix.noteapp.data.task.TaskRepo;
 import com.creativematrix.noteapp.data.user.DisplayUserDetailsRequest;
 import com.creativematrix.noteapp.data.user.LstUsers;
 import com.creativematrix.noteapp.data.user.UserRepo;
+import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
 import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.ArrayList;
+import java.util.SplittableRandom;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -53,11 +61,13 @@ public class GroupDetailFragment extends Fragment {
     Toolbar toolbar;
     LstGroup mGroup;
     DialogPlus dialog;
-    TextView group_name,group_name_title,members_count;
+    TextView group_name, group_name_title, members_count, no_member;
+
     public GroupDetailFragment(LstGroup group) {
         this.mGroup = group;
     }
 
+    Button btnUpdate, btnDelete;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +90,38 @@ public class GroupDetailFragment extends Fragment {
             }
             return true;
         });
+        btnDelete.setOnClickListener(v ->
+                deleteGroup(
+                        new Group((mGroup.getGroupId()),
+                                String.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())), Utils.getLang())));
 
+        btnUpdate.setOnClickListener(v -> {
+            Group group = new Group();
+            group.setLang(Utils.getLang());
+            if (mGroup.getGroupId() != null)
+                group.setGroupId(mGroup.getGroupId());
+
+            if (mGroup.getGroupImage() != null)
+                group.setImagebinary(mGroup.getGroupImage());
+
+            if (mGroup.getGroupDescripation() != null)
+                group.setGroupDescreption(mGroup.getGroupDescripation());
+
+            if (mGroup.getMGroupName() != null)
+                group.setGroupName(
+                        mGroup.getMGroupName());
+            if (mGroup.getGroupDescripation() != null)
+                group.setGroupDescreption(mGroup.getGroupDescripation());
+
+            Utils.switchFragmentWithAnimation
+                    (R.id.fragment_holder_home,
+                            new AddNewGroupFragment(group),
+                            getActivity(),
+                            Utils.ADDNEWGROUPFRAGMENT,
+                            Utils.AnimationType.SLIDE_UP);
+
+
+        });
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         new GroupRepo(getActivity()).displayGroupDetailsResponseLiveData(new DisplayGroupDetailsRequest(mGroup.getGroupId()))
@@ -92,11 +133,10 @@ public class GroupDetailFragment extends Fragment {
                             tasksInGroupAdapter.notifyDataSetChanged();
                             group_name_title.setText(mGroup.getMGroupName());
                             group_name.setText(mGroup.getMGroupName());
-
+                            no_member.setVisibility(View.GONE);
                             //Utils.showStringToast(getActivity(),getResources().getString(R.string.deleted_succees));
-                        }
-                        else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
-                            Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
+                        } else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)) {
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMessage()));
                         }
                     } catch (Exception ex) {
 
@@ -106,9 +146,43 @@ public class GroupDetailFragment extends Fragment {
         return view;
     }
 
+    private void deleteGroup(Group mGroup) {
+        mGroup.setLang(Utils.getLang());
+        dialog = DialogPlus.newDialog(getActivity())
+                .setContentHolder(new ViewHolder(R.layout.custom_dialog_confrim_delete))
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setGravity(Gravity.CENTER)
+                .create();
+        dialog.show();
 
+        LinearLayout btnYes = (LinearLayout) dialog.findViewById(R.id.btnYes);
+        LinearLayout btnNo = (LinearLayout) dialog.findViewById(R.id.btnNo);
+        btnYes.setOnClickListener(v ->
+                confirm_delete_group(mGroup)
+        );
+        btnNo.setOnClickListener(v -> dialog.dismiss());
+    }
 
+    private void confirm_delete_group(Group mGroup) {
+        new GroupRepo(getActivity()).deleteGroup(mGroup)
+                .observe(this, GroupRes -> {
+                    try {
+                        if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            dialog.dismiss();
+                            Utils.showStringToast(getActivity(), getResources().getString(R.string.deleted_succees));
+                            getActivity().onBackPressed();
+                        } else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)) {
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMsg()));
+                            dialog.dismiss();
 
+                        }
+                    } catch (Exception ex) {
+                        dialog.dismiss();
+
+                    }
+                });
+
+    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -147,18 +221,24 @@ public class GroupDetailFragment extends Fragment {
     }
 
     private void configureViews(View view) {
-        group_name= view.findViewById(R.id.group_name);
-        group_name_title= view.findViewById(R.id.group_name_title);
-        members_count= view.findViewById(R.id.members_count);
+        group_name = view.findViewById(R.id.group_name);
+        no_member = view.findViewById(R.id.no_member);
+        group_name_title = view.findViewById(R.id.group_name_title);
+        btnUpdate = view.findViewById(R.id.btnUpdate);
+        btnDelete = view.findViewById(R.id.btnDelete);
+        members_count = view.findViewById(R.id.members_count);
         recycler_view_users = view.findViewById(R.id.recycler_view_users);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_users.setLayoutManager(linearLayoutManager);
         recycler_view_users.setHasFixedSize(true);
-        tasksInGroupAdapter = new TasksInGroupAdapter(getActivity(), userslsts, (v, position) -> Utils.showStringToast(getActivity(), String.valueOf(userslsts.get(position).getTasknumber())));
+        tasksInGroupAdapter = new TasksInGroupAdapter(
+                getActivity(), userslsts, (v, position) ->
+                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
+                        new UserDetailFragment(new LstUsers(userslsts.get(position).getUserId())),
+                        getActivity(), Utils.USERDETAILFRAGMENT, Utils.AnimationType.SLIDE_UP)
+        );
         // Set adapter in recyclerView
         toolbar = view.findViewById(R.id.anim_toolbar);
-
         recycler_view_users.setAdapter(tasksInGroupAdapter);
-
     }
 }

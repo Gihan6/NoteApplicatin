@@ -167,6 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:visibility="gone"
                 android:padding="16dp"
                 android:text="@string/signup_text_person"
                 android:textColor="@color/edit_text_colors" />

@@ -18,9 +18,9 @@ public class LstGroup implements Serializable {
     @Expose
     private Long companyid;
     @Expose
-    private String groupDescripation;
+    private String groupDescreption;
     @Expose
-    private Object groupDescripationInEnglish;
+    private Object groupDescreptionen;
     @Expose
     @SerializedName("GroupId")
     private Long groupId;
@@ -70,19 +70,19 @@ public class LstGroup implements Serializable {
     }
 
     public String getGroupDescripation() {
-        return groupDescripation;
+        return groupDescreption;
     }
 
     public void setGroupDescripation(String groupDescripation) {
-        this.groupDescripation = groupDescripation;
+        this.groupDescreption = groupDescripation;
     }
 
     public Object getGroupDescripationInEnglish() {
-        return groupDescripationInEnglish;
+        return groupDescreptionen;
     }
 
     public void setGroupDescripationInEnglish(Object groupDescripationInEnglish) {
-        this.groupDescripationInEnglish = groupDescripationInEnglish;
+        this.groupDescreptionen = groupDescripationInEnglish;
     }
 
     public Long getGroupId() {

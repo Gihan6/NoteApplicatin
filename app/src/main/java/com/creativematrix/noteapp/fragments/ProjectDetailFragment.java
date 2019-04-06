@@ -81,8 +81,15 @@ public class ProjectDetailFragment extends Fragment {
             return true;
         });
         btnDelete.setOnClickListener(v -> {
-          //  deleteTask();
+           deleteProject();
         });
+        btnUpdate.setOnClickListener(v ->
+                Utils.switchFragmentWithAnimation
+                        (R.id.fragment_holder_home,
+                                new AddNewProjectFragment(mProject),
+                                getActivity(),
+                                Utils.ADDNEWGROUPFRAGMENT,
+                                Utils.AnimationType.SLIDE_UP));
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         new ProjectRepo(getActivity()).displayProjectDeitals(mProject)
@@ -93,7 +100,7 @@ public class ProjectDetailFragment extends Fragment {
                             //Utils.showStringToast(getActivity(),getResources().getString(R.string.deleted_succees));
                         }
                         else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
-                         //   Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
+                           Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
                         }
                     } catch (Exception ex) {
 
@@ -120,7 +127,8 @@ public class ProjectDetailFragment extends Fragment {
     }
 
     private void confirm_delete_project(Project mProject) {
-        new ProjectRepo(getActivity()).displayProjectDeitals(mProject)
+
+        /*new ProjectRepo(getActivity()).displayProjectDeitals(mProject)
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
@@ -133,7 +141,7 @@ public class ProjectDetailFragment extends Fragment {
 
                     }
                 });
-
+*/
     }
 
     private void initialzeData(ProjectDetailsResponse groupRes) {

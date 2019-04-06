@@ -41,14 +41,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_margin="@dimen/title_list"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:weightSum="10"
         android:layout_below="@+id/appbar"
         android:orientation="vertical">
 
         <FrameLayout
+            android:layout_weight="3"
             android:id="@+id/empty_frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/appbar"
             android:fillViewport="true"
             >
@@ -99,8 +101,9 @@
         </FrameLayout>
         <!-- TODO: Update blank fragment layout -->
         <FrameLayout
+            android:layout_weight="6"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/appbar"
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -109,7 +112,50 @@
                 android:id="@+id/recycler_view_users"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/no_member"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:layout_margin="5dp"
+                android:text="@string/no_member_yet"
+                android:textColor="@color/color_blue_primary"
+                android:textSize="@dimen/title_list"
+                android:textStyle="bold" />
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_green"
+                android:text="@string/update"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_red"
+                android:text="@string/delete"
+                android:textColor="#FFF" />
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>
 

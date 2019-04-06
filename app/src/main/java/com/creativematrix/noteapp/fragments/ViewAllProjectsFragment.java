@@ -150,7 +150,10 @@ public class ViewAllProjectsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_projects.setLayoutManager(linearLayoutManager);
         recycler_view_projects.setHasFixedSize(true);
-        projectAdapter = new ProjectAdapter(getActivity(), projects, (v, position) -> Utils.showStringToast(getActivity(), String.valueOf("")));
+        projectAdapter = new ProjectAdapter(getActivity(), projects, (v, position) ->
+                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new ProjectDetailFragment(projects.get(position)), getActivity(), Utils.PROJECT_DETAIL_FRAGMENT, Utils.AnimationType.SLIDE_UP)
+
+        );
         // Set adapter in recyclerView
         toolbar = view.findViewById(R.id.anim_toolbar);
         /*

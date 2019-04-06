@@ -6,6 +6,12 @@ import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class Group {
+    public Group(Long groupId,String companyId, String lang) {
+        this.companyId = companyId;
+        this.groupId = groupId;
+        this.lang=lang;
+    }
+
     public Group(String $id, String addBy, String companyId, String flag, Object groupDescreption, Object groupDescreptionen, Long groupId, Object groupImage, String groupName, Object groupNameen, Object imagebinary, Object lang, String message, Object msg) {
         this.$id = $id;
         this.addBy = addBy;

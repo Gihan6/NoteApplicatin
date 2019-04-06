@@ -131,9 +131,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/coin"
-                        android:focusableInTouchMode="false"
                         android:inputType="textMultiLine"
                         android:padding="10dp"
+                        android:focusableInTouchMode="false"
+
                         android:drawableEnd="@drawable/ic_action_name"
                         android:textColorHint="@android:color/background_dark" />
 
