@@ -29,6 +29,7 @@ public class PreferenceHelper {
     // Handle Local Caching of data for responsiveness
     public static final String MY_CART_LIST_LOCAL = "MyCartItems";
     private static final String USER_LOGGED_IN = "isLoggedIn";
+    private static final String ISCOMPANY = "isCompany";
     public static final String USER_COMPLETE_PROFILE = "isCompleteProfile";
 
     public static final String USER_CODE_VERIFCATION = "userCodeVerification";
@@ -145,17 +146,25 @@ public class PreferenceHelper {
                 .getString(key, defaultValue);
     }
 
+    public void setIscompany(boolean UserLoggedIn, Context appContext) {
+        setBoolean(appContext, ISCOMPANY, UserLoggedIn);
+    }
+
+
+    public boolean getIsCompany(Context appContext) {
+        return getBoolean(appContext, ISCOMPANY, false);
+    }
     public void setUserLoggedIn(boolean UserLoggedIn, Context appContext) {
         setBoolean(appContext, USER_LOGGED_IN, UserLoggedIn);
     }
 
-    public void setUSER_Complete_PROFILE(boolean USER_Complete_PROFILE, Context appContext) {
 
-
-        setBoolean(appContext, USER_COMPLETE_PROFILE, USER_Complete_PROFILE);
-    }
     public boolean isUserLoggedIn(Context appContext) {
         return getBoolean(appContext, USER_LOGGED_IN, false);
+    }
+
+    public void setUSER_Complete_PROFILE(boolean USER_Complete_PROFILE, Context appContext) {
+        setBoolean(appContext, USER_COMPLETE_PROFILE, USER_Complete_PROFILE);
     }
     public boolean isUSER_Complete_PROFILE(Context appContext) {
         return getBoolean(appContext, USER_COMPLETE_PROFILE, false);

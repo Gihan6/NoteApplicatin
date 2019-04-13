@@ -90,6 +90,8 @@
     <string name="user_group_empty_msg">قم باختيار المجموعة</string>
     <string name="user_phone_empty_msg">قم بادخال رقم الجوال</string>
     <string name="no_tasks_found">لا يوجد مهام انقر لاضافة مهمة جديده</string>
+    <string name="no_projects_found">لا يوجد مشاريع انقر لاضافة مشروع جديد</string>
+
     <string name="start_time">بدأ:</string>
     <string name="end_time">انتهاء:</string>
     <string name="tasks_count">عدد المهام</string>

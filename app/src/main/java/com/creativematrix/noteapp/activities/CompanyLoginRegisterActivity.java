@@ -78,6 +78,7 @@ public class CompanyLoginRegisterActivity extends AppCompatActivity implements R
             // go to new activity
             PreferenceHelper.getPrefernceHelperInstace().storeCompanyData(this, String.valueOf(loginResponse.getiD()), email, password,logoPath,Type);
             PreferenceHelper.getPrefernceHelperInstace().setUserLoggedIn(true, CompanyLoginRegisterActivity.this);
+            PreferenceHelper.getPrefernceHelperInstace().setIscompany(true,CompanyLoginRegisterActivity.this);
             Intent intent = new Intent(this, NoteHomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

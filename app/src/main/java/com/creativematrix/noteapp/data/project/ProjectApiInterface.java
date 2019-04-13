@@ -11,12 +11,12 @@ public interface ProjectApiInterface {
 
     @POST("AddProject/")
     Call<Project> postAddProject(@Body Project project);
-    @POST("DeleteProject/")
-    Call<Project> postDeleteProject(@Body Project project);
+    @POST("DeletePro/")
+    Call<DeleteProjectResponse> postDeleteProject(@Body Project project);
     @POST("DispalyProjects/")
     Call<DisplayProjectsResponse> postDisplayProjects(@Body DisplayProjectRequest displayTaskRequest);
     @POST("DisplayProjectDetials/")
     Call<ProjectDetailsResponse> postDisplayProjectDetails(@Body Project project);
     @POST("EditProject/")
-    Call<Project> postUpdateProject(@Body Project project);
+    Call<UpdateProjectResponse> postUpdateProject(@Body Project project);
 }

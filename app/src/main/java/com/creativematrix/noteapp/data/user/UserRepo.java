@@ -10,7 +10,6 @@ import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.data.ApiClient;
 import com.creativematrix.noteapp.data.company.Login;
 import com.creativematrix.noteapp.data.company.LoginResponse;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -5,15 +5,18 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:visible="false"
             android:id="@+id/nav_projects"
             android:title="@string/projects" />
         <item
             android:id="@+id/nav_tasks"
             android:title="@string/tasks" />
         <item
+            android:visible="false"
             android:id="@+id/nav_groups"
             android:title="@string/groups" />
         <item
+            android:visible="false"
             android:id="@+id/nav_members"
             android:title="@string/members" />
     </group>

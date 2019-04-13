@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
@@ -36,6 +37,7 @@ public class ViewAllProjectsFragment extends Fragment {
     private String mParam2;
     private Context mContext;
     private ViewAllTasksFragment.OnFragmentInteractionListener mListener;
+FrameLayout     empty_frame_layout;
 
 
     RecyclerView recycler_view_projects;
@@ -96,6 +98,9 @@ public class ViewAllProjectsFragment extends Fragment {
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            if(GroupRes.getProjects().size()==0){
+                                empty_frame_layout.setVisibility(View.VISIBLE);
+                            }
                             projects.clear();
                             projects.addAll(GroupRes.getProjects());
                             projectAdapter.notifyDataSetChanged();
@@ -147,6 +152,7 @@ public class ViewAllProjectsFragment extends Fragment {
     private void configureViews(View view) {
         recycler_view_projects = view.findViewById(R.id.recycler_view_projects);
         floating_button_add_project = view.findViewById(R.id.floating_button_add_project);
+        empty_frame_layout = view.findViewById(R.id.empty_frame_layout);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_projects.setLayoutManager(linearLayoutManager);
         recycler_view_projects.setHasFixedSize(true);

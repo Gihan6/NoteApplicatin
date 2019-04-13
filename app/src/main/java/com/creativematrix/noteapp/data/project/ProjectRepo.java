@@ -48,35 +48,35 @@ public class ProjectRepo {
         return mutableLiveData;
     }
 
-    public LiveData<Project> updateProject(Project project) {
-        final MutableLiveData<Project> mutableLiveData = new MutableLiveData<>();
-        Call<Project> projectCall = mProjectApiInterface.postUpdateProject(project);
-        projectCall.enqueue(new Callback<Project>() {
+    public LiveData<UpdateProjectResponse> updateProject(Project project) {
+        final MutableLiveData<UpdateProjectResponse> mutableLiveData = new MutableLiveData<>();
+        Call<UpdateProjectResponse> projectCall = mProjectApiInterface.postUpdateProject(project);
+        projectCall.enqueue(new Callback<UpdateProjectResponse>() {
             @Override
-            public void onResponse(Call<Project> call, Response<Project> response) {
+            public void onResponse(Call<UpdateProjectResponse> call, Response<UpdateProjectResponse> response) {
                 Log.d(TAG, "onResponse: " + response.message());
                 mutableLiveData.postValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<Project> call, Throwable t) {
+            public void onFailure(Call<UpdateProjectResponse> call, Throwable t) {
 
             }
         });
         return mutableLiveData;
     }
-    public LiveData<Project> deleteProject(Project project) {
-        final MutableLiveData<Project> mutableLiveData = new MutableLiveData<>();
-        Call<Project> projectCall = mProjectApiInterface.postAddProject(project);
-        projectCall.enqueue(new Callback<Project>() {
+    public LiveData<DeleteProjectResponse> deleteProject(Project project) {
+        final MutableLiveData<DeleteProjectResponse> mutableLiveData = new MutableLiveData<>();
+        Call<DeleteProjectResponse> projectCall = mProjectApiInterface.postDeleteProject(project);
+        projectCall.enqueue(new Callback<DeleteProjectResponse>() {
             @Override
-            public void onResponse(Call<Project> call, Response<Project> response) {
+            public void onResponse(Call<DeleteProjectResponse> call, Response<DeleteProjectResponse> response) {
                 Log.d(TAG, "onResponse: " + response.message());
                 mutableLiveData.postValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<Project> call, Throwable t) {
+            public void onFailure(Call<DeleteProjectResponse> call, Throwable t) {
 
             }
         });
@@ -119,7 +119,7 @@ public class ProjectRepo {
             public void onResponse(Call<DisplayProjectsResponse> call, Response<DisplayProjectsResponse> response) {
                 Log.d(TAG, "onResponse: " + response.body());
                 mutableLiveData.postValue(response.body());
-              hideDialog();
+                hideDialog();
             }
 
             @Override

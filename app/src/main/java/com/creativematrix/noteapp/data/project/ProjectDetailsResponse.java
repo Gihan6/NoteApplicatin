@@ -1,111 +1,171 @@
 
 package com.creativematrix.noteapp.data.project;
 
-import com.google.gson.annotations.Expose;
+import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class ProjectDetailsResponse {
 
-    @Expose
-    private String $id;
-    @Expose
-    private Long coast;
-    @Expose
-    private String director;
-    @Expose
-    private String end;
-    @Expose
-    private String flag;
+    @SerializedName("$id")
+    private String m$id;
+    @SerializedName("coast")
+    private Long mCoast;
+    @SerializedName("Currencyid")
+    private Long mCurrencyid;
+    @SerializedName("Currencyname")
+    private String mCurrencyname;
+    @SerializedName("DirID")
+    private Long mDirID;
+    @SerializedName("director")
+    private List<Director> mDirector;
+    @SerializedName("end")
+    private String mEnd;
+    @SerializedName("flag")
+    private String mFlag;
+    @SerializedName("Id")
+    private Long mId;
     @SerializedName("Message")
-    private String message;
-    @Expose
-    private String name;
-    @Expose
-    private String owner;
-    @Expose
-    private String start;
-    @Expose
-    private Long state;
+    private String mMessage;
+    @SerializedName("name")
+    private String mName;
+    @SerializedName("owner")
+    private String mOwner;
+    @SerializedName("ProjectDescripations")
+    private String mProjectDescripations;
+    @SerializedName("start")
+    private String mStart;
+    @SerializedName("state")
+    private Long mState;
+    @SerializedName("States")
+    private Boolean mStates;
 
     public String get$id() {
-        return $id;
+        return m$id;
     }
 
     public void set$id(String $id) {
-        this.$id = $id;
+        m$id = $id;
     }
 
     public Long getCoast() {
-        return coast;
+        return mCoast;
     }
 
     public void setCoast(Long coast) {
-        this.coast = coast;
+        mCoast = coast;
     }
 
-    public String getDirector() {
-        return director;
+    public Long getCurrencyid() {
+        return mCurrencyid;
     }
 
-    public void setDirector(String director) {
-        this.director = director;
+    public void setCurrencyid(Long currencyid) {
+        mCurrencyid = currencyid;
+    }
+
+    public String getCurrencyname() {
+        return mCurrencyname;
+    }
+
+    public void setCurrencyname(String currencyname) {
+        mCurrencyname = currencyname;
+    }
+
+    public Long getDirID() {
+        return mDirID;
+    }
+
+    public void setDirID(Long dirID) {
+        mDirID = dirID;
+    }
+
+    public List<Director> getDirector() {
+        return mDirector;
+    }
+
+    public void setDirector(List<Director> director) {
+        mDirector = director;
     }
 
     public String getEnd() {
-        return end;
+        return mEnd;
     }
 
     public void setEnd(String end) {
-        this.end = end;
+        mEnd = end;
     }
 
     public String getFlag() {
-        return flag;
+        return mFlag;
     }
 
     public void setFlag(String flag) {
-        this.flag = flag;
+        mFlag = flag;
+    }
+
+    public Long getId() {
+        return mId;
+    }
+
+    public void setId(Long id) {
+        mId = id;
     }
 
     public String getMessage() {
-        return message;
+        return mMessage;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        mMessage = message;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        mName = name;
     }
 
     public String getOwner() {
-        return owner;
+        return mOwner;
     }
 
     public void setOwner(String owner) {
-        this.owner = owner;
+        mOwner = owner;
+    }
+
+    public String getProjectDescripations() {
+        return mProjectDescripations;
+    }
+
+    public void setProjectDescripations(String projectDescripations) {
+        mProjectDescripations = projectDescripations;
     }
 
     public String getStart() {
-        return start;
+        return mStart;
     }
 
     public void setStart(String start) {
-        this.start = start;
+        mStart = start;
     }
 
     public Long getState() {
-        return state;
+        return mState;
     }
 
     public void setState(Long state) {
-        this.state = state;
+        mState = state;
+    }
+
+    public Boolean getStates() {
+        return mStates;
+    }
+
+    public void setStates(Boolean states) {
+        mStates = states;
     }
 
 }

@@ -44,6 +44,19 @@ public class Project implements Serializable {
     @SerializedName("StartTime")
     private String startTime;
 
+    public Project(Long id) {
+        this.id=id;
+    }
+
+    public String getDirctoresNames() {
+        return DirctoresNames;
+    }
+
+    public void setDirctoresNames(String dirctoresNames) {
+        DirctoresNames = dirctoresNames;
+    }
+
+    private String DirctoresNames;
     public Project(String projectName,
                    String startTime,
                    String endTime,

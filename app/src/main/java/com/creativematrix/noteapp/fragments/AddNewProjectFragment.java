@@ -176,9 +176,47 @@ public class AddNewProjectFragment extends Fragment {
             if(mProject.getProjectDescripation()!=null)
                 editTextProjectDescription .setText((String.valueOf(mProject.getProjectDescripation())));
             if(mProject.getProjectCost()!=null)
-                editTextProjectCost.setText((String.valueOf(mProject.getProjectDescripation())));
+                editTextProjectCost.setText((String.valueOf(mProject.getProjectCost())));
+
+            if(mProject.getDirctoresNames()!=null) {
+                editTextProjectDirector.setText((String.valueOf(mProject.getDirctoresNames())));
+                taskOwnerIDS=String.valueOf(mProject.getDirectorIDs());
+            }
+            if(mProject.getStartTime()!=null){
+                handleStartTimeDate(mProject.getStartTime());
+            }
+            if(mProject.getEndTime()!=null){
+                handleEndTimeDate(mProject.getEndTime());
+            }
+            if(mProject.getProjectOwner()!=null){
+                editTextProjectOwner.setText(mProject.getProjectOwner());
+            }
+           /* if(mProject.getProjectStatus()!=null){
+                if (mProject.getProjectStatus().equals("False")) {
+                    ed.setText(getResources().getString(R.string.task_under_processing));
+                } else {
+                    task_status.setText(getResources().getString(R.string.task_completed));
+                }
+            }
+*/
+       //         editTextProjectCost.setText((String.valueOf(mProject.getDirctoresNames())));
+
 
         }
+    }
+
+    private void handleStartTimeDate(String startDateTime) {
+        String s1= startDateTime.substring(0,startDateTime.indexOf("T",1));
+        editTextProjectStartDate.setText(s1);
+        String s2= startDateTime.substring(s1.length()+2);
+        editTextProjectStartTime.setText(s2);
+    }
+
+    private void handleEndTimeDate(String startEndTime) {
+        String s1= startEndTime.substring(0,startEndTime.indexOf("T",1));
+        editTextProjectEndDate.setText(s1);
+        String s2= startEndTime.substring(s1.length()+2);
+        editTextProjectEndTime.setText(s2);
     }
 
     public void showDateFragment() {
@@ -249,12 +287,12 @@ public class AddNewProjectFragment extends Fragment {
         new ProjectRepo(getActivity()).updateProject(project)
                 .observe(this, projectRes -> {
                     try {
-                        if (projectRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                        if (projectRes.getFlag().equals(String.valueOf(Constant.RESPONSE_SUCCESS))) {
                             Utils.showStringToast(getActivity(), getString(R.string.project_updated_successfully));
                             getActivity().onBackPressed();
                         }
-                        else if (projectRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
-                            Utils.showStringToast(getActivity(),String.valueOf(projectRes.getMsg()));
+                        else if (projectRes.getFlag().equals(String.valueOf(Constant.RESPONSE_FAILURE))){
+                            Utils.showStringToast(getActivity(),String.valueOf(projectRes.getMessage()));
                         }
                         Log.d(TAG, "collectData: " + projectRes.toString());
                     } catch (Exception ex) {

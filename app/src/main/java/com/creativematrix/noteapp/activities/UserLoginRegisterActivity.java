@@ -68,6 +68,7 @@ public class UserLoginRegisterActivity extends AppCompatActivity implements Regi
             // go to new activity
             PreferenceHelper.getPrefernceHelperInstace().storeCompanyData(this, String.valueOf(loginResponse.getiD()), email, password,logoPath,Type);
             PreferenceHelper.getPrefernceHelperInstace().setUserLoggedIn(true, UserLoginRegisterActivity.this);
+            PreferenceHelper.getPrefernceHelperInstace().setIscompany(false,UserLoginRegisterActivity.this);
             Intent intent = new Intent(this, NoteHomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

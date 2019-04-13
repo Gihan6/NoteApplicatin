@@ -128,20 +128,26 @@ public class ProjectDetailFragment extends Fragment {
 
     private void confirm_delete_project(Project mProject) {
 
-        /*new ProjectRepo(getActivity()).displayProjectDeitals(mProject)
+        new ProjectRepo(getActivity()).deleteProject(mProject)
                 .observe(this, GroupRes -> {
                     try {
-                        if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                        if (GroupRes.getFlag().equals(String.valueOf(Constant.RESPONSE_SUCCESS))) {
+                            dialog.dismiss();
                             Utils.showStringToast(getActivity(),getResources().getString(R.string.deleted_succees));
+                            getActivity().onBackPressed();
+
                         }
-                        else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
+                        else if (GroupRes.getFlag().equals(String.valueOf(Constant.RESPONSE_FAILURE))){
+                            dialog.dismiss();
                             Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
                         }
                     } catch (Exception ex) {
+                        dialog.dismiss();
+
 
                     }
                 });
-*/
+
     }
 
     private void initialzeData(ProjectDetailsResponse groupRes) {
@@ -151,7 +157,12 @@ public class ProjectDetailFragment extends Fragment {
         project_start_time.setText(groupRes.getStart());
         project_end_time.setText(groupRes.getEnd());
         project_owners.setText(groupRes.getOwner());
-        project_director.setText(groupRes.getDirector());
+        String director="";
+        for(int i=0;i<groupRes.getDirector().size();i++){
+            director+=groupRes.getDirector().get(i).getName()+"-";
+        }
+        mProject.setDirctoresNames(director);
+        project_director.setText(director);
         if (groupRes.getState().equals("0")) {
             project_status.setText(getResources().getString(R.string.task_under_processing));
         } else {

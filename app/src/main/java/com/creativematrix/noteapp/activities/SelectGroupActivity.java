@@ -56,10 +56,6 @@ public class SelectGroupActivity extends AppCompatActivity implements Button.OnC
 
                     }
                 });
-
-
-
-
         button.setOnClickListener(this);
     }
 

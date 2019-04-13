@@ -15,22 +15,12 @@ import android.widget.TextView;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
-import com.creativematrix.noteapp.adapters.GroupsAdapter;
 import com.creativematrix.noteapp.adapters.TasksInUsersAdapter;
-import com.creativematrix.noteapp.data.groups.Group;
-import com.creativematrix.noteapp.data.groups.GroupRepo;
-import com.creativematrix.noteapp.data.groups.LstGroup;
-import com.creativematrix.noteapp.data.project.Project;
-import com.creativematrix.noteapp.data.project.ProjectDetailsResponse;
-import com.creativematrix.noteapp.data.project.ProjectRepo;
 import com.creativematrix.noteapp.data.task.Task;
 import com.creativematrix.noteapp.data.user.DisplayUserDetailsRequest;
 import com.creativematrix.noteapp.data.user.LstUsers;
-import com.creativematrix.noteapp.data.user.User;
 import com.creativematrix.noteapp.data.user.UserRepo;
-import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
