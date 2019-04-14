@@ -259,10 +259,6 @@ public class AddNewProjectFragment extends Fragment {
         else{
             AddProject(project);
         }
-
-
-
-
     }
 
     private void AddProject(Project project) {

@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
@@ -28,7 +30,6 @@ public class SelectProjectActivity extends AppCompatActivity implements Button.O
     private ListView listView;
     private Button button;
     private ArrayList<Project> projects=new ArrayList<>();
-    CustomSelectUserInCompanyAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +54,14 @@ public class SelectProjectActivity extends AppCompatActivity implements Button.O
 
 
         button.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button:
-                List<Project> selected = getSelectedItems();
+                ArrayList<Project> selected = getSelectedItems();
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra(Constant.PROJECTS_LIST, (Serializable) selected);
                 setResult(Activity.RESULT_OK,returnIntent);
@@ -76,12 +78,14 @@ public class SelectProjectActivity extends AppCompatActivity implements Button.O
 
     }
 
-    private List<Project> getSelectedItems() {
-        List<Project> result = new ArrayList<>();
+    private ArrayList<Project> getSelectedItems() {
+        int count =listView.getCount();
+        ArrayList<Project> result = new ArrayList<>();
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
 
         for (int i = 0; i < listView.getCount(); ++i) {
             if (checkedItems.valueAt(i)) {
+              int index=  checkedItems.keyAt(i);
                 result.add((Project) listView.getItemAtPosition(checkedItems.keyAt(i)));
             }
         }
