@@ -16,13 +16,10 @@ import android.widget.TextView;
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.adapters.GroupsAdapter;
-import com.creativematrix.noteapp.data.groups.DisplayGroupRequest;
-import com.creativematrix.noteapp.data.groups.GroupRepo;
 import com.creativematrix.noteapp.data.groups.LstGroup;
+import com.creativematrix.noteapp.data.task.DisplayTaskDetailsResponse;
 import com.creativematrix.noteapp.data.task.Task;
-import com.creativematrix.noteapp.data.task.TaskDetailsResponse;
 import com.creativematrix.noteapp.data.task.TaskRepo;
-import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -32,7 +29,6 @@ import java.util.ArrayList;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -134,20 +130,24 @@ public class TaskDetailFragment extends Fragment {
 
     }
 
-    private void initialzeData(TaskDetailsResponse groupRes) {
-        task_name_title.setText(groupRes.getTaskname());
-        task_name.setText(groupRes.getTaskname());
-        task_desc.setText(groupRes.getDescreption());
-        task_start_time.setText(groupRes.getStartdate());
-        task_end_time.setText(groupRes.getEnddate());
-        task_owners.setText(groupRes.getLstuser());
-        if (groupRes.getStatus().equals("False")) {
+    private void initialzeData(DisplayTaskDetailsResponse groupRes) {
+        task_name_title.setText(groupRes.getTaskName());
+        task_name.setText(groupRes.getTaskName());
+        task_desc.setText(groupRes.getTaskDescription());
+        task_start_time.setText(groupRes.getTaskStartTime());
+        task_end_time.setText(groupRes.getTaskEndTime());
+        String ownersNames="";
+        for (int i =0; i<groupRes.getTaskUsers().size();i++){
+             ownersNames+=groupRes.getTaskUsers().get(i).getUserName()+"-";
+        }
+        task_owners.setText(ownersNames);
+        if (groupRes.getTaskStautes()==false) {
             task_status.setText(getResources().getString(R.string.task_under_processing));
         } else {
             task_status.setText(getResources().getString(R.string.task_completed));
         }
-        project_name.setText(groupRes.getProject());
-        task_cost.setText(String.valueOf(groupRes.getPrice()));
+        //project_name.setText(groupRes.get());
+        task_cost.setText(String.valueOf(groupRes.getTaskCost()));
     }
 
     // TODO: Rename method, update argument and hook method into UI event

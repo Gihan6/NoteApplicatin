@@ -13,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +35,14 @@ public class FloatingViewService extends Service {
 
     private WindowManager mWindowManager;
     private View mFloatingView;
+     RelativeLayout expandedView;
     CallRecord callRecord;
     ImageView cancel_voice, play_voice;
     Button btnAddToCart;
     private FloatingActionButton mRecordButton = null;
     private int mRecordPromptCount = 0;
     Intent intent;
+    ImageView btnhideRecord;
     private boolean mStartRecording = true;
     private boolean mPauseRecording = true;
     private Chronometer mChronometer = null;
@@ -45,7 +50,10 @@ public class FloatingViewService extends Service {
     long timeWhenPaused = 0; //stores time when user clicks pause button
     long elapsedMillis;
     private TextView mRecordingPrompt;
-
+    Button btn_save_task;
+    RelativeLayout fragment_record;
+    EditText input_task_name;
+     View collapsedView ;
     public FloatingViewService() {
     }
 
@@ -57,17 +65,32 @@ public class FloatingViewService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
         //Inflate the floating view layout we created
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
         linear_layout_play = mFloatingView.findViewById(R.id.linear_layout_play);
+        input_task_name= mFloatingView.findViewById(R.id.input_task_name);
 
-         mRecordingPrompt= (TextView) mFloatingView.findViewById(R.id.recording_status_text);
-
+        fragment_record = mFloatingView.findViewById(R.id.fragment_record);
+        btnhideRecord = mFloatingView.findViewById(R.id.btnhideRecord);
+        mRecordingPrompt = (TextView) mFloatingView.findViewById(R.id.recording_status_text);
+        collapsedView= mFloatingView.findViewById(R.id.collapse_view);
         cancel_voice = mFloatingView.findViewById(R.id.cancel_voice);
         play_voice = mFloatingView.findViewById(R.id.play_voice);
+        expandedView = mFloatingView.findViewById(R.id.fragment_record);
+        btn_save_task= mFloatingView.findViewById(R.id.btn_save_task);
         btnAddToCart = mFloatingView.findViewById(R.id.btnAddToCart);
         mChronometer = (Chronometer) mFloatingView.findViewById(R.id.chronometer);
 
+        InputMethodManager im = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
+        im.showSoftInput(input_task_name, 0);
+        btnhideRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment_record.setVisibility(View.GONE);
+                collapsedView.setVisibility(View.VISIBLE);
+            }
+        });
 
         cancel_voice.setOnClickListener(new View./*
         play_voice.setOnClickListener(new View.OnClickListener() {
@@ -131,9 +154,8 @@ public class FloatingViewService extends Service {
         mWindowManager.addView(mFloatingView, params);
 
         //The root element of the collapsed view layout
-        final View collapsedView = mFloatingView.findViewById(R.id.collapse_view);
+
         //The root element of the expanded view layout
-        final View expandedView = mFloatingView.findViewById(R.id.expanded_container);
 
 
         //Set the close button
@@ -145,38 +167,18 @@ public class FloatingViewService extends Service {
 
         //Set the view while floating view is expanded.
         //Set the play button.
-        ImageView start_record_btn = mFloatingView.findViewById(R.id.start_record_btn);
-        start_record_btn.setOnClickListener(v ->
-                callRecord.startCallReceiver()
-        );
+
 
 
         //Set the next button.
-        ImageView close_record_btn = mFloatingView.findViewById(R.id.close_record_btn);
-        close_record_btn.setOnClickListener(v -> Utils.showStringToast(FloatingViewService.this, getResources().getString(R.string.stop_record)));
 
         //Set the pause button.
-        ImageView prevButton = (ImageView) mFloatingView.findViewById(R.id.prev_btn);
-        prevButton.setOnClickListener(v -> Toast.makeText(FloatingViewService.this, "Playing previous song.", Toast.LENGTH_LONG).show());
 
         //Set the close button
-        ImageView closeButton = (ImageView) mFloatingView.findViewById(R.id.close_button);
-        closeButton.setOnClickListener(view -> {
-            collapsedView.setVisibility(View.VISIBLE);
-            expandedView.setVisibility(View.GONE);
-        });
+
 
         //Open the application on thi button click
-        ImageView openButton = (ImageView) mFloatingView.findViewById(R.id.open_button);
-        openButton.setOnClickListener(view -> {
-            //Open the application  click.
-            // Intent intent = new Intent(FloatingViewService.this, MainActivity.class);
-            //  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //  startActivity(intent);
 
-            //close the service and remove view from the view hierarchy
-            //  stopSelf();
-        });
 
         //Drag and move floating view using user's touch action.
         mFloatingView.findViewById(R.id.root_container).setOnTouchListener(new View.OnTouchListener() {
@@ -241,7 +243,7 @@ public class FloatingViewService extends Service {
             mRecordButton.setImageResource(R.drawable.ic_stop);
             //mPauseButton.setVisibility(View.VISIBLE);
             Toast.makeText(this, this.getResources().getString(R.string.toast_recording_start), Toast.LENGTH_SHORT).show();
-            File folder = new File(Environment.getExternalStorageDirectory() + "/SoundRecorder");
+            File folder = new File(Environment.getExternalStorageDirectory() + "/NoteApp");
             if (!folder.exists()) {
                 //folder /SoundRecorder doesn't exist, create the folder
                 folder.mkdir();
@@ -270,9 +272,13 @@ public class FloatingViewService extends Service {
 
 
             });
-
+         /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                this.startForegroundService(intent);
+            } else {
+                this.startService(intent);
+            }*/
             //start RecordingService
-            this.startService(intent);
+           this.startService(intent);
             //keep screen on while recording
             //getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -296,7 +302,9 @@ public class FloatingViewService extends Service {
             timeWhenPaused = 0;
             mRecordingPrompt.setText(getString(R.string.record_prompt));
 
-           this.stopService(intent);
+            this.stopService(intent);
+            btn_save_task.setVisibility(View.VISIBLE);
+            mRecordButton.setVisibility(View.GONE);
             //allow the screen to turn off again once recording is finished
             // getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -306,6 +314,7 @@ public class FloatingViewService extends Service {
     private boolean isViewCollapsed() {
         return mFloatingView == null || mFloatingView.findViewById(R.id.collapse_view).getVisibility() == View.VISIBLE;
     }
+
     private void showElapsedTime() {
         elapsedMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
         int seconds = (int) (elapsedMillis / 1000) % 60;
@@ -318,7 +327,7 @@ public class FloatingViewService extends Service {
             timeWhenPaused = 0;
             mRecordingPrompt.setText(getString(R.string.record_prompt));
             // getActivity().stopService(intent);
-           this.stopService(intent);
+            this.stopService(intent);
             linear_layout_play.setVisibility(View.VISIBLE);
             mRecordButton.setImageResource(R.drawable.ic_mic);
             mStartRecording = true;
@@ -327,6 +336,7 @@ public class FloatingViewService extends Service {
         }
 
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

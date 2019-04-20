@@ -8,6 +8,10 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.android.material.textfield.TextInputEditText;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -42,6 +46,7 @@ import com.creativematrix.noteapp.data.task.TaskStatus;
 import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +88,7 @@ public class AddNewTaskFragment extends Fragment {
     private String endDate;
     private String endTime;
     RecyclerView recycler_view_files;
+
     String taskStatus;
 
     public void setStartDate(String startDate) {
@@ -192,7 +198,11 @@ public class AddNewTaskFragment extends Fragment {
         });
 
         buttonSaveProject.setOnClickListener(v -> {
-            collectData();
+            try {
+                collectData();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         });
 
 
@@ -207,7 +217,8 @@ public class AddNewTaskFragment extends Fragment {
                     Toast.makeText(getActivity(), path, Toast.LENGTH_SHORT).show();
                     String filename = path.substring(path.lastIndexOf("/") + 1);
                     String fileExtension = path.substring(path.lastIndexOf(".") + 1);
-                    String fileContent = Utils.encodeImage(path);
+                    String fileContent = null;
+                    fileContent = Utils.getFileBinary(path);
                     filesBinaryList.add(new FilesBinary(filename, fileExtension, fileContent));
                     customFilesAdapter.notifyDataSetChanged();
 
@@ -219,15 +230,12 @@ public class AddNewTaskFragment extends Fragment {
 
         } catch (ExternalStorageNotAvailableException e) {
             Toast.makeText(getActivity(), "There is no external storage available on this device.",
-                    Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+                    Toast.LENGTH_SHORT).show();e.printStackTrace();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -278,7 +286,7 @@ public class AddNewTaskFragment extends Fragment {
         fragment.show(getActivity().getSupportFragmentManager(), "TaskTimeFragment");
     }
 
-    private void collectData() {
+    private void collectData() throws JsonProcessingException {
         String taskName = editTextTaskName.getText().toString();
         String ProjectID = selectedProjectID;
         String taskDesc = editTextTaskDescription.getText().toString();
@@ -345,6 +353,9 @@ public class AddNewTaskFragment extends Fragment {
         }
 
         task.setFilesBinaryList(filesBinaryList);
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(task);
+
         new TaskRepo(getActivity()).addTask(task)
                 .observe(this, GroupRes -> {
                     try {

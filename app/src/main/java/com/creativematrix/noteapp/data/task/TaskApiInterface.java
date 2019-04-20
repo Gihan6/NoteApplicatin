@@ -1,8 +1,5 @@
 package com.creativematrix.noteapp.data.task;
 
-import com.creativematrix.noteapp.data.groups.DisplayGroupRequest;
-import com.creativematrix.noteapp.data.groups.DisplayGroupResponse;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -19,6 +16,6 @@ public interface TaskApiInterface {
     @POST("GetUsersInCompany/")
     Call<GetUsersInCompanyResponse> postGetUsersInCompany(@Body DisplayTaskRequest displayTaskRequest);
 
-    @POST("GetTaskDetails/")
-    Call<TaskDetailsResponse> postGetTaskDetails(@Body Task task);
+    @POST("DisplayTaskes/")
+    Call<DisplayTaskDetailsResponse> postGetTaskDetails(@Body Task task);
 }

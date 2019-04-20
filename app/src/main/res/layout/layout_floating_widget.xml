@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:fab="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
     <RelativeLayout
@@ -16,9 +16,9 @@
         <RelativeLayout
             android:id="@+id/collapse_view"
             android:layout_width="wrap_content"
-            android:visibility="visible"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <!--Icon of floating widget -->
             <ImageView
@@ -27,233 +27,210 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/logo"
-                tools:ignore="ContentDescription"/>
+                tools:ignore="ContentDescription" />
 
             <!--Close button-->
             <ImageView
                 android:id="@+id/close_btn"
                 android:layout_width="20dp"
-                android:visibility="gone"
                 android:layout_height="20dp"
                 android:layout_marginLeft="40dp"
                 android:src="@drawable/ic_close"
-                tools:ignore="ContentDescription"/>
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <!--View while view is expanded-->
-        <LinearLayout
-            android:id="@+id/expanded_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:background="@color/color_background"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <!--Album image for the song currently playing.-->
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:visibility="gone"
-                android:src="@drawable/ic_record_call"
-                tools:ignore="ContentDescription"/>
-
-            <!--Previous button-->
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/list"
-                android:visibility="invisible"
-                tools:ignore="ContentDescription"/>
-
-            <!--Play button-->
-            <ImageView
-                android:id="@+id/start_record_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_play"
-                tools:ignore="ContentDescription"/>
-
-            <!--Next button-->
-            <ImageView
-                android:id="@+id/close_record_btn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_stop"
-                tools:ignore="ContentDescription"/>
-            <ImageView
-                android:id="@+id/prev_btn"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center_vertical"
-
-                android:src="@mipmap/list"
-                android:visibility="invisible"
-                tools:ignore="ContentDescription"/>
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/close_button"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_close_call"/>
-
-                <ImageView
-                    android:id="@+id/open_button"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentBottom="true"
-                    android:src="@drawable/ic_save"
-                    />
-            </RelativeLayout>
-        </LinearLayout>
-    </RelativeLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/fragment_record"
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@color/color_blue_primary"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/recording_status_text"
+        <RelativeLayout
+            android:id="@+id/fragment_record"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/btnRecord"
-            android:gravity="center"
-            android:text="record_prompt"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-            <Chronometer
-                android:id="@+id/chronometer"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/recordProgressBar"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-light"
-                android:gravity="top|center"
-                android:textColor="@color/white"
-                android:textSize="40sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnRecord" />
-
-
-            <LinearLayout
-                android:visibility="invisible"
-                android:layout_marginTop="10dp"
-                android:id="@+id/linear_layout_play"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/color_background"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/play_voice"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/recording_status_text"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/chronometer"
-                        android:layout_margin="20dp"
-                        android:clickable="true"
-                        android:src="@drawable/ic_play_white" />
+                        android:layout_above="@+id/btnRecord"
+                        android:gravity="center"
+                        android:text="record_prompt"
+                        android:textColor="@color/color_blue_primary"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/cancel_voice"
-                        android:layout_width="wrap_content"
+                    <Chronometer
+                        android:id="@+id/chronometer"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/chronometer"
-                        android:layout_margin="20dp"
-                        android:clickable="true"
-                        android:src="@drawable/ic_close_white"
-                        />
+                        android:layout_alignBottom="@+id/recordProgressBar"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="top|center"
+                        android:textColor="@color/color_blue_primary"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.501"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnRecord" />
+
+
+
+                        <EditText
+                            android:id="@+id/input_task_name"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/task_name"
+                            android:inputType="textMultiLine"
+                            android:padding="10dp"
+                            android:textColorHint="@android:color/background_dark" />
+
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_play"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/play_voice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@+id/chronometer"
+                                android:layout_margin="20dp"
+                                android:clickable="true"
+                                android:src="@drawable/ic_play_white"
+                                android:visibility="gone" />
+
+                            <ImageView
+                                android:id="@+id/cancel_voice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@+id/chronometer"
+                                android:layout_margin="20dp"
+                                android:clickable="true"
+                                android:src="@drawable/ic_close_white"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnAddToCart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/dawadoz_buttons_green_selected"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
+                            android:text="ad_to_cart"
+                            android:textSize="17sp"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btn_save_task"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/btn_back"
+                        android:text="@string/save"
+                        android:textColor="#FFF" />
+
+                    <com.melnykov.fab.FloatingActionButton
+                        android:id="@+id/btnRecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/chronometer"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_mic"
+                        app:fab_colorPressed="@color/color_blue_primary"
+                        fab:fab_colorNormal="@color/color_blue_primary"
+                        fab:fab_colorRipple="@color/colorAccent" />
+                </FrameLayout>
+
+
+                <ProgressBar
+                    android:id="@+id/recordProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="27dp"
+                    android:background="@drawable/record_progress_bar_background"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/record_progress_bar"
+                    android:visibility="gone" />
+
                 <Button
-                    android:id="@+id/btnAddToCart"
+                    android:id="@+id/btnPause"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/chronometer"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/green"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="pause_recording_button"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    app:layout_constraintHorizontal_bias="0.408" />
+
+                <ImageView
+                    android:id="@+id/btnhideRecord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="end"
                     android:layout_margin="10dp"
-                    android:background="@drawable/dawadoz_buttons_green_selected"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:text="ad_to_cart"
-                    android:textSize="17sp" />
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_close_white" />
             </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/btnRecord"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/chronometer"
-            android:layout_weight="1"
-            android:src="@drawable/ic_mic"
-            app:fab_colorPressed="@color/color_blue_primary"
-            fab:fab_colorNormal="@color/green"
-            fab:fab_colorRipple="@color/colorAccent" />
-
-
-        <ProgressBar
-            android:id="@+id/recordProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="27dp"
-            android:background="@drawable/record_progress_bar_background"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="0"
-            android:progressDrawable="@drawable/record_progress_bar"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/btnPause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/chronometer"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="8dp"
-            android:background="@color/green"
-            android:fontFamily="sans-serif-condensed"
-            android:text="pause_recording_button"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:visibility="gone"
-            app:layout_constraintHorizontal_bias="0.408" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

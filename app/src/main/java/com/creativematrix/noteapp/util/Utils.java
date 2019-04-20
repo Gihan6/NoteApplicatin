@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.core.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -26,9 +27,14 @@ import android.widget.Toast;
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -85,8 +91,28 @@ public class Utils {
                 R.dimen.abc_action_bar_default_height_material);
         return height;
     }
+    public static String getFileBinary(String uploadFilePath) {
+        File f = new File(uploadFilePath);
+        byte[] byteArray = null;
+        try {
+            InputStream inputStream = new FileInputStream(f);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024 * 11];
+            int bytesRead = 0;
 
+            while ((bytesRead = inputStream.read(b)) != -1) {
+                bos.write(b, 0, bytesRead);
+            }
 
+            byteArray = bos.toByteArray();
+
+            Log.e("Byte array", ">" + byteArray);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Base64.encodeToString(byteArray, Base64.NO_WRAP);
+    }
     public static String encodeImage(String selectedPath) {
 
 

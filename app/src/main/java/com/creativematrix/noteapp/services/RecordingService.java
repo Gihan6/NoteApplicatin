@@ -10,8 +10,8 @@ import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
-import com.creativematrix.noteapp.R;
 
+import com.creativematrix.noteapp.R;
 
 
 import java.io.File;
@@ -107,21 +107,17 @@ public class RecordingService extends Service {
     public void setFileNameAndPath() {
         int count = 0;
         File f;
-
         do {
             count++;
             mFileName = getString(R.string.default_file_name)
-                    +
-                    ".mp3";
+                    + "_" + (count) + ".mp3";
             mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-            mFilePath += "/SoundRecorder/" + mFileName;
-
+            mFilePath += "/NoteApp/" + mFileName;
             f = new File(mFilePath);
         } while (f.exists() && !f.isDirectory());
     }
 
     public void stopRecording() {
-
         mRecorder.stop();
         mElapsedMillis = (System.currentTimeMillis() - mStartingTimeMillis);
         mRecorder.release();
@@ -136,8 +132,6 @@ public class RecordingService extends Service {
         mRecorder = null;
 
         try {
-
-
             //Intent intent = new Intent(HomeActivity.RECORDER_INTENT);
             //intent.putExtra(HomeActivity.RECEIVER_MESSAGE, myMessage);
             // LocalBroadcastManager.getInstance(this).sendBroadcast(intent);

@@ -79,14 +79,15 @@ public class SelectProjectActivity extends AppCompatActivity implements Button.O
     }
 
     private ArrayList<Project> getSelectedItems() {
-        int count =listView.getCount();
+        //int count =listView.getCount();
         ArrayList<Project> result = new ArrayList<>();
         SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
 
-        for (int i = 0; i < listView.getCount(); ++i) {
+        for (int i = 0; i < listView.getCheckedItemCount(); ++i) {
             if (checkedItems.valueAt(i)) {
               int index=  checkedItems.keyAt(i);
-                result.add((Project) listView.getItemAtPosition(checkedItems.keyAt(i)));
+               Project p= (Project) listView.getItemAtPosition(checkedItems.keyAt(i));
+                result.add(p);
             }
         }
 
