@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.creativematrix.noteapp.R;
+import com.creativematrix.noteapp.activities.PendingTaskActivity;
 
 
 import java.io.File;
@@ -132,10 +133,9 @@ public class RecordingService extends Service {
         mRecorder = null;
 
         try {
-            //Intent intent = new Intent(HomeActivity.RECORDER_INTENT);
-            //intent.putExtra(HomeActivity.RECEIVER_MESSAGE, myMessage);
-            // LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-            //   mDatabase.addRecording(mFileName, mFilePath, mElapsedMillis);
+            PendingTaskActivity pendingTaskActivity= new PendingTaskActivity();
+            pendingTaskActivity.setFileName(mFilePath);
+
 
         } catch (Exception e) {
             Log.e(LOG_TAG, "exception", e);

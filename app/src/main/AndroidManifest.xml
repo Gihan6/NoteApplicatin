@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,15 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SelectTaskCoinActivity"></activity>
-        <activity android:name=".activities.BeforeLoginActivity"></activity>
-        <activity android:name=".activities.UserLoginRegisterActivity"></activity>
+        <activity android:name=".activities.PendingTaskActivity"></activity>
+        <activity android:name=".activities.SelectTaskCoinActivity" />
+        <activity android:name=".activities.BeforeLoginActivity" />
+        <activity android:name=".activities.UserLoginRegisterActivity" />
 
         <service android:name=".services.FloatingService" />
         <service android:name=".services.RecordingService" />
-
         <service android:name=".services.FloatingViewService" />
-        <activity android:name=".activities.CompanyLoginRegisterActivity"></activity>
+
+        <activity android:name=".activities.CompanyLoginRegisterActivity" />
         <activity android:name=".activities.SplachScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.aykuttasil.callrecord.CallRecord;
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.activities.MainActivity;
+import com.creativematrix.noteapp.activities.PendingTaskActivity;
 import com.creativematrix.noteapp.util.Utils;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -84,14 +85,16 @@ public class FloatingViewService extends Service {
 
         InputMethodManager im = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
         im.showSoftInput(input_task_name, 0);
-        btnhideRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragment_record.setVisibility(View.GONE);
-                collapsedView.setVisibility(View.VISIBLE);
-            }
+        btnhideRecord.setOnClickListener(v -> {
+            fragment_record.setVisibility(View.GONE);
+            collapsedView.setVisibility(View.VISIBLE);
         });
+play_voice.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
 
+    }
+});
         cancel_voice.setOnClickListener(new View./*
         play_voice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,8 +214,12 @@ public class FloatingViewService extends Service {
                                 //When user clicks on the image view of the collapsed layout,
                                 //visibility of the collapsed layout will be changed to "View.GONE"
                                 //and expanded view will become visible.
-                                collapsedView.setVisibility(View.GONE);
-                                expandedView.setVisibility(View.VISIBLE);
+                            //    collapsedView.setVisibility(View.GONE);
+                             //   expandedView.setVisibility(View.VISIBLE);
+                                Intent intent=new Intent(FloatingViewService.this, PendingTaskActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+                                startActivity(intent);
                             }
                         }
                         return true;
@@ -319,7 +326,6 @@ public class FloatingViewService extends Service {
         elapsedMillis = SystemClock.elapsedRealtime() - mChronometer.getBase();
         int seconds = (int) (elapsedMillis / 1000) % 60;
         if (seconds == 30) {
-
             mRecordButton.setImageResource(R.drawable.ic_mic);
             // mPauseButton.setVisibility(View.GONE);
             mChronometer.stop();

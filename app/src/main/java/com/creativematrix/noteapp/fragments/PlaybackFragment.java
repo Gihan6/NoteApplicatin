@@ -206,7 +206,7 @@ public class PlaybackFragment extends DialogFragment {
     }
 
     private void startPlaying() {
-        mPlayButton.setImageResource(R.drawable.ic_close_white);
+        mPlayButton.setImageResource(R.drawable.ic_close_blue);
         mMediaPlayer = new MediaPlayer();
 
         try {
@@ -270,7 +270,7 @@ public class PlaybackFragment extends DialogFragment {
     }
 
     private void resumePlaying() {
-        mPlayButton.setImageResource(R.drawable.ic_close_white);
+        mPlayButton.setImageResource(R.drawable.ic_close_blue);
         mHandler.removeCallbacks(mRunnable);
         mMediaPlayer.start();
         updateSeekBar();

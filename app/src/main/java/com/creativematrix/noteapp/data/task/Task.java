@@ -75,6 +75,16 @@ public class Task {
     @SerializedName("TaskStatus")
     private boolean taskStatus;
 
+    public Boolean getPending() {
+        return pending;
+    }
+
+    public void setPending(Boolean pending) {
+        this.pending = pending;
+    }
+
+    @SerializedName("Pending")
+    private Boolean pending;
     public Long getTaskState() {
         return TaskState;
     }
