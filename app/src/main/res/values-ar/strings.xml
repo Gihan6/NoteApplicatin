@@ -43,6 +43,7 @@
     <string name="projects">المشروعات</string>
     <string name="members">الأعضاء</string>
     <string name="delete_sure">هل أنت متأكد أنك تريد المسح؟ </string>
+    <string name="task_voice_note_empty">قم بالضغط علي الزر وتسجيل رسالة صوتيه</string>
 
     <string name="pick_a_start_time">وقت البدء</string>
     <string name="pick_a_start_date">تاريخ البدء</string>
@@ -101,4 +102,6 @@
     <string name="toast_recording_start">Recording Voice Note Started</string>
     <string name="record_in_progress">Recording</string>
     <string name="record_prompt">Tap to start record</string>
+    <string name="pending">Pending</string>
+    <string name="download"><u>تنزيل المرفقات</u></string>
 </resources>

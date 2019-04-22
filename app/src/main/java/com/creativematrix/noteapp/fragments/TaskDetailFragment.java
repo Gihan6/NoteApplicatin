@@ -1,8 +1,13 @@
 package com.creativematrix.noteapp.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -25,6 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import androidx.appcompat.widget.Toolbar;
@@ -43,6 +49,9 @@ public class TaskDetailFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private Context mContext;
+    // Progress Dialog
+    private ProgressDialog pDialog;
+    public static final int progress_bar_type = 0;
     private OnFragmentInteractionListener mListener;
     RecyclerView recycler_view_groups;
     FloatingActionButton floating_button_add_group;
@@ -50,10 +59,11 @@ public class TaskDetailFragment extends Fragment {
     private ArrayList<LstGroup> lstGroups = new ArrayList<>();
     Toolbar toolbar;
     Task mTask;
-    TextView task_name_title, task_name, task_desc, task_cost, task_start_time, task_end_time, task_owners, task_status, project_name;
+    TextView task_name_title, task_name, task_desc, task_cost, task_start_time, task_end_time, task_owners, file_name, task_status, project_name, txtDownloadFile;
     Button btnDelete, btnUpdate;
     DialogPlus dialog;
-
+    LinearLayout file_download;
+    DisplayTaskDetailsResponse displayTaskDetailsResponse;
     public TaskDetailFragment(Task task) {
         this.mTask = task;
     }
@@ -82,12 +92,20 @@ public class TaskDetailFragment extends Fragment {
         btnDelete.setOnClickListener(v -> {
             deleteTask();
         });
+        txtDownloadFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadFile(displayTaskDetailsResponse.getTaskesfiles().get(0).getFileExt());
+            }
+        });
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         new TaskRepo(getActivity()).displayTaskDetails(mTask)
                 .observe(this, GroupRes -> {
                     try {
+
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            displayTaskDetailsResponse =GroupRes;
                             initialzeData(GroupRes);
                         }
                     } catch (Exception ex) {
@@ -118,10 +136,9 @@ public class TaskDetailFragment extends Fragment {
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
-                            Utils.showStringToast(getActivity(),getResources().getString(R.string.deleted_succees));
-                        }
-                        else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
-                            Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMsg()));
+                            Utils.showStringToast(getActivity(), getResources().getString(R.string.deleted_succees));
+                        } else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)) {
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMsg()));
                         }
                     } catch (Exception ex) {
 
@@ -136,15 +153,23 @@ public class TaskDetailFragment extends Fragment {
         task_desc.setText(groupRes.getTaskDescription());
         task_start_time.setText(groupRes.getTaskStartTime());
         task_end_time.setText(groupRes.getTaskEndTime());
-        String ownersNames="";
-        for (int i =0; i<groupRes.getTaskUsers().size();i++){
-             ownersNames+=groupRes.getTaskUsers().get(i).getUserName()+"-";
+        String ownersNames = "";
+        for (int i = 0; i < groupRes.getTaskUsers().size(); i++) {
+            ownersNames += groupRes.getTaskUsers().get(i).getUserName() + "-";
         }
         task_owners.setText(ownersNames);
-        if (groupRes.getTaskStautes()==false) {
+        if (groupRes.getTaskStautes() == false) {
             task_status.setText(getResources().getString(R.string.task_under_processing));
         } else {
             task_status.setText(getResources().getString(R.string.task_completed));
+        }
+
+        if (groupRes.getTaskesfiles() != null) {
+            file_download.setVisibility(View.VISIBLE);
+            file_name.setText(mTask.getFilesBinaryList().get(0).getFileName());
+        } else {
+            file_download.setVisibility(View.GONE);
+
         }
         //project_name.setText(groupRes.get());
         task_cost.setText(String.valueOf(groupRes.getTaskCost()));
@@ -197,7 +222,20 @@ public class TaskDetailFragment extends Fragment {
         task_cost = view.findViewById(R.id.task_cost);
         btnDelete = view.findViewById(R.id.btnDelete);
         btnUpdate = view.findViewById(R.id.btnUpdate);
-
+        txtDownloadFile = view.findViewById(R.id.txtDownloadFile);
+        file_name = view.findViewById(R.id.file_name);
+        file_download = view.findViewById(R.id.file_download);
         toolbar = view.findViewById(R.id.anim_toolbar);
+
+    }
+
+    private void downloadFile(String url) {
+
+        Uri intentUri = Uri.parse(url);
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(intentUri);
+        startActivity(intent);
     }
 }

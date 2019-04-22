@@ -74,6 +74,21 @@
                     android:textColor="@color/black" />
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/pending_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="end"
+                android:ellipsize="marquee"
+                android:visibility="gone"
+                android:focusable="false"
+                android:freezesText="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="@string/pending"
+                android:textColor="@color/color_blue_primary"
+                android:textStyle="bold" />
         </LinearLayout>
 
 

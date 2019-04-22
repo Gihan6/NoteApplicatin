@@ -1,11 +1,13 @@
 package com.creativematrix.noteapp.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -13,12 +15,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.android.material.textfield.TextInputEditText;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -88,9 +92,16 @@ public class AddNewTaskFragment extends Fragment {
     private String endDate;
     private String endTime;
     RecyclerView recycler_view_files;
-
+    private Task mTask;
     String taskStatus;
 
+    @SuppressLint("ValidFragment")
+    public AddNewTaskFragment(Task task) {
+        this.mTask=task;
+    }
+    public AddNewTaskFragment() {
+
+    }
     public void setStartDate(String startDate) {
         this.startDate = startDate;
         if (startDate != null && !startDate.equals("")) {
@@ -230,7 +241,8 @@ public class AddNewTaskFragment extends Fragment {
 
         } catch (ExternalStorageNotAvailableException e) {
             Toast.makeText(getActivity(), "There is no external storage available on this device.",
-                    Toast.LENGTH_SHORT).show();e.printStackTrace();
+                    Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 

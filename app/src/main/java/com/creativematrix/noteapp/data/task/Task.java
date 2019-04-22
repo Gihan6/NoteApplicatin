@@ -36,6 +36,17 @@ public class Task {
         isAdmin = admin;
     }
 
+    public List<com.creativematrix.noteapp.data.task.FilesBinary> getTaskesfiles() {
+        return Taskesfiles;
+    }
+
+    public void setTaskesfiles(List<com.creativematrix.noteapp.data.task.FilesBinary> taskesfiles) {
+        Taskesfiles = taskesfiles;
+    }
+
+    @SerializedName("Taskesfiles")
+    private List<FilesBinary> Taskesfiles;
+
     @SerializedName("FilesBinary")
     private List<FilesBinary> FilesBinary;
     @Expose
@@ -83,7 +94,7 @@ public class Task {
         this.pending = pending;
     }
 
-    @SerializedName("Pending")
+    @SerializedName("Pendining")
     private Boolean pending;
     public Long getTaskState() {
         return TaskState;

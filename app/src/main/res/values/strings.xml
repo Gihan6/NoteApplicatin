@@ -50,6 +50,7 @@
     <string name="pick_a_end_time">Pick a End Time</string>
     <string name="project_name_empty">Project Name Can not Be Empty</string>
     <string name="task_name_empty">Task Name Can not Be Empty</string>
+    <string name="task_voice_note_empty">Please Hold button and record voice message</string>
 
     <string name="pick_a_start_time">Pick a Start Time</string>
     <string name="pick_a_start_date">Pick a Start Date</string>
@@ -133,5 +134,7 @@
     <string name="toast_recording_start">Recording Voice Note Started</string>
     <string name="record_in_progress">Recording</string>
     <string name="record_prompt">Tap to start record</string>
+    <string name="pending">Pending</string>
+    <string name="download"><u>Doawnload Attachment</u></string>
 
 </resources>

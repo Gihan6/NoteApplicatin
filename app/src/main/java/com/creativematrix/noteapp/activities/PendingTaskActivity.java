@@ -93,6 +93,7 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
             public void onClick(View v) {
                 play_cancel_layout.setVisibility(View.INVISIBLE);
                 btnRecord.setVisibility(View.VISIBLE);
+                btnSaveTask.setVisibility(View.GONE);
             }
         });
 
@@ -107,6 +108,10 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
             Utils.showResToast(this, R.string.task_name_empty);
             return;
         }
+        if (Utils.isFieldEmpty(mFileName)) {
+            Utils.showResToast(this, R.string.task_voice_note_empty);
+            return;
+        }
         /*if (Utils.isFieldEmpty(taskDesc)) {
             Utils.showResToast(this, R.string.empt);
             return;
@@ -119,23 +124,24 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
         task.setCompanyID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(this)));
         task.setAddedID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(this)));
 
-
+        task.setPending(true);
         task.setFilesBinaryList(filesBinaryList);
-        //   ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        //  String json = ow.writeValueAsString(task);
+
         String filename = mFileName.substring(mFileName.lastIndexOf("/") + 1);
         String fileExtension = mFileName.substring(mFileName.lastIndexOf(".") + 1);
         String fileContent = null;
         fileContent = Utils.getFileBinary(mFileName);
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         filesBinaryList.add(new FilesBinary(filename, fileExtension, fileContent));
+        task.setFilesBinaryList(filesBinaryList);
+        String json = ow.writeValueAsString(task);
         new TaskRepo(this).addTask(task)
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
                             Utils.showStringToast(this, getString(R.string.task_added_success));
                             this.onBackPressed();
-                        }
-                        else if(GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
+                        } else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)) {
                             Utils.showStringToast(this, GroupRes.getMsg().toString());
 
                         }
@@ -155,7 +161,7 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
         mRecordingPrompt = findViewById(R.id.recording_status_text);
         cancel_voice = findViewById(R.id.cancel_voice);
         play_voice = findViewById(R.id.play_voice);
-        btnSaveTask= findViewById(R.id.btn_save_task);
+        btnSaveTask = findViewById(R.id.btn_save_task);
     }
 
     private void showElapsedTime() {
@@ -183,6 +189,7 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
     private void onRecord(boolean start) {
         intent = new Intent(PendingTaskActivity.this, RecordingService.class);
         if (start) {
+            btnSaveTask.setVisibility(View.GONE);
             play_cancel_layout.setVisibility(View.INVISIBLE);
             // start recording
             btnRecord.setImageResource(R.drawable.ic_stop);
@@ -238,6 +245,7 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
                     .updateItemCount(true);*/
         } else {
             //stop recording
+            btnSaveTask.setVisibility(View.VISIBLE);
             play_cancel_layout.setVisibility(View.VISIBLE);
             btnRecord.setImageResource(R.drawable.ic_mic);
 

@@ -202,8 +202,19 @@ public class ViewAllTasksFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_tasks.setLayoutManager(linearLayoutManager);
         recycler_view_tasks.setHasFixedSize(true);
-        tasksAdapter=new TasksAdapter(getActivity(), tasks, (v, position) ->
-                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new TaskDetailFragment(tasks.get(position)), getActivity(), Utils.VIEWAllTASKSFRAGGMENT, Utils.AnimationType.SLIDE_UP)
+                        tasksAdapter=new TasksAdapter(getActivity(), tasks, (v, position) ->
+                        {
+                            if(tasks.get(position).getPending()){
+                                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
+                                        new AddNewTaskFragment(tasks.get(position)),
+                                        getActivity(), Utils.ADDNEWTASKFRAGMENT, Utils.AnimationType.SLIDE_UP);
+                            }
+                            else {
+                                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
+                                        new TaskDetailFragment(tasks.get(position)),
+                                        getActivity(), Utils.VIEWAllTASKSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
+                            }
+                        }
 
 
 

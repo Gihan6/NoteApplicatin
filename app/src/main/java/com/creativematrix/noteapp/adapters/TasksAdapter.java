@@ -1,8 +1,12 @@
 package com.creativematrix.noteapp.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,23 +23,24 @@ import java.util.ArrayList;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<Task> tasks=new ArrayList<>();
+    private ArrayList<Task> tasks = new ArrayList<>();
     private TasksAdapter.OnItemClickListener clickListener;
     private static int sSelected = -1;
 
     public TasksAdapter(final Context context, final ArrayList<Task> items, TasksAdapter.OnItemClickListener listener) {
         this.context = context;
         this.tasks = items;
-        this.clickListener=listener;
+        this.clickListener = listener;
 
     }
+
     public interface MyAdapterListener {
 
         void addCity(View v, int position);
 
 
-
     }
+
     public void setOnItemClickListener(final TasksAdapter.OnItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
     }
@@ -48,13 +53,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
 
     public interface OnItemClickListener {
-         void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-        private TextView task_name,task_status;
+        private TextView task_name, task_status,pending_name;
 
         //RadioButton checker;
         CardView cardlist_item;
@@ -64,8 +69,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             super(itemView);
             cardlist_item = itemView.findViewById(R.id.cardlist_item);
             task_name = itemView.findViewById(R.id.task_name);
-            task_status= itemView.findViewById(R.id.task_status);
+            task_status = itemView.findViewById(R.id.task_status);
+            pending_name = itemView.findViewById(R.id.pending_name);
             cardlist_item.setOnClickListener(this);
+
 
         }
 
@@ -79,20 +86,29 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final TasksAdapter.ViewHolder holder, int position) {
 
-        Task task=tasks.get(position);
+        Task task = tasks.get(position);
         holder.task_name.setText(task.getTaskName());
-        if((task.getTaskStatus())){
+        if ((task.getTaskStatus())) {
             holder.task_status.setText(context.getResources().getString(R.string.task_completed));
-        }
-        else {
+        } else {
             holder.task_status.setText(context.getResources().getString(R.string.task_under_processing));
 
         }
 
-   //     holder.task_status.setText(String.valueOf(task.getTaskStatus()));
+
+        if (task.getPending()) {
+            holder.cardlist_item.setCardBackgroundColor(R.color.colorPrimary);
+            holder.pending_name.setVisibility(View.VISIBLE);
+        } else {
+            holder.cardlist_item.setCardBackgroundColor(Color.WHITE);
+            holder.pending_name.setVisibility(View.GONE);
+
+        }
+        //     holder.task_status.setText(String.valueOf(task.getTaskStatus()));
     }
 
     @Override
