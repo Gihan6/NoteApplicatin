@@ -2,181 +2,200 @@
 package com.creativematrix.noteapp.data.task;
 
 import java.util.List;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class DisplayTaskDetailsResponse {
 
-    @Expose
-    private String $id;
+    @SerializedName("$id")
+    private String m$id;
     @SerializedName("Currencyid")
-    private Long currencyid;
+    private Long mCurrencyid;
     @SerializedName("Currencyname")
-    private String currencyname;
-    @Expose
-    private String flag;
+    private String mCurrencyname;
+    @SerializedName("flag")
+    private String mFlag;
     @SerializedName("Message")
-    private String message;
+    private String mMessage;
     @SerializedName("Pending")
-    private Boolean pending;
+    private Boolean mPending;
+    @SerializedName("ProjectID")
+    private Long mProjectID;
+    @SerializedName("ProjectName")
+    private String mProjectName;
     @SerializedName("TaskCost")
-    private Long taskCost;
+    private Long mTaskCost;
     @SerializedName("TaskDescription")
-    private String taskDescription;
+    private String mTaskDescription;
     @SerializedName("TaskEndTime")
-    private String taskEndTime;
+    private String mTaskEndTime;
     @SerializedName("TaskFinshing")
-    private Object taskFinshing;
+    private Object mTaskFinshing;
     @SerializedName("TaskID")
-    private Long taskID;
+    private Long mTaskID;
     @SerializedName("TaskName")
-    private String taskName;
+    private String mTaskName;
     @SerializedName("TaskStartTime")
-    private String taskStartTime;
+    private String mTaskStartTime;
     @SerializedName("TaskState")
-    private Long taskState;
+    private Long mTaskState;
     @SerializedName("TaskStautes")
-    private Boolean taskStautes;
+    private Boolean mTaskStautes;
     @SerializedName("TaskUsers")
-    private List<TaskUser> taskUsers;
+    private List<TaskUser> mTaskUsers;
     @SerializedName("Taskesfiles")
-    private List<Taskesfile> taskesfiles;
+    private List<Taskesfile> mTaskesfiles;
 
     public String get$id() {
-        return $id;
+        return m$id;
     }
 
     public void set$id(String $id) {
-        this.$id = $id;
+        m$id = $id;
     }
 
     public Long getCurrencyid() {
-        return currencyid;
+        return mCurrencyid;
     }
 
     public void setCurrencyid(Long currencyid) {
-        this.currencyid = currencyid;
+        mCurrencyid = currencyid;
     }
 
     public String getCurrencyname() {
-        return currencyname;
+        return mCurrencyname;
     }
 
     public void setCurrencyname(String currencyname) {
-        this.currencyname = currencyname;
+        mCurrencyname = currencyname;
     }
 
     public String getFlag() {
-        return flag;
+        return mFlag;
     }
 
     public void setFlag(String flag) {
-        this.flag = flag;
+        mFlag = flag;
     }
 
     public String getMessage() {
-        return message;
+        return mMessage;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        mMessage = message;
     }
 
     public Boolean getPending() {
-        return pending;
+        return mPending;
     }
 
     public void setPending(Boolean pending) {
-        this.pending = pending;
+        mPending = pending;
+    }
+
+    public Long getProjectID() {
+        return mProjectID;
+    }
+
+    public void setProjectID(Long projectID) {
+        mProjectID = projectID;
+    }
+
+    public String getProjectName() {
+        return mProjectName;
+    }
+
+    public void setProjectName(String projectName) {
+        mProjectName = projectName;
     }
 
     public Long getTaskCost() {
-        return taskCost;
+        return mTaskCost;
     }
 
     public void setTaskCost(Long taskCost) {
-        this.taskCost = taskCost;
+        mTaskCost = taskCost;
     }
 
     public String getTaskDescription() {
-        return taskDescription;
+        return mTaskDescription;
     }
 
     public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
+        mTaskDescription = taskDescription;
     }
 
     public String getTaskEndTime() {
-        return taskEndTime;
+        return mTaskEndTime;
     }
 
     public void setTaskEndTime(String taskEndTime) {
-        this.taskEndTime = taskEndTime;
+        mTaskEndTime = taskEndTime;
     }
 
     public Object getTaskFinshing() {
-        return taskFinshing;
+        return mTaskFinshing;
     }
 
     public void setTaskFinshing(Object taskFinshing) {
-        this.taskFinshing = taskFinshing;
+        mTaskFinshing = taskFinshing;
     }
 
     public Long getTaskID() {
-        return taskID;
+        return mTaskID;
     }
 
     public void setTaskID(Long taskID) {
-        this.taskID = taskID;
+        mTaskID = taskID;
     }
 
     public String getTaskName() {
-        return taskName;
+        return mTaskName;
     }
 
     public void setTaskName(String taskName) {
-        this.taskName = taskName;
+        mTaskName = taskName;
     }
 
     public String getTaskStartTime() {
-        return taskStartTime;
+        return mTaskStartTime;
     }
 
     public void setTaskStartTime(String taskStartTime) {
-        this.taskStartTime = taskStartTime;
+        mTaskStartTime = taskStartTime;
     }
 
     public Long getTaskState() {
-        return taskState;
+        return mTaskState;
     }
 
     public void setTaskState(Long taskState) {
-        this.taskState = taskState;
+        mTaskState = taskState;
     }
 
     public Boolean getTaskStautes() {
-        return taskStautes;
+        return mTaskStautes;
     }
 
     public void setTaskStautes(Boolean taskStautes) {
-        this.taskStautes = taskStautes;
+        mTaskStautes = taskStautes;
     }
 
     public List<TaskUser> getTaskUsers() {
-        return taskUsers;
+        return mTaskUsers;
     }
 
     public void setTaskUsers(List<TaskUser> taskUsers) {
-        this.taskUsers = taskUsers;
+        mTaskUsers = taskUsers;
     }
 
     public List<Taskesfile> getTaskesfiles() {
-        return taskesfiles;
+        return mTaskesfiles;
     }
 
     public void setTaskesfiles(List<Taskesfile> taskesfiles) {
-        this.taskesfiles = taskesfiles;
+        mTaskesfiles = taskesfiles;
     }
 
 }

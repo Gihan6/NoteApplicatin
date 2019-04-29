@@ -64,10 +64,12 @@ public class TaskRepo {
         });
         return mutableLiveData;
     }
-    public LiveData<Task> deleteTask(Task task) {
+
+
+    public LiveData<Task> EditTask(Task task) {
         final MutableLiveData<Task> mutableLiveData = new MutableLiveData<>();
         showDialog();
-        Call<Task> tasksResponseCall = mTaskApiInterface.postDeleteTask(task);
+        Call<Task> tasksResponseCall = mTaskApiInterface.postEditTask(task);
         tasksResponseCall.enqueue(new Callback<Task>() {
             @Override
             public void onResponse(Call<Task> call, Response<Task> response) {
@@ -78,6 +80,25 @@ public class TaskRepo {
 
             @Override
             public void onFailure(Call<Task> call, Throwable t) {
+                hideDialog();
+            }
+        });
+        return mutableLiveData;
+    }
+    public LiveData<DeleteTaskResponse> deleteTask(Task task) {
+        final MutableLiveData<DeleteTaskResponse> mutableLiveData = new MutableLiveData<>();
+        showDialog();
+        Call<DeleteTaskResponse> tasksResponseCall = mTaskApiInterface.postDeleteTask(task);
+        tasksResponseCall.enqueue(new Callback<DeleteTaskResponse>() {
+            @Override
+            public void onResponse(Call<DeleteTaskResponse> call, Response<DeleteTaskResponse> response) {
+                Log.d(TAG, "onResponse: " + response.message());
+                mutableLiveData.postValue(response.body());
+                hideDialog();
+            }
+
+            @Override
+            public void onFailure(Call<DeleteTaskResponse> call, Throwable t) {
                 hideDialog();
             }
         });

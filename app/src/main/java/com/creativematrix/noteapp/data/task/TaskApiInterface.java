@@ -9,7 +9,7 @@ public interface TaskApiInterface {
     @POST("AddTask/")
     Call<Task> postAddTask(@Body Task task);
     @POST("DeleteTask/")
-    Call<Task> postDeleteTask(@Body Task task);
+    Call<DeleteTaskResponse> postDeleteTask(@Body Task task);
     @POST("DisplayTasks/")
     Call<DisplayTasksResponse> postDisplayTasks(@Body DisplayTaskRequest displayTaskRequest);
 
@@ -18,4 +18,8 @@ public interface TaskApiInterface {
 
     @POST("DisplayTaskesInDetalies/")
     Call<DisplayTaskDetailsResponse> postGetTaskDetails(@Body Task task);
+
+  @POST("EditTask/")
+  Call<Task> postEditTask(@Body Task task);
+
 }

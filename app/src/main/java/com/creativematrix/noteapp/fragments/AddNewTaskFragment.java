@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.creativematrix.noteapp.data.task.DisplayTaskDetailsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -94,14 +95,22 @@ public class AddNewTaskFragment extends Fragment {
     RecyclerView recycler_view_files;
     private Task mTask;
     String taskStatus;
+    DisplayTaskDetailsResponse mDisplayTaskDetailsResponse;
 
     @SuppressLint("ValidFragment")
     public AddNewTaskFragment(Task task) {
-        this.mTask=task;
+        this.mTask = task;
     }
+
     public AddNewTaskFragment() {
 
     }
+
+    @SuppressLint("ValidFragment")
+    public AddNewTaskFragment(DisplayTaskDetailsResponse displayTaskDetailsResponse) {
+        this.mDisplayTaskDetailsResponse = displayTaskDetailsResponse;
+    }
+
     public void setStartDate(String startDate) {
         this.startDate = startDate;
         if (startDate != null && !startDate.equals("")) {
@@ -286,6 +295,72 @@ public class AddNewTaskFragment extends Fragment {
 
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         buttonSaveProject = view.findViewById(R.id.btn_save_project);
+
+
+        if (mTask != null) {
+            editTextTaskName.setText(mTask.getTaskName());
+            if (mTask.getTaskDescripation() != null)
+                editTextTaskDescription.setText(((mTask.getTaskDescripation())));
+
+
+        }
+
+        if (mDisplayTaskDetailsResponse != null) {
+            editTextTaskName.setText(mDisplayTaskDetailsResponse.getTaskName());
+            if (mDisplayTaskDetailsResponse.getTaskDescription() != null)
+                editTextTaskDescription.setText(((mDisplayTaskDetailsResponse.getTaskDescription())));
+            if (mDisplayTaskDetailsResponse.getTaskCost() != null)
+                editTextTaskCost.setText(String.valueOf(mDisplayTaskDetailsResponse.getTaskCost()));
+
+            if (mDisplayTaskDetailsResponse.getTaskStartTime() != null) {
+                String str = mDisplayTaskDetailsResponse.getTaskStartTime();
+                String[] splitStr = str.split("\\s+");
+                editTextTaskStartDate.setText(((splitStr[0])));
+                editTextTaskStartTime.setText(((splitStr[1])));
+            }
+            if (mDisplayTaskDetailsResponse.getTaskEndTime() != null) {
+                String str = mDisplayTaskDetailsResponse.getTaskEndTime();
+                String[] splitStr = str.split("\\s+");
+                editTextTaskEndDate.setText(((splitStr[0])));
+                editTextTaskEndTime.setText(((splitStr[1])));
+            }
+            if (mDisplayTaskDetailsResponse.getCurrencyid() != null) {
+                selectedCurrnecyID = String.valueOf(mDisplayTaskDetailsResponse.getCurrencyid());
+            }
+            if (mDisplayTaskDetailsResponse.getCurrencyname() != null) {
+                selectedCurrnecyID = String.valueOf(mDisplayTaskDetailsResponse.getCurrencyid());
+            }
+            if (mDisplayTaskDetailsResponse.getCurrencyname() != null) {
+                editTextTaskCoin.setText(mDisplayTaskDetailsResponse.getCurrencyname());
+            }
+            if (mDisplayTaskDetailsResponse.getProjectName() != null) {
+                editTextProjectName.setText(mDisplayTaskDetailsResponse.getProjectName());
+            }
+            if (mDisplayTaskDetailsResponse.getProjectID() != null) {
+                selectedProjectID = String.valueOf(mDisplayTaskDetailsResponse.getProjectID());
+            }
+            if (mDisplayTaskDetailsResponse.getTaskState() != null) {
+                selectedTaskStatusID = String.valueOf(mDisplayTaskDetailsResponse.getTaskState());
+                if (mDisplayTaskDetailsResponse.getTaskState() == 0) {
+                    editTextTaskStatus.setText((getString(R.string.Usual)));
+                } else if (mDisplayTaskDetailsResponse.getTaskState() == 1) {
+                    editTextTaskStatus.setText((getString(R.string.Critical)));
+                } else if (mDisplayTaskDetailsResponse.getTaskState() == 2) {
+                    editTextTaskStatus.setText((getString(R.string.Urgent)));
+                }
+            }
+
+            if (mDisplayTaskDetailsResponse.getTaskUsers() != null) {
+
+                for (int i = 0; i < mDisplayTaskDetailsResponse.getTaskUsers().size(); i++) {
+                    taskOwnerIDS = "";
+                    taskOwnerNames = "";
+                    taskOwnerNames += mDisplayTaskDetailsResponse.getTaskUsers().get(i).getUserName() + "-";
+                    taskOwnerIDS += mDisplayTaskDetailsResponse.getTaskUsers().get(i).getUSerTaskID() + "-";
+                }
+                editTextTaskOwner.setText(taskOwnerNames);
+            }
+        }
     }
 
     public void showDateFragment() {
@@ -350,6 +425,7 @@ public class AddNewTaskFragment extends Fragment {
         task.setTaskCost(Long.valueOf(taskCost));
         task.setTaskState(Long.valueOf(selectedTaskStatusID));
         task.setCurrencyID(CurrencyID);
+        task.setPending(false);
         task.setCompanyID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
         task.setAddedID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
         try {
@@ -367,13 +443,43 @@ public class AddNewTaskFragment extends Fragment {
         task.setFilesBinaryList(filesBinaryList);
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(task);
+        if (mTask != null) {
+            task.setTaskID(mTask.getTaskID());
+            updateTask(task);
+        }
+        if (mDisplayTaskDetailsResponse != null) {
+            task.setTaskID(mDisplayTaskDetailsResponse.getTaskID());
+            updateTask(task);
+        } else {
+            AddTask(task);
+        }
+    }
 
+    private void AddTask(Task task) {
         new TaskRepo(getActivity()).addTask(task)
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
                             Utils.showStringToast(getActivity(), getString(R.string.task_added_success));
                             getActivity().onBackPressed();
+                        } else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)) {
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMsg()));
+                        }
+                    } catch (Exception ex) {
+
+                    }
+                });
+    }
+
+    private void updateTask(Task task) {
+        new TaskRepo(getActivity()).EditTask(task)
+                .observe(this, GroupRes -> {
+                    try {
+                        if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            Utils.showStringToast(getActivity(), getString(R.string.task_added_success));
+                            getActivity().onBackPressed();
+                        } else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)) {
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMsg()));
                         }
                     } catch (Exception ex) {
 

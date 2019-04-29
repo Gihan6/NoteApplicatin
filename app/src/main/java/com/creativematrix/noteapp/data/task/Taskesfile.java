@@ -1,71 +1,70 @@
 
 package com.creativematrix.noteapp.data.task;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class Taskesfile {
 
-    @Expose
-    private String $id;
+    @SerializedName("$id")
+    private String m$id;
     @SerializedName("FileExt")
-    private String fileExt;
+    private String mFileExt;
     @SerializedName("FileName")
-    private String fileName;
+    private String mFileName;
     @SerializedName("FileType")
-    private String fileType;
+    private String mFileType;
     @SerializedName("TakeID")
-    private Long takeID;
+    private Long mTakeID;
     @SerializedName("TaskFileId")
-    private Long taskFileId;
+    private Long mTaskFileId;
 
     public String get$id() {
-        return $id;
+        return m$id;
     }
 
     public void set$id(String $id) {
-        this.$id = $id;
+        m$id = $id;
     }
 
     public String getFileExt() {
-        return fileExt;
+        return mFileExt;
     }
 
     public void setFileExt(String fileExt) {
-        this.fileExt = fileExt;
+        mFileExt = fileExt;
     }
 
     public String getFileName() {
-        return fileName;
+        return mFileName;
     }
 
     public void setFileName(String fileName) {
-        this.fileName = fileName;
+        mFileName = fileName;
     }
 
     public String getFileType() {
-        return fileType;
+        return mFileType;
     }
 
     public void setFileType(String fileType) {
-        this.fileType = fileType;
+        mFileType = fileType;
     }
 
     public Long getTakeID() {
-        return takeID;
+        return mTakeID;
     }
 
     public void setTakeID(Long takeID) {
-        this.takeID = takeID;
+        mTakeID = takeID;
     }
 
     public Long getTaskFileId() {
-        return taskFileId;
+        return mTaskFileId;
     }
 
     public void setTaskFileId(Long taskFileId) {
-        this.taskFileId = taskFileId;
+        mTaskFileId = taskFileId;
     }
 
 }

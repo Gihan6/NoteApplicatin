@@ -67,7 +67,10 @@ public class VerificationActivity extends AppCompatActivity implements Verificat
             int flag = Integer.parseInt(companyResponse.getFlag());
             if (Constant.RESPONSE_ADD_NEW_COMPANY == flag) {
                 PreferenceHelper.getPrefernceHelperInstace().storeCompanyData(this, String.valueOf(companyResponse.getCompanyID()), company.Username, company.Password,company.LogoPath,"1");
+                PreferenceHelper.getPrefernceHelperInstace().setIscompany(true,VerificationActivity.this);
+
                 PreferenceHelper.getPrefernceHelperInstace().setUserLoggedIn(true,VerificationActivity.this);
+
                 Intent intent = new Intent(this, NoteHomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

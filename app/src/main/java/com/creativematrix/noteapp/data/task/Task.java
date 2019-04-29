@@ -94,7 +94,7 @@ public class Task {
         this.pending = pending;
     }
 
-    @SerializedName("Pendining")
+    @SerializedName("Pending")
     private Boolean pending;
     public Long getTaskState() {
         return TaskState;

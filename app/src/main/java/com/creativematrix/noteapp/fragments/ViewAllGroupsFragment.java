@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
@@ -51,6 +52,7 @@ public class ViewAllGroupsFragment extends Fragment {
     GroupsAdapter groupsAdapter;
     private ArrayList<LstGroup> lstGroups = new ArrayList<>();
     Toolbar toolbar;
+    FrameLayout empty_frame_layout;
 
     public ViewAllGroupsFragment() {
         // Required empty public constructor
@@ -89,10 +91,12 @@ public class ViewAllGroupsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_view_all_groups, container, false);
         configureViews(view);
         floating_button_add_group.setOnClickListener(
-                view1 -> Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
-                        new AddNewGroupFragment(), getActivity(),
-                        Utils.ADDNEWGROUPFRAGMENT, Utils.AnimationType.SLIDE_UP
-                ));
+                view1 -> {
+                    Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
+                            new AddNewGroupFragment(), getActivity(),
+                            Utils.ADDNEWGROUPFRAGMENT, Utils.AnimationType.SLIDE_UP
+                    );
+                });
 
         view.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
@@ -106,6 +110,9 @@ public class ViewAllGroupsFragment extends Fragment {
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            if (GroupRes.getLstGroup().size() == 0) {
+                                empty_frame_layout.setVisibility(View.VISIBLE);
+                            }
                             lstGroups.clear();
                             lstGroups.addAll(GroupRes.getLstGroup());
                             groupsAdapter.notifyDataSetChanged();
@@ -158,6 +165,8 @@ public class ViewAllGroupsFragment extends Fragment {
     private void configureViews(View view) {
         recycler_view_groups = view.findViewById(R.id.recycler_view_groups);
         floating_button_add_group = view.findViewById(R.id.floating_button_add_group);
+        empty_frame_layout = view.findViewById(R.id.empty_frame_layout);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_groups.setLayoutManager(linearLayoutManager);
         recycler_view_groups.setHasFixedSize(true);

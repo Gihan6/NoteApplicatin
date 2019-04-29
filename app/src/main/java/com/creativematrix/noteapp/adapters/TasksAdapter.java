@@ -59,7 +59,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-        private TextView task_name, task_status,pending_name;
+        private TextView task_name, task_status, pending_name;
 
         //RadioButton checker;
         CardView cardlist_item;
@@ -100,14 +100,15 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         }
 
 
-        if (task.getPending()) {
-            holder.cardlist_item.setCardBackgroundColor(R.color.colorPrimary);
-            holder.pending_name.setVisibility(View.VISIBLE);
-        } else {
-            holder.cardlist_item.setCardBackgroundColor(Color.WHITE);
-            holder.pending_name.setVisibility(View.GONE);
+        if (task.getPending() != null)
+            if (task.getPending()) {
+                holder.cardlist_item.setCardBackgroundColor(R.color.colorPrimary);
+                holder.pending_name.setVisibility(View.VISIBLE);
+            } else {
+                holder.cardlist_item.setCardBackgroundColor(Color.WHITE);
+                holder.pending_name.setVisibility(View.GONE);
 
-        }
+            }
         //     holder.task_status.setText(String.valueOf(task.getTaskStatus()));
     }
 

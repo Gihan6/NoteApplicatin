@@ -44,7 +44,7 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
     private TextView mRecordingPrompt;
     long timeWhenPaused = 0; //stores time when user clicks pause button
     private int mRecordPromptCount = 0;
-    ImageView cancel_voice, play_voice;
+    Button cancel_voice, play_voice;
     public static String mFileName;
     Button btnSaveTask;
     long elapsedMillis;
@@ -123,7 +123,6 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
         task.setTaskDescripation(taskDesc);
         task.setCompanyID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(this)));
         task.setAddedID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(this)));
-
         task.setPending(true);
         task.setFilesBinaryList(filesBinaryList);
 

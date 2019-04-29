@@ -222,7 +222,11 @@ public class UserDetailFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_users.setLayoutManager(linearLayoutManager);
         recycler_view_users.setHasFixedSize(true);
-        tasksInUsersAdapter = new TasksInUsersAdapter(getActivity(), tasks, (v, position) -> Utils.showStringToast(getActivity(), String.valueOf(tasks.get(position).getAddedID())));
+        tasksInUsersAdapter = new TasksInUsersAdapter(getActivity(), tasks, (v, position) ->
+                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
+                        new TaskDetailFragment(tasks.get(position)),
+                        getActivity(), Utils.TASK_DETAIL_FRAGMENT, Utils.AnimationType.SLIDE_UP)
+        );
         // Set adapter in recyclerView
         toolbar = view.findViewById(R.id.anim_toolbar);
 

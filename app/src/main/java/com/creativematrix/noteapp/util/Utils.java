@@ -12,6 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.provider.MediaStore;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -78,7 +80,7 @@ public class Utils {
     public static final String ADDNEWUSERFRAGMENT = "AddNewUserFragment";
     public static final String VIEWAllUSERSFRAGGMENT = "ViewAllUsersFragment";
     public static final String PROJECT_DETAIL_FRAGMENT = "ProjectDetailFragment";
-
+    public static final String TASK_DETAIL_FRAGMENT = "TaskDetailFragment";
     public static final String ADDNEWTASKFRAGMENT = "AddNewTaskFragment";
     public static final String ADDNEWPROJECTFRAGMENT = "AddNewProjectFragment";
     public static final String USERDETAILFRAGMENT = "UserDetailFragment";
@@ -113,6 +115,41 @@ public class Utils {
         }
         return Base64.encodeToString(byteArray, Base64.NO_WRAP);
     }
+    @NonNull
+    public static String getETAString(@NonNull final Context context, final long etaInMilliSeconds) {
+        if (etaInMilliSeconds < 0) {
+            return "";
+        }
+        int seconds = (int) (etaInMilliSeconds / 1000);
+        long hours = seconds / 3600;
+        seconds -= hours * 3600;
+        long minutes = seconds / 60;
+        seconds -= minutes * 60;
+        if (hours > 0) {
+            return context.getString(R.string.download_eta_hrs, hours, minutes, seconds);
+        } else if (minutes > 0) {
+            return context.getString(R.string.download_eta_min, minutes, seconds);
+        } else {
+            return context.getString(R.string.download_eta_sec, seconds);
+        }
+    }
+    @NonNull
+    public static String getDownloadSpeedString(@NonNull final Context context, final long downloadedBytesPerSecond) {
+        if (downloadedBytesPerSecond < 0) {
+            return "";
+        }
+        double kb = (double) downloadedBytesPerSecond / (double) 1000;
+        double mb = kb / (double) 1000;
+        final DecimalFormat decimalFormat = new DecimalFormat(".##");
+        if (mb >= 1) {
+            return context.getString(R.string.download_speed_mb, decimalFormat.format(mb));
+        } else if (kb >= 1) {
+            return context.getString(R.string.download_speed_kb, decimalFormat.format(kb));
+        } else {
+            return context.getString(R.string.download_speed_bytes, downloadedBytesPerSecond);
+        }
+    }
+
     public static String encodeImage(String selectedPath) {
 
 

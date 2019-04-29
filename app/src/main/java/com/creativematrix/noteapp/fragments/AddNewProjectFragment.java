@@ -191,32 +191,31 @@ public class AddNewProjectFragment extends Fragment {
             if(mProject.getProjectOwner()!=null){
                 editTextProjectOwner.setText(mProject.getProjectOwner());
             }
-           /* if(mProject.getProjectStatus()!=null){
-                if (mProject.getProjectStatus().equals("False")) {
-                    ed.setText(getResources().getString(R.string.task_under_processing));
-                } else {
-                    task_status.setText(getResources().getString(R.string.task_completed));
-                }
-            }
-*/
-       //         editTextProjectCost.setText((String.valueOf(mProject.getDirctoresNames())));
-
 
         }
     }
 
     private void handleStartTimeDate(String startDateTime) {
-        String s1= startDateTime.substring(0,startDateTime.indexOf("T",1));
+     /*   String s1= startDateTime.substring(0,startDateTime.indexOf("T",1));
         editTextProjectStartDate.setText(s1);
         String s2= startDateTime.substring(s1.length()+2);
         editTextProjectStartTime.setText(s2);
+*/
+
+        String[] splitStr = startDateTime.split("\\s+");
+        editTextProjectStartDate.setText(((splitStr[0])));
+        editTextProjectStartTime.setText(((splitStr[1])));
     }
 
     private void handleEndTimeDate(String startEndTime) {
-        String s1= startEndTime.substring(0,startEndTime.indexOf("T",1));
+     /*   String s1= startEndTime.substring(0,startEndTime.indexOf("T",1));
         editTextProjectEndDate.setText(s1);
         String s2= startEndTime.substring(s1.length()+2);
-        editTextProjectEndTime.setText(s2);
+        editTextProjectEndTime.setText(s2);*/
+
+        String[] splitStr = startEndTime.split("\\s+");
+        editTextProjectEndDate.setText(((splitStr[0])));
+        editTextProjectEndTime.setText(((splitStr[1])));
     }
 
     public void showDateFragment() {

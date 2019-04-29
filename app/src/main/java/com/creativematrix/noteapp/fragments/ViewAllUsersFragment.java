@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
@@ -53,6 +54,7 @@ public class ViewAllUsersFragment extends Fragment {
     AllUsersAdapter allUsersAdapter;
     private ArrayList<LstUsers> lstUsers = new ArrayList<>();
     Toolbar toolbar;
+    FrameLayout empty_frame_layout;
 
     public ViewAllUsersFragment() {
         // Required empty public constructor
@@ -104,6 +106,9 @@ public class ViewAllUsersFragment extends Fragment {
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            if (GroupRes.getLst().size() == 0) {
+                                empty_frame_layout.setVisibility(View.VISIBLE);
+                            }
                             lstUsers.clear();
                             lstUsers.addAll(GroupRes.getLst());
                             allUsersAdapter.notifyDataSetChanged();
@@ -152,6 +157,8 @@ public class ViewAllUsersFragment extends Fragment {
 
     private void configureViews(View view) {
         recycler_view_users = view.findViewById(R.id.recycler_view_users);
+        empty_frame_layout = view.findViewById(R.id.empty_frame_layout);
+
         floating_button_add_user = view.findViewById(R.id.floating_button_add_user);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycler_view_users.setLayoutManager(linearLayoutManager);

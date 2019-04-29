@@ -17,6 +17,8 @@
         <RelativeLayout
             android:id="@+id/fragment_record"
             android:layout_width="match_parent"
+            android:background="@color/color_background"
+
             android:layout_height="match_parent">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/color_background"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -104,7 +105,7 @@
                         android:layout_margin="10dp"
                         android:orientation="horizontal">
 
-                        <ImageView
+                        <Button
                             android:id="@+id/play_voice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -112,15 +113,21 @@
                             android:clickable="true"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
+                            android:text="@string/play"
+                            android:textStyle="bold"
+                            android:background="@drawable/btn_green"
                             android:src="@drawable/ic_play_blue" />
 
-                        <ImageView
+                        <Button
                             android:id="@+id/cancel_voice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_above="@+id/chronometer"
                             android:clickable="true"
+                            android:text="@string/cancel"
                             android:layout_marginStart="10dp"
+                            android:background="@drawable/btn_red"
+                            android:textStyle="bold"
                             android:layout_marginEnd="10dp"
                             android:src="@drawable/ic_close_blue"
                             />
@@ -202,6 +209,7 @@
                     android:layout_gravity="end"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:src="@drawable/ic_close_white" />
             </LinearLayout>
 

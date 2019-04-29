@@ -38,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
+                android:layout_marginStart="10dp"
                 android:gravity="start"
                 android:orientation="vertical"
                 >
@@ -48,7 +49,6 @@
                 android:ellipsize="marquee"
                 android:focusable="false"
                 android:layout_gravity="center"
-                android:layout_marginStart="10dp"
                 android:textStyle="bold"
                 android:freezesText="true"
                 android:textColor="@color/black"
@@ -62,7 +62,6 @@
                     android:ellipsize="marquee"
                     android:focusable="false"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
                     android:freezesText="true"
                     android:textColor="@color/black"
                     android:marqueeRepeatLimit="marquee_forever"

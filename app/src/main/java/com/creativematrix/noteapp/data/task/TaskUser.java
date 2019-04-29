@@ -1,51 +1,50 @@
 
 package com.creativematrix.noteapp.data.task;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class TaskUser {
 
-    @Expose
-    private String $id;
+    @SerializedName("$id")
+    private String m$id;
     @SerializedName("Phone")
-    private String phone;
+    private String mPhone;
     @SerializedName("USerTaskID")
-    private Long uSerTaskID;
+    private Long mUSerTaskID;
     @SerializedName("UserName")
-    private String userName;
+    private String mUserName;
 
     public String get$id() {
-        return $id;
+        return m$id;
     }
 
     public void set$id(String $id) {
-        this.$id = $id;
+        m$id = $id;
     }
 
     public String getPhone() {
-        return phone;
+        return mPhone;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        mPhone = phone;
     }
 
     public Long getUSerTaskID() {
-        return uSerTaskID;
+        return mUSerTaskID;
     }
 
     public void setUSerTaskID(Long uSerTaskID) {
-        this.uSerTaskID = uSerTaskID;
+        mUSerTaskID = uSerTaskID;
     }
 
     public String getUserName() {
-        return userName;
+        return mUserName;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        mUserName = userName;
     }
 
 }

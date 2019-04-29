@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PendingTaskActivity"></activity>
+        <activity android:name=".activities.PendingTaskActivity"
+            android:launchMode= "singleInstance"
+            ></activity>
         <activity android:name=".activities.SelectTaskCoinActivity" />
         <activity android:name=".activities.BeforeLoginActivity" />
         <activity android:name=".activities.UserLoginRegisterActivity" />

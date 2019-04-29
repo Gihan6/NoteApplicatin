@@ -81,7 +81,7 @@ public class ProjectDetailFragment extends Fragment {
             return true;
         });
         btnDelete.setOnClickListener(v -> {
-           deleteProject();
+            deleteProject();
         });
         btnUpdate.setOnClickListener(v ->
                 Utils.switchFragmentWithAnimation
@@ -98,9 +98,8 @@ public class ProjectDetailFragment extends Fragment {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
                             initialzeData(GroupRes);
                             //Utils.showStringToast(getActivity(),getResources().getString(R.string.deleted_succees));
-                        }
-                        else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
-                           Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
+                        } else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)) {
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMessage()));
                         }
                     } catch (Exception ex) {
 
@@ -133,13 +132,12 @@ public class ProjectDetailFragment extends Fragment {
                     try {
                         if (GroupRes.getFlag().equals(String.valueOf(Constant.RESPONSE_SUCCESS))) {
                             dialog.dismiss();
-                            Utils.showStringToast(getActivity(),getResources().getString(R.string.deleted_succees));
+                            Utils.showStringToast(getActivity(), getResources().getString(R.string.deleted_succees));
                             getActivity().onBackPressed();
 
-                        }
-                        else if (GroupRes.getFlag().equals(String.valueOf(Constant.RESPONSE_FAILURE))){
+                        } else if (GroupRes.getFlag().equals(String.valueOf(Constant.RESPONSE_FAILURE))) {
                             dialog.dismiss();
-                            Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMessage()));
                         }
                     } catch (Exception ex) {
                         dialog.dismiss();
@@ -157,9 +155,9 @@ public class ProjectDetailFragment extends Fragment {
         project_start_time.setText(groupRes.getStart());
         project_end_time.setText(groupRes.getEnd());
         project_owners.setText(groupRes.getOwner());
-        String director="";
-        for(int i=0;i<groupRes.getDirector().size();i++){
-            director+=groupRes.getDirector().get(i).getName()+"-";
+        String director = "";
+        for (int i = 0; i < groupRes.getDirector().size(); i++) {
+            director += groupRes.getDirector().get(i).getName() + "-";
         }
         mProject.setDirctoresNames(director);
         project_director.setText(director);
