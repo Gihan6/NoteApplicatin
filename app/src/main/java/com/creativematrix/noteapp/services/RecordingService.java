@@ -75,6 +75,7 @@ public class RecordingService extends Service {
             stopRecording();
         }
 
+
         super.onDestroy();
     }
 

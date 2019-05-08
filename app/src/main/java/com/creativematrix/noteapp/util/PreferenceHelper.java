@@ -89,7 +89,12 @@ public class PreferenceHelper {
         return getString(context,COMPANYID,"");
     }
 
-
+    public String getLogopath(Context context) {
+        return getString(context,LOGOPATH,"");
+    }
+    public String getCompanyemail(Context context) {
+        return getString(context,COMPANYEMAIL,"");
+    }
     public void setShippingAddressToNull(Context c) {
         setShippingAddress(false, c);
     }

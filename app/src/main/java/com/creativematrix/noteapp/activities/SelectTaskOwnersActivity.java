@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.creativematrix.noteapp.Constant;
@@ -28,6 +29,7 @@ public class SelectTaskOwnersActivity extends AppCompatActivity implements Butto
     private Button button;
     private ArrayList<LstUsersnCompnay> lstUsersnCompnays=new ArrayList<>();
     CustomSelectUserInCompanyAdapter adapter;
+    FrameLayout empty_frame_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +43,21 @@ public class SelectTaskOwnersActivity extends AppCompatActivity implements Butto
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)){
+                            if (GroupRes.getLstUsersnCompnay().size() == 0) {
+                                empty_frame_layout.setVisibility(View.VISIBLE);
+                                button.setVisibility(View.GONE);
+                            }
                             lstUsersnCompnays.clear();
                             lstUsersnCompnays.addAll(GroupRes.getLstUsersnCompnay());
                             adapter.notifyDataSetChanged();
                         }
+                        else {
+                            empty_frame_layout.setVisibility(View.VISIBLE);
+                            button.setVisibility(View.GONE);
+                        }
                     } catch (Exception ex) {
-
+                        empty_frame_layout.setVisibility(View.VISIBLE);
+                        button.setVisibility(View.GONE);
                     }
                 });
 
@@ -74,6 +85,7 @@ public class SelectTaskOwnersActivity extends AppCompatActivity implements Butto
     private void findViewsById() {
         listView = (ListView) findViewById(R.id.list);
         button = (Button) findViewById(R.id.button);
+        empty_frame_layout =findViewById(R.id.empty_frame_layout);
 
     }
 

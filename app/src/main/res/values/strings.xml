@@ -152,4 +152,7 @@
     <string name="download_speed_mb">%1$s MB/s</string>
     <string name="retry">RETRY</string>
     <string name="download_complete">Download Completed ! check downloads folder</string>
+    <string name="not_found">Not Found</string>
+    <string name="not_assigned">Not Assigned Yet</string>
+    <string name="complete_task">Complete Task</string>
 </resources>

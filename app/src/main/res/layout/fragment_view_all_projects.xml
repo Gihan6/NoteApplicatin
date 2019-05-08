@@ -48,23 +48,24 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     <FrameLayout
         android:id="@+id/empty_frame_layout"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="match_parent"
         android:layout_below="@+id/appbar"
+        android:visibility="gone"
         android:fillViewport="true"
         >
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
             android:layout_gravity="center"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/list" />
+                android:src="@drawable/view_empty" />
             <TextView
                 android:layout_marginTop="@dimen/title_list"
                 android:text="@string/no_projects_found"

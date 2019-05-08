@@ -118,6 +118,8 @@ public class ViewAllGroupsFragment extends Fragment {
                             groupsAdapter.notifyDataSetChanged();
                         } else {
                             Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMessage()));
+                            empty_frame_layout.setVisibility(View.VISIBLE);
+
                         }
 
                     } catch (Exception ex) {

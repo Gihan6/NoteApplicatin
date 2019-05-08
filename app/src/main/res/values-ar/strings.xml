@@ -120,4 +120,7 @@
     <string name="download_complete"> تم التنزيل داخل ملف التحميلات</string>
     <string name="no_users_found">لا يوجد مستحدمين انقر لاضافة مستخدم جديد</string>
     <string name="no_groups_found">لا يوجد مجموعات انقر لاضافة مجموعة جديد</string>
+    <string name="not_found">لا يوجد</string>
+    <string name="not_assigned">لم تضف بعد</string>
+    <string name="complete_task">اكمال المهمة</string>
 </resources>

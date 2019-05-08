@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.tonyodev.fetch2.Error;
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
@@ -86,7 +87,7 @@ public class TaskDetailFragment extends Fragment implements FetchObserver<Downlo
     private ArrayList<LstGroup> lstGroups = new ArrayList<>();
     Toolbar toolbar;
     Task mTask;
-LinearLayout activity_single_download;
+    LinearLayout activity_single_download;
     TextView task_name_title, txtDownloadFile, task_name, task_desc, task_cost, task_start_time, task_end_time, task_owners, file_name, task_status, project_name;
     Button btnDelete, btnUpdate;
     private TextView progressTextView;
@@ -98,6 +99,7 @@ LinearLayout activity_single_download;
     DisplayTaskDetailsResponse displayTaskDetailsResponse;
     FetchConfiguration fetchConfiguration;
     View view;
+
     public TaskDetailFragment(Task task) {
         this.mTask = task;
     }
@@ -120,7 +122,7 @@ LinearLayout activity_single_download;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_task_detail, container, false);
+        view = inflater.inflate(R.layout.fragment_task_detail, container, false);
         FetchConfiguration fetchConfiguration = new FetchConfiguration.Builder(getActivity())
                 .setDownloadConcurrentLimit(3)
                 .build();
@@ -277,6 +279,7 @@ LinearLayout activity_single_download;
             }
         }
     }
+
     private void showDownloadErrorSnackBar(@NotNull Error error) {
         final Snackbar snackbar = Snackbar.make(view, "Download Failed: ErrorCode: " + error, Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction(R.string.retry, v -> {
@@ -285,10 +288,12 @@ LinearLayout activity_single_download;
         });
         snackbar.show();
     }
+
     private void setTitleView(@NonNull final String fileName) {
         final Uri uri = Uri.parse(fileName);
         titleTextView.setText(uri.getLastPathSegment());
     }
+
     private void setProgressView(@NonNull final Status status, final int progress) {
         switch (status) {
             case QUEUED: {
@@ -306,7 +311,7 @@ LinearLayout activity_single_download;
                 } else {
                     final String progressString = getResources().getString(R.string.percent_progress, progress);
                     progressTextView.setText(progressString);
-                    Utils.showStringToast(getActivity(),getResources().getString(R.string.download_complete));
+                    Utils.showStringToast(getActivity(), getResources().getString(R.string.download_complete));
                     activity_single_download.setVisibility(View.GONE);
                 }
                 break;
@@ -317,6 +322,7 @@ LinearLayout activity_single_download;
             }
         }
     }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -351,8 +357,8 @@ LinearLayout activity_single_download;
         progressTextView = view.findViewById(R.id.progressTextView);
         titleTextView = view.findViewById(R.id.titleTextView);
         etaTextView = view.findViewById(R.id.etaTextView);
-        downloadSpeedTextView =view. findViewById(R.id.downloadSpeedTextView);
-        activity_single_download=view. findViewById(R.id.activity_single_download);
+        downloadSpeedTextView = view.findViewById(R.id.downloadSpeedTextView);
+        activity_single_download = view.findViewById(R.id.activity_single_download);
     }
 
     private Extras getExtrasForRequest(Request request) {

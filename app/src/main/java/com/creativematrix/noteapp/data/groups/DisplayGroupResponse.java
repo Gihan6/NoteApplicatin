@@ -2,51 +2,50 @@
 package com.creativematrix.noteapp.data.groups;
 
 import java.util.List;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class DisplayGroupResponse {
 
-    @Expose
-    private String $id;
-    @Expose
-    private String flag;
-    @Expose
-    private List<LstGroup> lstGroup;
+    @SerializedName("$id")
+    private String m$id;
+    @SerializedName("flag")
+    private String mFlag;
+    @SerializedName("lstGroup")
+    private List<LstGroup> mLstGroup;
     @SerializedName("Message")
-    private String message;
+    private String mMessage;
 
     public String get$id() {
-        return $id;
+        return m$id;
     }
 
     public void set$id(String $id) {
-        this.$id = $id;
+        m$id = $id;
     }
 
     public String getFlag() {
-        return flag;
+        return mFlag;
     }
 
     public void setFlag(String flag) {
-        this.flag = flag;
+        mFlag = flag;
     }
 
     public List<LstGroup> getLstGroup() {
-        return lstGroup;
+        return mLstGroup;
     }
 
     public void setLstGroup(List<LstGroup> lstGroup) {
-        this.lstGroup = lstGroup;
+        mLstGroup = lstGroup;
     }
 
     public String getMessage() {
-        return message;
+        return mMessage;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        mMessage = message;
     }
 
 }

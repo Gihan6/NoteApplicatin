@@ -14,9 +14,7 @@ public class ProjectDetailsResponse {
     @SerializedName("Currencyid")
     private Long mCurrencyid;
     @SerializedName("Currencyname")
-    private String mCurrencyname;
-    @SerializedName("DirID")
-    private Long mDirID;
+    private Object mCurrencyname;
     @SerializedName("director")
     private List<Director> mDirector;
     @SerializedName("end")
@@ -64,20 +62,12 @@ public class ProjectDetailsResponse {
         mCurrencyid = currencyid;
     }
 
-    public String getCurrencyname() {
+    public Object getCurrencyname() {
         return mCurrencyname;
     }
 
-    public void setCurrencyname(String currencyname) {
+    public void setCurrencyname(Object currencyname) {
         mCurrencyname = currencyname;
-    }
-
-    public Long getDirID() {
-        return mDirID;
-    }
-
-    public void setDirID(Long dirID) {
-        mDirID = dirID;
     }
 
     public List<Director> getDirector() {

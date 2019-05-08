@@ -40,7 +40,7 @@ public class CustomGroupsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        final String username = lstGroups.get(i).getMGroupName();
+        final String username = lstGroups.get(i).getGroupName();
        // final String groupname = projects.get(i).getGroupName();
 
         if (view == null) {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.creativematrix.noteapp.Constant;
@@ -34,10 +35,11 @@ public class SelectGroupActivity extends AppCompatActivity implements Button.OnC
     private Button button;
     private ArrayList<LstGroup> lstGroups=new ArrayList<>();
     CustomGroupsAdapter customGroupsAdapter;
+    FrameLayout empty_frame_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_project);
+        setContentView(R.layout.activity_select_group);
         findViewsById();
         customGroupsAdapter = new CustomGroupsAdapter(this, lstGroups);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -48,12 +50,21 @@ public class SelectGroupActivity extends AppCompatActivity implements Button.OnC
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            if (GroupRes.getLstGroup().size() == 0) {
+                                empty_frame_layout.setVisibility(View.VISIBLE);
+                                button.setVisibility(View.GONE);
+                            }
                             lstGroups.clear();
                             lstGroups.addAll(GroupRes.getLstGroup());
                             customGroupsAdapter.notifyDataSetChanged();
                         }
+                        else {
+                            empty_frame_layout.setVisibility(View.VISIBLE);
+                            button.setVisibility(View.GONE);
+                        }
                     } catch (Exception ex) {
-
+                        empty_frame_layout.setVisibility(View.VISIBLE);
+                        button.setVisibility(View.GONE);
                     }
                 });
         button.setOnClickListener(this);
@@ -76,6 +87,7 @@ public class SelectGroupActivity extends AppCompatActivity implements Button.OnC
     private void findViewsById() {
         listView = (ListView) findViewById(R.id.list);
         button = (Button) findViewById(R.id.button);
+        empty_frame_layout =findViewById(R.id.empty_frame_layout);
 
     }
 

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,7 @@ public class UserDetailFragment extends Fragment {
     LstUsers mUser;
     DialogPlus dialog;
     Button btnUpdate,btnDelete;
+    FrameLayout empty_frame_layout;
     TextView user_name,user_email,user_name_title;
     public UserDetailFragment(LstUsers user) {
         this.mUser = user;
@@ -60,7 +62,6 @@ public class UserDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -114,6 +115,9 @@ public class UserDetailFragment extends Fragment {
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
+                            if (GroupRes.getTasks().size() == 0) {
+                                empty_frame_layout.setVisibility(View.VISIBLE);
+                            }
                             tasks.clear();
                             tasks.addAll(GroupRes.getTasks());
                             tasksInUsersAdapter.notifyDataSetChanged();
@@ -124,8 +128,11 @@ public class UserDetailFragment extends Fragment {
                         }
                         else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)){
                             Utils.showStringToast(getActivity(),String.valueOf(GroupRes.getMessage()));
+                            empty_frame_layout.setVisibility(View.VISIBLE);
+
                         }
                     } catch (Exception ex) {
+                        empty_frame_layout.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -217,6 +224,8 @@ public class UserDetailFragment extends Fragment {
         user_email= view.findViewById(R.id.user_email);
         btnUpdate= view.findViewById(R.id.btnUpdate);
         btnDelete= view.findViewById(R.id.btnDelete);
+        empty_frame_layout = view.findViewById(R.id.empty_frame_layout);
+
         user_name_title= view.findViewById(R.id.user_name_title);
         recycler_view_users = view.findViewById(R.id.recycler_view_tasks);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

@@ -104,10 +104,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             if (task.getPending()) {
                 holder.cardlist_item.setCardBackgroundColor(R.color.colorPrimary);
                 holder.pending_name.setVisibility(View.VISIBLE);
+                holder.task_status.setText(context.getResources().getString(R.string.not_assigned));
+
             } else {
                 holder.cardlist_item.setCardBackgroundColor(Color.WHITE);
                 holder.pending_name.setVisibility(View.GONE);
-
             }
         //     holder.task_status.setText(String.valueOf(task.getTaskStatus()));
     }

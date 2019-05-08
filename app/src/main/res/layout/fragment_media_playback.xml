@@ -75,6 +75,7 @@
                     android:id="@+id/file_length_text_view"
                     android:text="00:00"
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:textColor="@color/defaultTextColor"

@@ -14,6 +14,9 @@ import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.fragment.app.Fragment;
@@ -37,6 +40,7 @@ import com.creativematrix.noteapp.data.groups.Group;
 import com.creativematrix.noteapp.data.groups.GroupRepo;
 import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
+import com.squareup.picasso.Picasso;
 
 public class AddNewGroupFragment extends Fragment {
     private ProjectCallbacks mCallbacks;
@@ -83,7 +87,11 @@ public class AddNewGroupFragment extends Fragment {
         configureViews(view);
 
         btn_save_group.setOnClickListener(v -> {
-            collectData();
+            try {
+                collectData();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         });
         upload_photo.setOnClickListener(view1 -> uploadPhoto());
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -109,11 +117,13 @@ public class AddNewGroupFragment extends Fragment {
             et_group_name.setText(mGroup.getGroupName());
             if(mGroup.getGroupDescreption()!=null)
             et_group_desc.setText((String.valueOf(mGroup.getGroupDescreption())));
+            if(mGroup.getGroupImage()!=null)
+                Picasso.with(getActivity()).load(String.valueOf( mGroup.getGroupImage())).placeholder(R.mipmap.picture).into(image_view_group_logo);
         }
     }
 
 
-    private void collectData() {
+    private void collectData() throws JsonProcessingException {
         String groupName = et_group_name.getText().toString();
         String groupDesc = et_group_desc.getText().toString();
 
@@ -163,7 +173,9 @@ public class AddNewGroupFragment extends Fragment {
         });
     }
 
-    private void AddGroup(Group group) {
+    private void AddGroup(Group group) throws JsonProcessingException {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(group);
         new GroupRepo(getActivity()).addGroup(group).observe(this, GroupRes -> {
             try {
                 if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {

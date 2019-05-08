@@ -1,144 +1,112 @@
 
 package com.creativematrix.noteapp.data.groups;
 
-import java.io.Serializable;
-import java.util.List;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 @SuppressWarnings("unused")
 public class LstGroup implements Serializable {
 
-    @Expose
-    private String $id;
-    @Expose
-    private Long addBy;
-    @Expose
-    private String addDate;
-    @Expose
-    private Long companyid;
-    @Expose
-    private String groupDescreption;
-    @Expose
-    private Object groupDescreptionen;
-    @Expose
+    @SerializedName("$id")
+    private String m$id;
+    @SerializedName("AddBy")
+    private Long mAddBy;
+    @SerializedName("companyId")
+    private Long mCompanyId;
+    @SerializedName("groupDescreption")
+    private String mGroupDescreption;
+    @SerializedName("groupDescreptionen")
+    private Object mGroupDescreptionen;
     @SerializedName("GroupId")
-    private Long groupId;
-    @Expose
-    private Object groupImage;
-    @Expose
-    private String groupName;
-    @Expose
-    private Object groupNameInEnglish;
-    @Expose
-    private String groupbinaryimage;
-    @Expose
-    private TblCompany tblCompany;
-    @Expose
-    private List<TblUsrerLog> tblUsrerLogs;
+    private Long mGroupId;
+    @SerializedName("groupName")
+    private String mGroupName;
+    @SerializedName("groupNameen")
+    private Object mGroupNameen;
+    @SerializedName("imagebinary")
+    private String mImagebinary;
+    @SerializedName("Img")
+    private String mImg;
 
     public String get$id() {
-        return $id;
+        return m$id;
     }
 
     public void set$id(String $id) {
-        this.$id = $id;
+        m$id = $id;
     }
 
     public Long getAddBy() {
-        return addBy;
+        return mAddBy;
     }
 
     public void setAddBy(Long addBy) {
-        this.addBy = addBy;
+        mAddBy = addBy;
     }
 
-    public String getAddDate() {
-        return addDate;
+    public Long getCompanyId() {
+        return mCompanyId;
     }
 
-    public void setAddDate(String addDate) {
-        this.addDate = addDate;
+    public void setCompanyId(Long companyId) {
+        mCompanyId = companyId;
     }
 
-    public Long getCompanyid() {
-        return companyid;
+    public String getGroupDescreption() {
+        return mGroupDescreption;
     }
 
-    public void setCompanyid(Long companyid) {
-        this.companyid = companyid;
+    public void setGroupDescreption(String groupDescreption) {
+        mGroupDescreption = groupDescreption;
     }
 
-    public String getGroupDescripation() {
-        return groupDescreption;
+    public Object getGroupDescreptionen() {
+        return mGroupDescreptionen;
     }
 
-    public void setGroupDescripation(String groupDescripation) {
-        this.groupDescreption = groupDescripation;
-    }
-
-    public Object getGroupDescripationInEnglish() {
-        return groupDescreptionen;
-    }
-
-    public void setGroupDescripationInEnglish(Object groupDescripationInEnglish) {
-        this.groupDescreptionen = groupDescripationInEnglish;
+    public void setGroupDescreptionen(Object groupDescreptionen) {
+        mGroupDescreptionen = groupDescreptionen;
     }
 
     public Long getGroupId() {
-        return groupId;
+        return mGroupId;
     }
 
     public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+        mGroupId = groupId;
     }
 
-    public Object getGroupImage() {
-        return groupImage;
-    }
-
-    public void setGroupImage(Object groupImage) {
-        this.groupImage = groupImage;
-    }
-
-    public String getMGroupName() {
-        return groupName;
+    public String getGroupName() {
+        return mGroupName;
     }
 
     public void setGroupName(String groupName) {
-        this.groupName = groupName;
+        mGroupName = groupName;
     }
 
-    public Object getGroupNameInEnglish() {
-        return groupNameInEnglish;
+    public Object getGroupNameen() {
+        return mGroupNameen;
     }
 
-    public void setGroupNameInEnglish(Object groupNameInEnglish) {
-        this.groupNameInEnglish = groupNameInEnglish;
+    public void setGroupNameen(Object groupNameen) {
+        mGroupNameen = groupNameen;
     }
 
-    public String getGroupbinaryimage() {
-        return groupbinaryimage;
+    public String getImagebinary() {
+        return mImagebinary;
     }
 
-    public void setGroupbinaryimage(String groupbinaryimage) {
-        this.groupbinaryimage = groupbinaryimage;
+    public void setImagebinary(String imagebinary) {
+        mImagebinary = imagebinary;
     }
 
-    public TblCompany getTblCompany() {
-        return tblCompany;
+    public String getImg() {
+        return mImg;
     }
 
-    public void setTblCompany(TblCompany tblCompany) {
-        this.tblCompany = tblCompany;
-    }
-
-    public List<TblUsrerLog> getTblUsrerLogs() {
-        return tblUsrerLogs;
-    }
-
-    public void setTblUsrerLogs(List<TblUsrerLog> tblUsrerLogs) {
-        this.tblUsrerLogs = tblUsrerLogs;
+    public void setImg(String img) {
+        mImg = img;
     }
 
 }

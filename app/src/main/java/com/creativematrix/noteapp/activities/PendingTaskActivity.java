@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -26,6 +27,9 @@ import com.creativematrix.noteapp.services.FloatingViewService;
 import com.creativematrix.noteapp.services.RecordingService;
 import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
+import com.devlomi.record_view.OnRecordListener;
+import com.devlomi.record_view.RecordButton;
+import com.devlomi.record_view.RecordView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -49,7 +53,8 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
     Button btnSaveTask;
     long elapsedMillis;
     private List<FilesBinary> filesBinaryList = new ArrayList<>();
-
+    RecordView recordView;
+    RecordButton recordButton;
     private boolean mStartRecording = true;
     private boolean mPauseRecording = true;
     com.melnykov.fab.FloatingActionButton btnRecord;
@@ -161,6 +166,58 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
         cancel_voice = findViewById(R.id.cancel_voice);
         play_voice = findViewById(R.id.play_voice);
         btnSaveTask = findViewById(R.id.btn_save_task);
+        recordView = findViewById(R.id.record_view);
+        recordButton = findViewById(R.id.record_button);
+
+        //IMPORTANT
+        recordButton.setRecordView(recordView);
+        recordView.setOnRecordListener(new OnRecordListener() {
+            @Override
+            public void onStart() {
+                //Start Recording..
+                Log.d("RecordView", "onStart");
+                onRecord(mStartRecording);
+                mStartRecording = !mStartRecording;
+            }
+
+            @Override
+            public void onCancel() {
+                //On Swipe To Cancel
+                Log.d("RecordView", "onCancel");
+
+                chronometer.stop();
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                timeWhenPaused = 0;
+                mRecordingPrompt.setText(getString(R.string.record_prompt));
+                stopService(intent);
+                btnRecord.setVisibility(View.INVISIBLE);
+
+            }
+
+            @Override
+            public void onFinish(long recordTime) {
+                onRecord(mStartRecording);
+                mStartRecording = !mStartRecording;
+                //Stop Recording..
+               // String time = getHumanTimeText(recordTime);
+                Log.d("RecordView", "onFinish");
+
+             //   Log.d("RecordTime", time);
+            }
+
+            @Override
+            public void onLessThanSecond() {
+                chronometer.stop();
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                timeWhenPaused = 0;
+                mRecordingPrompt.setText(getString(R.string.record_prompt));
+             //   stopService(intent);
+                btnRecord.setVisibility(View.INVISIBLE);
+                mStartRecording = !mStartRecording;
+                //When the record time is less than One Second
+                Log.d("RecordView", "onLessThanSecond");
+            }
+        });
     }
 
     private void showElapsedTime() {
@@ -247,15 +304,12 @@ public class PendingTaskActivity extends AppCompatActivity implements RecordingS
             btnSaveTask.setVisibility(View.VISIBLE);
             play_cancel_layout.setVisibility(View.VISIBLE);
             btnRecord.setImageResource(R.drawable.ic_mic);
-
             chronometer.stop();
             chronometer.setBase(SystemClock.elapsedRealtime());
             timeWhenPaused = 0;
             mRecordingPrompt.setText(getString(R.string.record_prompt));
             this.stopService(intent);
-
             btnRecord.setVisibility(View.INVISIBLE);
-
 
         }
     }

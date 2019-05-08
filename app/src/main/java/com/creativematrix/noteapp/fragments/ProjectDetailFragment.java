@@ -155,18 +155,21 @@ public class ProjectDetailFragment extends Fragment {
         project_start_time.setText(groupRes.getStart());
         project_end_time.setText(groupRes.getEnd());
         project_owners.setText(groupRes.getOwner());
-        String director = "";
+        String director = "",taskOwnerIDS="";
         for (int i = 0; i < groupRes.getDirector().size(); i++) {
             director += groupRes.getDirector().get(i).getName() + "-";
+            taskOwnerIDS += groupRes.getDirector().get(i).getDirectorID() + "-";
         }
         mProject.setDirctoresNames(director);
+        mProject.setDirectorIDs(taskOwnerIDS);
         project_director.setText(director);
-        if (groupRes.getState().equals("0")) {
+        if (groupRes.getState()==0) {
             project_status.setText(getResources().getString(R.string.task_under_processing));
         } else {
             project_status.setText(getResources().getString(R.string.task_completed));
         }
         project_cost.setText(String.valueOf(groupRes.getCoast()));
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -216,6 +219,7 @@ public class ProjectDetailFragment extends Fragment {
         project_cost = view.findViewById(R.id.project_cost);
         btnDelete = view.findViewById(R.id.btnDelete);
         btnUpdate = view.findViewById(R.id.btnUpdate);
+        project_director = view.findViewById(R.id.project_director);
 
         toolbar = view.findViewById(R.id.anim_toolbar);
     }

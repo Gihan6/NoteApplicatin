@@ -29,6 +29,7 @@ import com.creativematrix.noteapp.data.groups.GroupRepo;
 import com.creativematrix.noteapp.data.groups.LstGroup;
 import com.creativematrix.noteapp.data.project.Project;
 import com.creativematrix.noteapp.data.task.LstUsersnCompnay;
+import com.creativematrix.noteapp.data.user.AddUserResponse;
 import com.creativematrix.noteapp.data.user.LstUsers;
 import com.creativematrix.noteapp.data.user.User;
 import com.creativematrix.noteapp.data.user.UserRepo;
@@ -180,13 +181,13 @@ public class AddNewUserFragment extends Fragment {
 
 
     private void AddUser(User user) {
-        new UserRepo(getActivity()).addUser(user).observe(this, GroupRes -> {
+        new UserRepo(getActivity()).addUser(user).observe(this, (AddUserResponse GroupRes) -> {
             try {
                 if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
-                    Utils.showResToast(mContext, R.string.user_added_successfully);
+                    Utils.showStringToast(mContext,GroupRes.getMessage());
                     getActivity().onBackPressed();
                 } else {
-                    Utils.showStringToast(mContext, GroupRes.getMsg());
+                    Utils.showStringToast(mContext, GroupRes.getMessage());
                 }
                 Log.d(TAG, "collectData: " + GroupRes.toString());
             } catch (Exception ex) {
@@ -210,7 +211,7 @@ public class AddNewUserFragment extends Fragment {
     }
 
     private void setGroupName() {
-        SelectedGroupName = String.valueOf(lstGroups.get(0).getMGroupName());
+        SelectedGroupName = String.valueOf(lstGroups.get(0).getGroupName());
         GroupID = lstGroups.get(0).getGroupId();
     }
 }

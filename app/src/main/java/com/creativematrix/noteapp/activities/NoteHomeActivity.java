@@ -22,6 +22,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -45,6 +47,7 @@ public class NoteHomeActivity extends AppCompatActivity
     private NavigationView navigationView;
     private Toolbar toolbar;
     private FragmentManager mFragmentManager;
+    private TextView text_view_company_email;
     // private ViewAllProjectsFragment viewAllProjectsFragment;
     private AddNewProjectFragment addNewProjectFragment;
     private AddNewTaskFragment addNewTaskFragment;
@@ -68,6 +71,8 @@ public class NoteHomeActivity extends AppCompatActivity
             showItem();
         }
         mFragmentManager = getSupportFragmentManager();
+        String a=PreferenceHelper.getPrefernceHelperInstace().getCompanyemail(this);
+        String b=PreferenceHelper.getPrefernceHelperInstace().getLogopath(this);
 
         //   viewAllProjectsFragment = new ViewAllProjectsFragment();
         Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
@@ -84,15 +89,14 @@ public class NoteHomeActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationView = findViewById(R.id.nav_view);
+
+
         navigationView.setNavigationItemSelectedListener(this);
-      /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getPackageName()));
-            startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
-        } else {
-            initializeView();
-        }*/
-       createFloatView();
+        View headerView = navigationView.getHeaderView(0);
+        text_view_company_email = (TextView) headerView.findViewById(R.id.text_view_company_email);
+        text_view_company_email.setText(String.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyemail(this)));
+
+       //createFloatView();
     }
 
     private void initializeView() {

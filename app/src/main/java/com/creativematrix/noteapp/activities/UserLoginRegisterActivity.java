@@ -55,9 +55,9 @@ public class UserLoginRegisterActivity extends AppCompatActivity implements Regi
     }
 
     @Override
-    public void onSignUpClicked(Company company) {
+    public void onSignUpClicked(/*Company company*/) {
         Intent intent = new Intent(this, VerificationActivity.class);
-        intent.putExtra("company", company);
+        //intent.putExtra("company", company);
         startActivity(intent);
     }
 

@@ -33,6 +33,7 @@
             <ImageView
                 android:id="@+id/close_btn"
                 android:layout_width="20dp"
+                android:visibility="gone"
                 android:layout_height="20dp"
                 android:layout_marginLeft="40dp"
                 android:src="@drawable/ic_close"

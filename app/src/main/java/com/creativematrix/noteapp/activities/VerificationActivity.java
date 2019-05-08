@@ -15,6 +15,7 @@ import com.creativematrix.noteapp.data.company.CompanyRepo;
 import com.creativematrix.noteapp.data.company.VerificationCodeResponse;
 import com.creativematrix.noteapp.fragments.VerificationCodeFragment;
 import com.creativematrix.noteapp.fragments.VerificationMobileFragment;
+import com.creativematrix.noteapp.util.CenterRepository;
 import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
 
@@ -37,7 +38,8 @@ public class VerificationActivity extends AppCompatActivity implements Verificat
                 .replace(R.id.fragment_holder_verification, verificationMobileFragment)
                 .commit();
         Intent intent = getIntent();
-        company = (Company) intent.getSerializableExtra("company");
+       // company = (Company) intent.getSerializableExtra("company");
+        company = CenterRepository.getCenterRepository().getmCompany();
         if (company != null) {
             Log.d(TAG, "onCreate: " + company.toString());
         }

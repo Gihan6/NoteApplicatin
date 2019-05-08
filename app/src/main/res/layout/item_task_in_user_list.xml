@@ -82,6 +82,7 @@ card_view:contentPadding="10dp">
             android:layout_marginStart="10dp"
             android:gravity="center"
             android:orientation="vertical"
+            android:visibility="gone"
             android:padding="5dp">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

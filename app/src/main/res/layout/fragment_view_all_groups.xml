@@ -62,9 +62,9 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@mipmap/list" />
+                    android:src="@drawable/view_empty_people" />
                 <TextView
                     android:layout_marginTop="@dimen/title_list"
                     android:text="@string/no_groups_found"

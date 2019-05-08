@@ -9,6 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class SelectProjectActivity extends AppCompatActivity implements Button.O
     private ListView listView;
     private Button button;
     private ArrayList<Project> projects=new ArrayList<>();
+    FrameLayout empty_frame_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +45,21 @@ public class SelectProjectActivity extends AppCompatActivity implements Button.O
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)){
+                            if (GroupRes.getProjects().size() == 0) {
+                                empty_frame_layout.setVisibility(View.VISIBLE);
+                                button.setVisibility(View.GONE);
+                            }
                             projects.clear();
                             projects.addAll(GroupRes.getProjects());
                             adapter.notifyDataSetChanged();
                         }
+                        else {
+                            empty_frame_layout.setVisibility(View.VISIBLE);
+                            button.setVisibility(View.GONE);
+                        }
                     } catch (Exception ex) {
-
+                        empty_frame_layout.setVisibility(View.VISIBLE);
+                        button.setVisibility(View.GONE);
                     }
                 });
 
@@ -75,7 +86,7 @@ public class SelectProjectActivity extends AppCompatActivity implements Button.O
     private void findViewsById() {
         listView = (ListView) findViewById(R.id.list);
         button = (Button) findViewById(R.id.button);
-
+        empty_frame_layout =findViewById(R.id.empty_frame_layout);
     }
 
     private ArrayList<Project> getSelectedItems() {

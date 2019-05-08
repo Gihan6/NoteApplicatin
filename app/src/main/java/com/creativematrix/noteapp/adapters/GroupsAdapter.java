@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.data.groups.LstGroup;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -58,13 +60,15 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
         private TextView group_name,group_desc;
         //RadioButton checker;
         CardView cardlist_item;
-
+       ImageView group_logo;
 
         ViewHolder(View itemView) {
             super(itemView);
+
             cardlist_item = itemView.findViewById(R.id.cardlist_item);
             group_name = itemView.findViewById(R.id.group_name);
             group_desc= itemView.findViewById(R.id.group_desc);
+            group_logo= itemView.findViewById(R.id.group_logo);
            // checker=itemView.findViewById(R.id.checker);
             cardlist_item.setOnClickListener(this);
 
@@ -85,8 +89,9 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
 
         LstGroup lstGroup=cityArrayList.get(position);
 
-        holder.group_name.setText(lstGroup.getMGroupName());
-        holder.group_desc.setText(lstGroup.getGroupDescripation());
+        holder.group_name.setText(lstGroup.getGroupName());
+        holder.group_desc.setText(lstGroup.getGroupDescreption());
+        Picasso.with(context).load(cityArrayList.get(position).getImg()).placeholder(R.mipmap.list).into(holder.group_logo);
 
 
     }

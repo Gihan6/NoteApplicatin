@@ -17,34 +17,77 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.PendingTaskActivity"
             android:launchMode= "singleInstance"
-            ></activity>
-        <activity android:name=".activities.SelectTaskCoinActivity" />
-        <activity android:name=".activities.BeforeLoginActivity" />
-        <activity android:name=".activities.UserLoginRegisterActivity" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
 
-        <service android:name=".services.FloatingService" />
+            ></activity>
+        <activity android:name=".activities.SelectTaskCoinActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+
+            />
+        <activity android:name=".activities.BeforeLoginActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.UserLoginRegisterActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"/>
+
+        <service android:name=".services.FloatingService"
+            />
         <service android:name=".services.RecordingService" />
         <service android:name=".services.FloatingViewService" />
 
-        <activity android:name=".activities.CompanyLoginRegisterActivity" />
-        <activity android:name=".activities.SplachScreen">
+        <activity android:name=".activities.CompanyLoginRegisterActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.SplachScreen"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.VerificationActivity" />
-        <activity android:name=".activities.SelectTaskStatusActivity" />
-        <activity android:name=".activities.SelectTaskOwnersActivity" />
-        <activity android:name=".activities.SelectGroupActivity" />
-        <activity android:name=".activities.SelectProjectActivity" />
-        <activity android:name=".activities.AddTaskActivity" />
+        <activity android:name=".activities.VerificationActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.SelectTaskStatusActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.SelectTaskOwnersActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.SelectGroupActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.SelectProjectActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.AddTaskActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.NoteHomeActivity"
+            android:windowSoftInputMode="adjustResize"
+
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.HomeActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
     </application>

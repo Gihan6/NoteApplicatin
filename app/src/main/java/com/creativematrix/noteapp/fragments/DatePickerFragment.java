@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import android.widget.DatePicker;
 
+import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.callback.DateTimeCallbacks;
 
 import java.util.Calendar;
@@ -45,7 +46,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        dialog = new DatePickerDialog(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,this, year, month, day);
+        dialog = new DatePickerDialog(getActivity(), R.style.MyTimePickerDialogTheme,this, year, month, day);
 
 
         return dialog;

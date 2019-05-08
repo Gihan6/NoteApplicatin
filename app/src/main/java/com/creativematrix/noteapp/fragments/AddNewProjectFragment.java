@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 
 import com.creativematrix.noteapp.activities.SelectTaskCoinActivity;
 import com.creativematrix.noteapp.data.coins.CurrencyList;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.android.material.textfield.TextInputEditText;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
@@ -253,9 +256,18 @@ public class AddNewProjectFragment extends Fragment {
         Log.d(TAG, "collectData: " + projectEndDate + " " + projectEndTime);
         if(mProject!=null){
             project.setId(mProject.getId());
+            project.setDirectorIDs(mProject.getDirectorIDs());
             updateProject(project);
         }
         else{
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            try {
+                String json = ow.writeValueAsString(project);
+                String B = json;
+                String C=B;
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
             AddProject(project);
         }
     }
@@ -279,6 +291,17 @@ public class AddNewProjectFragment extends Fragment {
     }
 
     private void updateProject(Project project) {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+        String json = null;
+        try {
+            json = ow.writeValueAsString(project);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        String B = json;
+            String C=B;
+
         new ProjectRepo(getActivity()).updateProject(project)
                 .observe(this, projectRes -> {
                     try {

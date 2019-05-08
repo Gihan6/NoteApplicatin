@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.Nullable;
+
+import com.creativematrix.noteapp.util.CenterRepository;
 import com.google.android.material.textfield.TextInputEditText;
 import androidx.fragment.app.Fragment;
 import androidx.cardview.widget.CardView;
@@ -36,7 +38,7 @@ public class CompanyRegisterFragment extends Fragment {
     private RegisterCallbacks mCallbacks;
     private Context mContext;
     private static final int RESULT_LOAD_IMAGE = 1;
-
+    Bitmap bmImg;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -149,9 +151,10 @@ public class CompanyRegisterFragment extends Fragment {
                         isEmailExist = false;
                         Company company;
                         company = new Company(companyLang, companyName, "", "",
-                                "", "", companyEmail, companyPassword, Utils.encodeImage(logoPath));
+                                "", "", companyEmail, companyPassword, Utils.BitMapToString(bmImg));
+                        CenterRepository.getCenterRepository().setmCompany(company);
                         Log.d(TAG, "collectData: " + company.toString());
-                        mCallbacks.onSignUpClicked(company);
+                        mCallbacks.onSignUpClicked(/*company*/);
                     }
 
                 });
@@ -181,8 +184,10 @@ public class CompanyRegisterFragment extends Fragment {
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     logoPath = cursor.getString(columnIndex);
                     cursor.close();
-                    Bitmap bmImg = BitmapFactory.decodeFile(logoPath);
-                    image_view_company_logo.setImageBitmap(bmImg);
+                     bmImg =Utils.createSmallImage(getActivity(),selectedImage);
+                            image_view_company_logo.setImageBitmap(bmImg);
+                            //BitmapFactory.decodeFile(logoPath);
+
 
                     break;
                 }
