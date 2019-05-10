@@ -230,6 +230,8 @@ public class TaskDetailFragment extends Fragment implements FetchObserver<Downlo
         for (int i = 0; i < groupRes.getTaskUsers().size(); i++) {
             ownersNames += groupRes.getTaskUsers().get(i).getUserName() + "-";
         }
+        ownersNames = ownersNames.substring(0, ownersNames.length() - 1);
+
         task_owners.setText(ownersNames);
         if (groupRes.getTaskStautes() == false) {
             task_status.setText(getResources().getString(R.string.task_under_processing));

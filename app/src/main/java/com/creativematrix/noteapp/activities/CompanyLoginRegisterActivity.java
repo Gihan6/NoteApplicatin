@@ -76,7 +76,7 @@ public class CompanyLoginRegisterActivity extends AppCompatActivity implements R
         Log.d(TAG, "onLoginClicked: " + loginResponse.toString() + " - " + email);
         if (loginResponse.getFlag().equals(String.valueOf(Constant.RESPONSE_ADD_NEW_COMPANY))) {
             // go to new activity
-            PreferenceHelper.getPrefernceHelperInstace().storeCompanyData(this, String.valueOf(loginResponse.getiD()), email, password,logoPath,Type);
+            PreferenceHelper.getPrefernceHelperInstace().storeCompanyData(this, String.valueOf(loginResponse.getiD()), email, password,loginResponse.getPhotoLink(),Type);
             PreferenceHelper.getPrefernceHelperInstace().setUserLoggedIn(true, CompanyLoginRegisterActivity.this);
             PreferenceHelper.getPrefernceHelperInstace().setIscompany(true,CompanyLoginRegisterActivity.this);
             Intent intent = new Intent(this, NoteHomeActivity.class);

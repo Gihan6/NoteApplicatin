@@ -160,6 +160,8 @@ public class ProjectDetailFragment extends Fragment {
             director += groupRes.getDirector().get(i).getName() + "-";
             taskOwnerIDS += groupRes.getDirector().get(i).getDirectorID() + "-";
         }
+        director = director.substring(0, director.length() - 1);
+
         mProject.setDirctoresNames(director);
         mProject.setDirectorIDs(taskOwnerIDS);
         project_director.setText(director);

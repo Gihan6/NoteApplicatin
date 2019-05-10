@@ -178,12 +178,13 @@ public class GroupDetailFragment extends Fragment {
         new GroupRepo(getActivity()).deleteGroup(mGroup)
                 .observe(this, GroupRes -> {
                     try {
+                        boolean a=GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS);
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
                             dialog.dismiss();
                             Utils.showStringToast(getActivity(), getResources().getString(R.string.deleted_succees));
                             getActivity().onBackPressed();
-                        } else if (GroupRes.getFlag().equals(Constant.RESPONSE_FAILURE)) {
-                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMsg()));
+                        } else {
+                            Utils.showStringToast(getActivity(), String.valueOf(GroupRes.getMessage()));
                             dialog.dismiss();
 
                         }

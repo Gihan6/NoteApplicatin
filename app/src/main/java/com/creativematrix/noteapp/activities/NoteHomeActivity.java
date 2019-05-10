@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,7 @@ import com.creativematrix.noteapp.fragments.ViewAllProjectsFragment;
 import com.creativematrix.noteapp.fragments.ViewAllTasksFragment;
 import com.creativematrix.noteapp.services.FloatingViewService;
 import com.creativematrix.noteapp.util.Utils;
+import com.squareup.picasso.Picasso;
 
 public class NoteHomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProjectCallbacks, DateTimeCallbacks {
@@ -71,8 +73,8 @@ public class NoteHomeActivity extends AppCompatActivity
             showItem();
         }
         mFragmentManager = getSupportFragmentManager();
-        String a=PreferenceHelper.getPrefernceHelperInstace().getCompanyemail(this);
-        String b=PreferenceHelper.getPrefernceHelperInstace().getLogopath(this);
+        String a = PreferenceHelper.getPrefernceHelperInstace().getCompanyemail(this);
+        String b = PreferenceHelper.getPrefernceHelperInstace().getLogopath(this);
 
         //   viewAllProjectsFragment = new ViewAllProjectsFragment();
         Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
@@ -95,8 +97,14 @@ public class NoteHomeActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         text_view_company_email = (TextView) headerView.findViewById(R.id.text_view_company_email);
         text_view_company_email.setText(String.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyemail(this)));
+        ImageView image_view_company_logo = headerView.findViewById(R.id.image_view_company_logo);
+        if (!Utils.isFieldEmpty(PreferenceHelper.getPrefernceHelperInstace().getLogopath(this))) {
+            Picasso.with(NoteHomeActivity.this).load((PreferenceHelper.getPrefernceHelperInstace().getLogopath(this))).placeholder(R.drawable.logo).into(image_view_company_logo);
 
-       //createFloatView();
+        }
+
+
+        createFloatView();
     }
 
     private void initializeView() {

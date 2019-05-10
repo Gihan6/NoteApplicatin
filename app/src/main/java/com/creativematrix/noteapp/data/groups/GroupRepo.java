@@ -82,20 +82,20 @@ public class GroupRepo {
         return mutableLiveData;
     }
 
-    public LiveData<Group> deleteGroup(Group group) {
-        final MutableLiveData<Group> mutableLiveData = new MutableLiveData<>();
+    public LiveData<DeleteGroupResponse> deleteGroup(Group group) {
+        final MutableLiveData<DeleteGroupResponse> mutableLiveData = new MutableLiveData<>();
         showDialog();
-        Call<Group> groupCall = mGroupsApiInterface.postDeleteGroup(group);
-        groupCall.enqueue(new Callback<Group>() {
+        Call<DeleteGroupResponse> groupCall = mGroupsApiInterface.postDeleteGroup(group);
+        groupCall.enqueue(new Callback<DeleteGroupResponse>() {
             @Override
-            public void onResponse(Call<Group> call, Response<Group> response) {
+            public void onResponse(Call<DeleteGroupResponse> call, Response<DeleteGroupResponse> response) {
                 Log.d(TAG, "onResponse: " + response.message());
                 mutableLiveData.postValue(response.body());
                 hideDialog();
             }
 
             @Override
-            public void onFailure(Call<Group> call, Throwable t) {
+            public void onFailure(Call<DeleteGroupResponse> call, Throwable t) {
                 hideDialog();
             }
         });

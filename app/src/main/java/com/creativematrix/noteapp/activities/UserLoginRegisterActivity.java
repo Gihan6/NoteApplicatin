@@ -66,7 +66,7 @@ public class UserLoginRegisterActivity extends AppCompatActivity implements Regi
         Log.d(TAG, "onLoginClicked: " + loginResponse.toString() + " - " + email);
         if (loginResponse.getFlag().equals(String.valueOf(Constant.RESPONSE_ADD_NEW_COMPANY))) {
             // go to new activity
-            PreferenceHelper.getPrefernceHelperInstace().storeCompanyData(this, String.valueOf(loginResponse.getiD()), email, password,logoPath,Type);
+            PreferenceHelper.getPrefernceHelperInstace().storeCompanyData(this, String.valueOf(loginResponse.getiD()), email, password,loginResponse.getPhotoLink(),Type);
             PreferenceHelper.getPrefernceHelperInstace().setUserLoggedIn(true, UserLoginRegisterActivity.this);
             PreferenceHelper.getPrefernceHelperInstace().setIscompany(false,UserLoginRegisterActivity.this);
             Intent intent = new Intent(this, NoteHomeActivity.class);

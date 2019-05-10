@@ -16,6 +16,19 @@ public class LoginResponse {
     @SerializedName("Username")
     @Expose
     private String username;
+
+    public String getPhotoLink() {
+        return PhotoLink;
+    }
+
+    public void setPhotoLink(String photoLink) {
+        PhotoLink = photoLink;
+    }
+
+    @SerializedName("PhotoLink")
+    @Expose
+    private String PhotoLink;
+
     @SerializedName("IsAdmin")
     @Expose
     private Boolean isAdmin;

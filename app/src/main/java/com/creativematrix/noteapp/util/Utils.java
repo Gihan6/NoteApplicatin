@@ -96,6 +96,11 @@ public class Utils {
                 R.dimen.abc_action_bar_default_height_material);
         return height;
     }
+    public static boolean isNullOrEmpty(String str) {
+        if(str != null && !str.trim().isEmpty())
+            return false;
+        return true;
+    }
     public static String getFileBinary(String uploadFilePath) {
         File f = new File(uploadFilePath);
         byte[] byteArray = null;

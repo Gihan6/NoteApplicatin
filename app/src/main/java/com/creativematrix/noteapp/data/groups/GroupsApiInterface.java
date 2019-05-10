@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 public interface GroupsApiInterface {
 
     @POST("DeleteGroup/")
-    Call<Group> postDeleteGroup(@Body Group group);
+    Call<DeleteGroupResponse> postDeleteGroup(@Body Group group);
     @POST("AddGroup/")
     Call<Group> postAddGroup(@Body Group group);
     @POST("DisplayGroup/")

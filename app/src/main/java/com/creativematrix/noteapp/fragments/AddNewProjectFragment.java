@@ -373,5 +373,7 @@ public class AddNewProjectFragment extends Fragment {
             taskOwnerNames += lstUsersnCompnays.get(i).getUsername() + "-";
             taskOwnerIDS += lstUsersnCompnays.get(i).getUserID() + "-";
         }
+        taskOwnerNames = taskOwnerNames.substring(0, taskOwnerNames.length() - 1);
+
     }
 }
