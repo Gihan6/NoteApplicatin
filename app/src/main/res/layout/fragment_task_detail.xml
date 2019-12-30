@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:scrollbars="none">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -146,6 +151,7 @@
 
     </LinearLayout>
     <FrameLayout
+        android:id="@+id/fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/activity_single_download"
@@ -438,6 +444,7 @@
     </FrameLayout>
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+        android:layout_below="@+id/fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -468,6 +475,6 @@
     </LinearLayout>
 
 </RelativeLayout>
-
+</ScrollView>
 
 

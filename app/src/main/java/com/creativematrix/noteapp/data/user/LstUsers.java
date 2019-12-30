@@ -9,7 +9,6 @@ public class LstUsers {
         this.mUserId = mUserId;
     }
 
-
     public Long getGroupID() {
         return GroupID;
     }

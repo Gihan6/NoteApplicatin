@@ -39,7 +39,10 @@ public class SelectTaskOwnersActivity extends AppCompatActivity implements Butto
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
 
-        new TaskRepo(SelectTaskOwnersActivity.this).getUsersInCompanyResponseLiveData(new DisplayTaskRequest(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(SelectTaskOwnersActivity.this)), Utils.getLang()))
+        new TaskRepo(SelectTaskOwnersActivity.this)
+                .getUsersInCompanyResponseLiveData(new DisplayTaskRequest(
+                        Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().
+                                getCompanyid(SelectTaskOwnersActivity.this)), Utils.getLang()))
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)){

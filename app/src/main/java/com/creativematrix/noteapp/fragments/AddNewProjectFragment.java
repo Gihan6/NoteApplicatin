@@ -248,12 +248,12 @@ public class AddNewProjectFragment extends Fragment {
         }
                 Project project =
                 new Project(projectName, projectStartDate + " " + projectStartTime
-                , projectEndDate + " " + projectEndTime, projectOwner, projectDesc, projectCost
+                , projectEndDate + "" + projectEndTime, projectOwner, projectDesc, projectCost
                 , Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())), ""
-                , Utils.getLang(), 0, projectDirector,Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
+                , Utils.getLang(), 0,
+                        projectDirector,Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().
+                        getCompanyid(getActivity())));
 
-        Log.d(TAG, "collectData: " + projectStartDate + " " + projectStartTime);
-        Log.d(TAG, "collectData: " + projectEndDate + " " + projectEndTime);
         if(mProject!=null){
             project.setId(mProject.getId());
             project.setDirectorIDs(mProject.getDirectorIDs());

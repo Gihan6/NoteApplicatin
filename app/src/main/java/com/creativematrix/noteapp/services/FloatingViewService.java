@@ -3,7 +3,6 @@ package com.creativematrix.noteapp.services;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
@@ -25,9 +24,7 @@ import android.widget.Toast;
 
 import com.aykuttasil.callrecord.CallRecord;
 import com.creativematrix.noteapp.R;
-import com.creativematrix.noteapp.activities.MainActivity;
 import com.creativematrix.noteapp.activities.PendingTaskActivity;
-import com.creativematrix.noteapp.util.Utils;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.io.File;
@@ -36,7 +33,7 @@ public class FloatingViewService extends Service {
 
     private WindowManager mWindowManager;
     private View mFloatingView;
-     RelativeLayout expandedView;
+    RelativeLayout expandedView;
     CallRecord callRecord;
     ImageView cancel_voice, play_voice;
     Button btnAddToCart;
@@ -54,7 +51,8 @@ public class FloatingViewService extends Service {
     Button btn_save_task;
     RelativeLayout fragment_record;
     EditText input_task_name;
-     View collapsedView ;
+    View collapsedView;
+
     public FloatingViewService() {
     }
 
@@ -70,31 +68,31 @@ public class FloatingViewService extends Service {
         //Inflate the floating view layout we created
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
         linear_layout_play = mFloatingView.findViewById(R.id.linear_layout_play);
-        input_task_name= mFloatingView.findViewById(R.id.input_task_name);
+        input_task_name = mFloatingView.findViewById(R.id.input_task_name);
 
         fragment_record = mFloatingView.findViewById(R.id.fragment_record);
         btnhideRecord = mFloatingView.findViewById(R.id.btnhideRecord);
         mRecordingPrompt = (TextView) mFloatingView.findViewById(R.id.recording_status_text);
-        collapsedView= mFloatingView.findViewById(R.id.collapse_view);
+        collapsedView = mFloatingView.findViewById(R.id.collapse_view);
         cancel_voice = mFloatingView.findViewById(R.id.cancel_voice);
         play_voice = mFloatingView.findViewById(R.id.play_voice);
         expandedView = mFloatingView.findViewById(R.id.fragment_record);
-        btn_save_task= mFloatingView.findViewById(R.id.btn_save_task);
+        btn_save_task = mFloatingView.findViewById(R.id.btn_save_task);
         btnAddToCart = mFloatingView.findViewById(R.id.btnAddToCart);
         mChronometer = (Chronometer) mFloatingView.findViewById(R.id.chronometer);
 
-        InputMethodManager im = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
+        InputMethodManager im = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         im.showSoftInput(input_task_name, 0);
         btnhideRecord.setOnClickListener(v -> {
             fragment_record.setVisibility(View.GONE);
             collapsedView.setVisibility(View.VISIBLE);
         });
-play_voice.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
+        play_voice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    }
-});
+            }
+        });
         cancel_voice.setOnClickListener(new View./*
         play_voice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +170,6 @@ play_voice.setOnClickListener(new View.OnClickListener() {
         //Set the play button.
 
 
-
         //Set the next button.
 
         //Set the pause button.
@@ -214,12 +211,12 @@ play_voice.setOnClickListener(new View.OnClickListener() {
                                 //When user clicks on the image view of the collapsed layout,
                                 //visibility of the collapsed layout will be changed to "View.GONE"
                                 //and expanded view will become visible.
-                            //    collapsedView.setVisibility(View.GONE);
-                             //   expandedView.setVisibility(View.VISIBLE);
-                                Intent intent=new Intent(FloatingViewService.this, PendingTaskActivity.class);
+                                //    collapsedView.setVisibility(View.GONE);
+                                //   expandedView.setVisibility(View.VISIBLE);
+                                Intent intent = new Intent(FloatingViewService.this, PendingTaskActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
-                                startActivity(intent);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                FloatingViewService.this.startActivity(intent);
                             }
                         }
                         return true;
@@ -285,7 +282,7 @@ play_voice.setOnClickListener(new View.OnClickListener() {
                 this.startService(intent);
             }*/
             //start RecordingService
-           this.startService(intent);
+            this.startService(intent);
             //keep screen on while recording
             //getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 

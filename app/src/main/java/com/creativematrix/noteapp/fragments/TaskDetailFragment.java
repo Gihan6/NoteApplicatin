@@ -63,7 +63,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-import timber.log.Timber;
 
 
 @SuppressLint("ValidFragment")

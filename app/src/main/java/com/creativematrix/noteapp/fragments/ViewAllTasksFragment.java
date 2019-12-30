@@ -3,18 +3,6 @@ package com.creativematrix.noteapp.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.creativematrix.noteapp.data.download.Data;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,16 +12,27 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.creativematrix.noteapp.Constant;
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.activities.NoteHomeActivity;
 import com.creativematrix.noteapp.adapters.TasksAdapter;
+import com.creativematrix.noteapp.data.download.Data;
 import com.creativematrix.noteapp.data.task.DisplayTaskRequest;
 import com.creativematrix.noteapp.data.task.Task;
 import com.creativematrix.noteapp.data.task.TaskRepo;
+import com.creativematrix.noteapp.firebase.FireBaseToken;
+import com.creativematrix.noteapp.firebase.UpdateTockenRequest;
 import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.tonyodev.fetch2.Download;
@@ -52,15 +51,8 @@ import org.jetbrains.annotations.NotNull;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ViewAllTasksFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ViewAllTasksFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Download> {
+
+public class ViewAllTasksFragment extends Fragment implements FetchObserver<Download> {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,7 +62,7 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
     private String mParam2;
     private Context mContext;
     private OnFragmentInteractionListener mListener;
-    DialogPlus confirmLogoutDialog,confirmPendingTask;
+    DialogPlus confirmLogoutDialog, confirmPendingTask;
     FrameLayout empty_frame_layout;
     RecyclerView recycler_view_tasks;
     FloatingActionButton floating_button_add_task;
@@ -81,19 +73,29 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
     private Request request;
     private Fetch fetch;
     View view;
+
     public ViewAllTasksFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ViewAllGroupsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    private void updateToken() {
+        UpdateTockenRequest request = new UpdateTockenRequest();
+        if (PreferenceHelper.getPrefernceHelperInstace().getIsCompany(getActivity()) == true) {
+            request.setTypeNo(1);
+        }else {
+            request.setTypeNo(2);
+        }
+        request.setID(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())));
+        request.setToken(new FireBaseToken().getToken());
+
+        new TaskRepo(getActivity()).updateTocken(request)
+                .observe(this, updateTockenResponse -> {
+
+                    String cc=updateTockenResponse.getMessage();
+
+                });
+    }
+
     public static ViewAllTasksFragment newInstance(String param1, String param2) {
         ViewAllTasksFragment fragment = new ViewAllTasksFragment();
         Bundle args = new Bundle();
@@ -107,6 +109,7 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
     public void onChanged(Download data, @NotNull Reason reason) {
         updateViews(data, reason);
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,27 +117,31 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        updateToken();
     }
+
     private void updateViews(Download download, Reason reason) {
 
         if (request.getId() == download.getId()) {
             if (reason == Reason.DOWNLOAD_QUEUED || reason == Reason.DOWNLOAD_COMPLETED) {
-                Utils.showStringToast(getActivity(),"Downloading : "+download.getFile());
+                Utils.showStringToast(getActivity(), "Downloading : " + download.getFile());
             }
-           setProgressView(download.getStatus(), download.getProgress());
-           // Utils.showStringToast(getActivity(),download.getFile());
+            setProgressView(download.getStatus(), download.getProgress());
+            // Utils.showStringToast(getActivity(),download.getFile());
             //etaTextView.setText(Utils.getETAString(getActivity(), download.getEtaInMilliSeconds()));
-           // downloadSpeedTextView.setText(Utils.getDownloadSpeedString(getActivity(), download.getDownloadedBytesPerSecond()));
+            // downloadSpeedTextView.setText(Utils.getDownloadSpeedString(getActivity(), download.getDownloadedBytesPerSecond()));
             if (download.getError() != Error.NONE) {
                 showDownloadErrorSnackBar(download.getError());
             }
         }
     }
+
     private void showDownloadErrorSnackBar(@NotNull Error error) {
-        Utils.showStringToast(getActivity(),"Download Failed: ErrorCode: " + error);
+        Utils.showStringToast(getActivity(), "Download Failed: ErrorCode: " + error);
         //final Snackbar snackbar = Snackbar.make(view, "Download Failed: ErrorCode: " + error, Snackbar.LENGTH_INDEFINITE);
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -145,7 +152,10 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
                 .build();
 
         fetch = Fetch.Impl.getInstance(fetchConfiguration);
-        floating_button_add_task.setOnClickListener(view1 -> Utils.switchFragmentWithAnimation(R.id.fragment_holder_home, new AddNewTaskFragment(), getActivity(), Utils.ADDNEWTASKFRAGMENT, Utils.AnimationType.SLIDE_UP));
+        floating_button_add_task.setOnClickListener(view1 ->
+                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
+                        new AddNewTaskFragment(), getActivity(), Utils.ADDNEWTASKFRAGMENT,
+                        Utils.AnimationType.SLIDE_UP));
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
@@ -169,8 +179,6 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
                             confirmLogoutDialog.dismiss();
                             getActivity().finish();
 
-                            // Sort_Price = "1";
-                            // getAllOffers();
                         }
                     });
                     Button btnCancel = (Button) confirmLogoutDialog.findViewById(R.id.btnCancel);
@@ -178,8 +186,7 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
                     btnCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // deleteMyLocation(locationslist.get(position));
-                            confirmLogoutDialog.dismiss();                       // Sort_Price = "1";
+                            confirmLogoutDialog.dismiss();
                         }
                     });
                 }
@@ -192,7 +199,9 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
         });
 
 
-        new TaskRepo(getActivity()).displayTasks(new DisplayTaskRequest(Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())), Utils.getLang()))
+        new TaskRepo(getActivity()).displayTasks(new DisplayTaskRequest
+                (Long.valueOf(PreferenceHelper.getPrefernceHelperInstace().getCompanyid(getActivity())),
+                        Utils.getLang()))
                 .observe(this, GroupRes -> {
                     try {
                         if (GroupRes.getFlag().equals(Constant.RESPONSE_SUCCESS)) {
@@ -230,16 +239,7 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -254,17 +254,17 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
         recycler_view_tasks.setHasFixedSize(true);
         tasksAdapter = new TasksAdapter(getActivity(), tasks, (v, position) ->
         {
-            if(tasks.get(position).getPending()!=null){
+            if (tasks.get(position).getPending() != null) {
 
-            if (tasks.get(position).getPending()) {
-                showPendingTaskDialog(tasks.get(position));
+                if (tasks.get(position).getPending()) {
+                    showPendingTaskDialog(tasks.get(position));
 
+                } else {
+                    Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
+                            new TaskDetailFragment(tasks.get(position)),
+                            getActivity(), Utils.VIEWAllTASKSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
+                }
             } else {
-                Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
-                        new TaskDetailFragment(tasks.get(position)),
-                        getActivity(), Utils.VIEWAllTASKSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
-            }}
-            else{
                 Utils.switchFragmentWithAnimation(R.id.fragment_holder_home,
                         new TaskDetailFragment(tasks.get(position)),
                         getActivity(), Utils.VIEWAllTASKSFRAGGMENT, Utils.AnimationType.SLIDE_UP);
@@ -286,7 +286,7 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
     }
 
     private void showPendingTaskDialog(Task task) {
-        confirmPendingTask  = DialogPlus.newDialog(getActivity())
+        confirmPendingTask = DialogPlus.newDialog(getActivity())
                 .setContentHolder(new ViewHolder(R.layout.custom_dialog_confirm_peningtask))
                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
                 .setGravity(Gravity.CENTER)
@@ -309,7 +309,7 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
         btnDownloadAttachement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               confirmPendingTask.dismiss();
+                confirmPendingTask.dismiss();
                 for (int i = 0; i < task.getFilesBinaryList().size(); i++) {
                     try {
                         downloadFile(task.getFilesBinaryList().get(i).getFileName(), task.getFilesBinaryList().get(i).getFileName());
@@ -349,6 +349,7 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
                     //An error occurred enqueuing the request.
                 });
     }
+
     private Extras getExtrasForRequest(Request request) {
         final MutableExtras extras = new MutableExtras();
         extras.putBoolean("testBoolean", true);
@@ -359,33 +360,34 @@ public class ViewAllTasksFragment extends Fragment  implements FetchObserver<Dow
         extras.putLong("testLong", Long.MAX_VALUE);
         return extras;
     }
+
     private void setProgressView(@NonNull final Status status, final int progress) {
         switch (status) {
             case QUEUED: {
-                Utils.showResToast(getActivity(),R.string.queued);
+                Utils.showResToast(getActivity(), R.string.queued);
                 //progressTextView.setText(R.string.queued);
                 break;
             }
             case ADDED: {
-                Utils.showResToast(getActivity(),R.string.added);
-               // progressTextView.setText(R.string.added);
+                Utils.showResToast(getActivity(), R.string.added);
+                // progressTextView.setText(R.string.added);
                 break;
             }
             case DOWNLOADING:
             case COMPLETED: {
                 if (progress == -1) {
-               //     progressTextView.setText(R.string.downloading);
-                    Utils.showResToast(getActivity(),R.string.downloading);
+                    //     progressTextView.setText(R.string.downloading);
+                    Utils.showResToast(getActivity(), R.string.downloading);
                 } else {
-                   // final String progressString = getResources().getString(R.string.percent_progress, progress);
-                   // progressTextView.setText(progressString);
+                    // final String progressString = getResources().getString(R.string.percent_progress, progress);
+                    // progressTextView.setText(progressString);
                     Utils.showStringToast(getActivity(), getResources().getString(R.string.download_complete));
-                 //   activity_single_download.setVisibility(View.GONE);
+                    //   activity_single_download.setVisibility(View.GONE);
                 }
                 break;
             }
             default: {
-               // progressTextView.setText(R.string.status_unknown);
+                // progressTextView.setText(R.string.status_unknown);
                 break;
             }
         }

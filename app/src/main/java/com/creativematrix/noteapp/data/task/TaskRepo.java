@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.creativematrix.noteapp.R;
 import com.creativematrix.noteapp.data.ApiClient;
+import com.creativematrix.noteapp.firebase.UpdateTockenRequest;
+import com.creativematrix.noteapp.firebase.UpdateTockenResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +46,6 @@ public class TaskRepo {
             progressDoalog.dismiss();
     }
 
-
     public LiveData<Task> addTask(Task task) {
         final MutableLiveData<Task> mutableLiveData = new MutableLiveData<>();
         showDialog();
@@ -65,6 +66,22 @@ public class TaskRepo {
         return mutableLiveData;
     }
 
+    public LiveData<UpdateTockenResponse> updateTocken(UpdateTockenRequest request) {
+        final MutableLiveData<UpdateTockenResponse> mutableLiveData = new MutableLiveData<>();
+        Call<UpdateTockenResponse> tasksResponseCall = mTaskApiInterface.updateTocken(request);
+        tasksResponseCall.enqueue(new Callback<UpdateTockenResponse>() {
+            @Override
+            public void onResponse(Call<UpdateTockenResponse> call, Response<UpdateTockenResponse> response) {
+                Log.d(TAG, "onResponse: " + response.message());
+                mutableLiveData.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTockenResponse> call, Throwable t) {
+            }
+        });
+        return mutableLiveData;
+    }
 
     public LiveData<Task> EditTask(Task task) {
         final MutableLiveData<Task> mutableLiveData = new MutableLiveData<>();

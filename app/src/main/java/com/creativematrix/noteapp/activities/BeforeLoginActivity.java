@@ -48,6 +48,7 @@ Button btn_company_login,btn_user_login;
         if (!UtilPermissions.hasPermissions(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this , PERMISSIONS, MY_PERMISSIONS_REQUEST_SYSTEM_ALERT_WINDOW);
         } else{
+            h=new Handler();
             h.postDelayed(r, 1500);
         }
         checkDrawOverlayPermission();

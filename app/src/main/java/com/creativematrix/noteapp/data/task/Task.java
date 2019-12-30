@@ -10,7 +10,6 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class Task {
-
     @Expose
     private String $id;
     @SerializedName("AddedID")
@@ -19,34 +18,8 @@ public class Task {
     private Long companyID;
     @SerializedName("EndTime")
     private Object endTime;
-
-    public List<FilesBinary> getFilesBinaryList() {
-        return FilesBinary;
-    }
-
-    public void setFilesBinaryList(List<FilesBinary> filesBinaryList) {
-        this.FilesBinary = filesBinaryList;
-    }
-
-    public Boolean getAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
-    }
-
-    public List<com.creativematrix.noteapp.data.task.FilesBinary> getTaskesfiles() {
-        return Taskesfiles;
-    }
-
-    public void setTaskesfiles(List<com.creativematrix.noteapp.data.task.FilesBinary> taskesfiles) {
-        Taskesfiles = taskesfiles;
-    }
-
     @SerializedName("Taskesfiles")
     private List<FilesBinary> Taskesfiles;
-
     @SerializedName("FilesBinary")
     private List<FilesBinary> FilesBinary;
     @Expose
@@ -65,18 +38,8 @@ public class Task {
     private Long taskCost;
     @SerializedName("TaskDescripation")
     private String taskDescripation;
-
-    public String getCurrencyID() {
-        return CurrencyID;
-    }
-
-    public void setCurrencyID(String currencyID) {
-        CurrencyID = currencyID;
-    }
-
     @SerializedName("CurrencyID")
     private String CurrencyID;
-
     @SerializedName("TaskDescripationEn")
     private String taskDescripationEn;
     @SerializedName("TaskID")
@@ -85,6 +48,14 @@ public class Task {
     private String taskName;
     @SerializedName("TaskStatus")
     private boolean taskStatus;
+    @SerializedName("Pending")
+    private Boolean pending;
+    @SerializedName("TaskState")
+    private Long TaskState;
+    @SerializedName("UserID")
+    private Long userID;
+    @SerializedName("UsersIDs")
+    private Object usersIDs;
 
     public Boolean getPending() {
         return pending;
@@ -94,8 +65,6 @@ public class Task {
         this.pending = pending;
     }
 
-    @SerializedName("Pending")
-    private Boolean pending;
     public Long getTaskState() {
         return TaskState;
     }
@@ -103,14 +72,6 @@ public class Task {
     public void setTaskState(Long taskState) {
         TaskState = taskState;
     }
-
-    @SerializedName("TaskState")
-    private Long TaskState;
-    @SerializedName("UserID")
-    private Long userID;
-    @SerializedName("UsersIDs")
-    private Object usersIDs;
-
     public String get$id() {
         return $id;
     }
@@ -144,6 +105,14 @@ public class Task {
     }
 
 
+
+    public String getCurrencyID() {
+        return CurrencyID;
+    }
+
+    public void setCurrencyID(String currencyID) {
+        CurrencyID = currencyID;
+    }
 
     public Object getFlag() {
         return flag;
@@ -257,5 +226,27 @@ public class Task {
     public void setUsersIDs(Object usersIDs) {
         this.usersIDs = usersIDs;
     }
+    public List<FilesBinary> getFilesBinaryList() {
+        return FilesBinary;
+    }
 
+    public void setFilesBinaryList(List<FilesBinary> filesBinaryList) {
+        this.FilesBinary = filesBinaryList;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public List<com.creativematrix.noteapp.data.task.FilesBinary> getTaskesfiles() {
+        return Taskesfiles;
+    }
+
+    public void setTaskesfiles(List<com.creativematrix.noteapp.data.task.FilesBinary> taskesfiles) {
+        Taskesfiles = taskesfiles;
+    }
 }

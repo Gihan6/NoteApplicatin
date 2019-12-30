@@ -145,7 +145,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:background="@drawable/dawadoz_buttons_green_selected"
+                            android:background="@color/green"
                             android:paddingStart="20dp"
                             android:paddingEnd="20dp"
                             android:text="ad_to_cart"

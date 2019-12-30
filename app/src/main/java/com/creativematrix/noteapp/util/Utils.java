@@ -556,7 +556,7 @@ public class Utils {
         if (mToast != null) {
             mToast.cancel();
         }
-        mToast = Toast.makeText(context, stringMsg, Toast.LENGTH_SHORT);
+        mToast = Toast.makeText(context, stringMsg, Toast.LENGTH_LONG);
         mToast.show();
     }
 
@@ -564,7 +564,7 @@ public class Utils {
         if (mToast != null) {
             mToast.cancel();
         }
-        mToast = Toast.makeText(context, stringID, Toast.LENGTH_SHORT);
+        mToast = Toast.makeText(context, stringID, Toast.LENGTH_LONG);
         mToast.show();
     }
 

@@ -67,17 +67,18 @@
         android:background="@drawable/btn_back"
         android:text="@string/login"
         android:textColor="#FFF" />
-
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:id="@+id/text_view_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/title_list"
+            android:gravity="center"
+            android:padding="16dp"
+            android:clickable="true"
+            android:text="@string/signup_text"
+            android:textColor="@color/edit_text_colors" />
     </LinearLayout>
 
-    <TextView
-        android:layout_alignParentBottom="true"
-        android:id="@+id/text_view_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="16dp"
-        android:clickable="true"
-        android:text="@string/signup_text"
-        android:textColor="@color/edit_text_colors" />
+
 </RelativeLayout>

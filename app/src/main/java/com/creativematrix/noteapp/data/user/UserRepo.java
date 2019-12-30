@@ -150,8 +150,7 @@ public class UserRepo {
         mUserApiInterface.DISPLAY_USER_DETAILS_RESPONSE_CALL(displayUserDetailsRequest).enqueue(new Callback<DisplayUserDetailsResponse>() {
             @Override
             public void onResponse(Call<DisplayUserDetailsResponse> call, Response<DisplayUserDetailsResponse> response) {
-                Log.d(TAG, "onResponse: " + response.message());
-                Log.d(TAG, "onResponse: " + response.body().toString());
+
                 hideDialog();
                 liveData.postValue(response.body());
 
