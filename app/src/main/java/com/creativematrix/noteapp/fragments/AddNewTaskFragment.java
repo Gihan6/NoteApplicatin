@@ -52,6 +52,7 @@ import com.creativematrix.noteapp.util.PreferenceHelper;
 import com.creativematrix.noteapp.util.Utils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -175,8 +176,11 @@ public class AddNewTaskFragment extends Fragment {
         });
         editTextTaskOwner.setOnClickListener(v -> {
             //should open date picker and return the date value
-            startActivityForResult(new Intent(getActivity(), SelectTaskOwnersActivity.class), GET_USERS_INCOMPANY);
-
+            Intent intent=new Intent(getActivity(), SelectTaskOwnersActivity.class);
+            if (mDisplayTaskDetailsResponse!=null&&mDisplayTaskDetailsResponse.getTaskUsers()!=null) {
+                intent.putExtra("users", (Serializable) mDisplayTaskDetailsResponse.getTaskUsers());
+            }
+            startActivityForResult(intent, GET_USERS_INCOMPANY);
         });
         txtAttachFile.setOnClickListener(view1 -> {
             int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
@@ -309,6 +313,7 @@ public class AddNewTaskFragment extends Fragment {
             editTextTaskName.setText(mDisplayTaskDetailsResponse.getTaskName());
             if (mDisplayTaskDetailsResponse.getTaskDescription() != null)
                 editTextTaskDescription.setText(((mDisplayTaskDetailsResponse.getTaskDescription())));
+
             if (mDisplayTaskDetailsResponse.getTaskCost() != null)
                 editTextTaskCost.setText(String.valueOf(mDisplayTaskDetailsResponse.getTaskCost()));
 
@@ -318,27 +323,34 @@ public class AddNewTaskFragment extends Fragment {
                 editTextTaskStartDate.setText(((splitStr[0])));
                 editTextTaskStartTime.setText(((splitStr[1])));
             }
+
             if (mDisplayTaskDetailsResponse.getTaskEndTime() != null) {
                 String str = mDisplayTaskDetailsResponse.getTaskEndTime();
                 String[] splitStr = str.split("\\s+");
                 editTextTaskEndDate.setText(((splitStr[0])));
                 editTextTaskEndTime.setText(((splitStr[1])));
             }
+
             if (mDisplayTaskDetailsResponse.getCurrencyid() != null) {
                 selectedCurrnecyID = String.valueOf(mDisplayTaskDetailsResponse.getCurrencyid());
             }
+
             if (mDisplayTaskDetailsResponse.getCurrencyname() != null) {
                 selectedCurrnecyID = String.valueOf(mDisplayTaskDetailsResponse.getCurrencyid());
             }
+
             if (mDisplayTaskDetailsResponse.getCurrencyname() != null) {
                 editTextTaskCoin.setText(mDisplayTaskDetailsResponse.getCurrencyname());
             }
+
             if (mDisplayTaskDetailsResponse.getProjectName() != null) {
                 editTextProjectName.setText(mDisplayTaskDetailsResponse.getProjectName());
             }
+
             if (mDisplayTaskDetailsResponse.getProjectID() != null) {
                 selectedProjectID = String.valueOf(mDisplayTaskDetailsResponse.getProjectID());
             }
+
             if (mDisplayTaskDetailsResponse.getTaskState() != null) {
                 selectedTaskStatusID = String.valueOf(mDisplayTaskDetailsResponse.getTaskState());
                 if (mDisplayTaskDetailsResponse.getTaskState() == 0) {

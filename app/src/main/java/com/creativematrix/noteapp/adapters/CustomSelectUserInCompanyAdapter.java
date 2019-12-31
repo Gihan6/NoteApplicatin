@@ -14,11 +14,14 @@ import com.creativematrix.noteapp.data.task.LstUsersnCompnay;
 import java.util.ArrayList;
 
 public class CustomSelectUserInCompanyAdapter extends BaseAdapter {
+
     private LayoutInflater inflater;
     private ArrayList<LstUsersnCompnay> lstUsersnCompnays;
     public CustomSelectUserInCompanyAdapter(Context context, ArrayList<LstUsersnCompnay> lstUsersnCompnays ) {
+
         this .lstUsersnCompnays = lstUsersnCompnays;
         inflater = LayoutInflater.from(context);
+
     }
 
     @Override

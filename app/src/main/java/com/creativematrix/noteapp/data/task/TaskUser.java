@@ -3,8 +3,10 @@ package com.creativematrix.noteapp.data.task;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 @SuppressWarnings("unused")
-public class TaskUser {
+public class TaskUser implements Serializable {
 
     @SerializedName("$id")
     private String m$id;
