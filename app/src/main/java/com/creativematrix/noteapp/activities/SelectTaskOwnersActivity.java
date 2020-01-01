@@ -115,7 +115,7 @@ public class SelectTaskOwnersActivity extends AppCompatActivity implements Butto
 
         for (int j = 0; j < selectUser.size(); j++) {
             for (int i = 0; i < listView.getCount(); ++i) {
-                if (lstUsersnCompnays.get(i).getUserID() .equals( selectUser.get(j).getUSerTaskID()) ){
+                if (lstUsersnCompnays.get(i).getUserID().equals(selectUser.get(j).getUSerTaskID())) {
 //                    listView.setAdapter()
                     listView.setItemChecked(i, true);
                 }
